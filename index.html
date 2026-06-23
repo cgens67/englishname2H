@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
+<title>English Game 2026</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
+<!-- Added Libre Barcode for the Easter Egg -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<style>
+/* CORE VARIABLES FROM REFERENCE HTML */
+:root{--ios-bg:#E8F0FE;--ios-card:rgba(255,255,255,0.85);--ios-modal:rgba(255,255,255,0.85);--ios-text:#1D1D1F;--ios-text-sec:rgba(29,29,31,0.6);--ios-sep:rgba(0,0,0,0.08);--ios-blue:#007AFF;--ios-blue-text:#007AFF;--ios-blue-light:rgba(0,122,255,0.15);--ios-input:rgba(255,255,255,0.7);--grad-1:#e0c3fc;--grad-2:#8ec5fc;--grad-3:#4facfe;--glass-border:rgba(255,255,255,0.8);--glass-highlight:inset 0 1px 1px rgba(255,255,255,0.8);--glass-shadow:0 4px 16px rgba(31,38,135,0.05);--glass-blur:blur(16px) saturate(180%);--chip-bg:#FFFFFF;--chip-border:#D1D1D6;--chip-shadow:0 1px 3px rgba(0,0,0,0.06);--chip-txt:#1D1D1F;--chip-act-bg:var(--ios-blue);--chip-act-border:var(--ios-blue);--chip-act-txt:#FFFFFF;--shadow-sm:0 4px 16px rgba(0,0,0,0.04);--shadow-md:0 8px 24px rgba(0,0,0,0.08);--shadow-lg:0 16px 48px rgba(0,0,0,0.15);--ease-ios:cubic-bezier(0.25,1,0.5,1);--ease-spring:cubic-bezier(0.175,0.885,0.32,1.275);--font-stack:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Noto Sans SC",sans-serif; --danger: #FF3B30; --success: #34C759; --warning: #FF9500;}
+[data-theme="dark"]{--ios-bg:#000000;--ios-card:rgba(30,30,30,0.85);--ios-modal:rgba(40,40,40,0.85);--ios-text:#FFFFFF;--ios-text-sec:rgba(255,255,255,0.6);--ios-sep:rgba(255,255,255,0.1);--ios-input:rgba(255,255,255,0.15);--glass-border:rgba(255,255,255,0.12);--glass-highlight:inset 0 1px 1px rgba(255,255,255,0.15);--glass-shadow:0 4px 16px rgba(0,0,0,0.4);--chip-bg:rgba(255,255,255,0.12);--chip-border:rgba(255,255,255,0.15);--chip-shadow:none;--chip-txt:#FFFFFF;--shadow-lg:0 16px 48px rgba(0,0,0,0.6); --grad-1:#0f2027;--grad-2:#203a43;--grad-3:#2c5364;}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;outline:0;user-select:none;}
+body{margin:0;padding:0;font-family:var(--font-stack);color:var(--ios-text);background-color:var(--ios-bg);background-image:linear-gradient(135deg,var(--grad-1) 0%,var(--grad-2) 50%,var(--grad-3) 100%);background-attachment:fixed;background-size:cover;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;transition:background-image 1s ease,background-color .4s ease,color .4s var(--ease-ios)}
+
+/* FLOATING CONTROLS (Since Header is Removed) */
+.floating-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px; align-items: center; }
+.theme-toggle{width:42px;height:42px;background:var(--ios-input);border-radius:50%;border:1px solid var(--chip-border);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;color:var(--ios-text);cursor:pointer;transition:transform .2s var(--ease-spring),opacity .2s,background-color .2s}
+.theme-toggle:active{transform:scale(.85);opacity:.7}
+.lost-btn { background: var(--ios-input); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--chip-border); box-shadow: var(--shadow-sm); padding: 0 16px; height: 42px; border-radius: 21px; font-weight: 700; color: var(--danger); cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s var(--ease-spring); }
+.lost-btn:active { transform: scale(0.92); }
+
+/* MAIN CONTAINER */
+#app-container { padding-top: 60px; padding-bottom: 40px; max-width: 900px; margin: 0 auto; width: 100%; padding-left: 16px; padding-right: 16px; }
+
+/* SCREENS */
+.screen { display: none; opacity: 0; animation: fadeUp 0.6s var(--ease-ios) forwards; width: 100%; }
+.screen.active { display: flex; flex-direction: column; align-items: center; }
+@keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); filter: blur(4px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+/* WHEEL UI */
+.wheel-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1; margin: 20px auto; }
+canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--shadow-lg), 0 0 0 8px var(--ios-card); transform: rotate(-90deg); }
+.wheel-pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 40px solid var(--danger); z-index: 10; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+.spin-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; border-radius: 50%; background: var(--ios-blue); color: #fff; font-size: 22px; font-weight: 800; border: 4px solid #fff; box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s var(--ease-spring); z-index: 5; }
+.spin-btn:active { transform: translate(-50%, -50%) scale(0.85); }
+.spin-btn:disabled { background: var(--ios-text-sec); cursor: not-allowed; transform: translate(-50%, -50%); }
+
+/* SEGMENT CONTROL (Accents) */
+.seg-control{display:flex;background:var(--ios-input);border:1px solid var(--chip-border);box-shadow:var(--glass-highlight);padding:4px;border-radius:12px;margin-bottom:20px;gap:4px; width:100%; max-width:300px;}
+.seg-btn{flex:1;border:none;background:0 0;padding:8px;border-radius:8px;font-weight:600;font-size:14px;color:var(--ios-text-sec);cursor:pointer;transition:all .2s ease;}
+.seg-btn:active{transform:scale(.95)}.seg-btn.active{background:var(--ios-card);border:1px solid var(--glass-border);box-shadow:0 2px 8px rgba(0,0,0,0.08);color:var(--ios-text);font-weight:700}[data-theme="dark"] .seg-btn.active{background:rgba(255,255,255,0.15);color:var(--ios-blue)}
+
+/* GAME SELECTION UI */
+.sel-student-card { background: var(--ios-card); padding: 20px; border-radius: 24px; text-align: center; width: 100%; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); margin-bottom: 24px; position:relative; }
+.sel-name { font-size: 26px; font-weight: 800; color: var(--ios-blue); }
+.sel-cn { font-size: 16px; color: var(--ios-text-sec); margin-top: 4px; }
+.btn-remove-wheel { position: absolute; top:10px; right:10px; background: rgba(255,59,48,0.15); color: var(--danger); border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.btn-remove-wheel:active { transform: scale(0.9); background: var(--danger); color: #fff; }
+
+.games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; width: 100%; }
+.game-card { background: var(--ios-card); border-radius: 20px; padding: 24px; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.3s var(--ease-spring); }
+.game-card:active { transform: scale(0.95); }
+.game-icon { font-size: 48px; color: var(--ios-blue); margin-bottom: 12px; }
+.game-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.game-desc { font-size: 13px; color: var(--ios-text-sec); line-height: 1.4; }
+
+/* GAMEPLAY UI */
+.play-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; }
+.timer-pill { background: var(--danger); color: #fff; font-weight: 800; padding: 8px 16px; border-radius: 20px; display: flex; align-items: center; gap: 6px; font-size: 18px; box-shadow: var(--shadow-sm); transition: 0.3s; }
+.goal-pill { background: var(--ios-blue); color: #fff; font-weight: 700; padding: 6px 12px; border-radius: 12px; font-size: 14px; box-shadow: var(--shadow-sm); }
+.score-tracker { font-weight: 800; font-size: 18px; color: var(--ios-text); }
+
+.question-card { background: var(--ios-card); width: 100%; border-radius: 24px; padding: 30px; border: 1px solid var(--glass-border); box-shadow: var(--shadow-md); margin-bottom: 20px; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.q-text { font-size: 22px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 20px; }
+
+/* MCQs */
+.mcq-btn { width: 100%; background: var(--ios-input); border: 2px solid var(--glass-border); padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 600; text-align: left; margin-bottom: 12px; cursor: pointer; transition: 0.2s; color: var(--ios-text); box-shadow: var(--shadow-sm); }
+.mcq-btn:active { transform: scale(0.98); background: var(--ios-bg); }
+.mcq-btn.correct { background: var(--success) !important; color: #fff !important; border-color: var(--success) !important; box-shadow: 0 4px 12px rgba(52,199,89,0.3) !important; }
+.mcq-btn.wrong { background: var(--danger) !important; color: #fff !important; border-color: var(--danger) !important; }
+
+/* VIRTUAL KEYBOARD */
+.v-input-display { width: 100%; background: var(--ios-input); border: 2px solid var(--ios-blue); padding: 16px 20px; border-radius: 16px; font-size: 24px; font-weight: 600; text-align: center; min-height: 64px; margin-bottom: 20px; word-break: break-all; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+.v-keyboard { width: 100%; display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.05); padding: 12px; border-radius: 20px; }
+[data-theme="dark"] .v-keyboard { background: rgba(255,255,255,0.05); }
+.vk-row { display: flex; justify-content: center; gap: 6px; }
+.vk-key { flex: 1; height: 50px; max-width: 55px; background: var(--ios-card); border: 1px solid var(--glass-border); border-radius: 10px; box-shadow: 0 2px 0 rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 600; cursor: pointer; transition: 0.1s; color: var(--ios-text); }
+[data-theme="dark"] .vk-key { box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
+.vk-key:active { transform: translateY(2px); box-shadow: none; filter: brightness(0.9); }
+.vk-key.wide { max-width: 100px; background: var(--ios-blue-light); color: var(--ios-blue); font-size: 16px;}
+.vk-key.space { max-width: 400px; flex: 4; }
+
+.play-actions { display: flex; gap: 12px; width: 100%; margin-top: 10px; }
+.btn-primary, .btn-danger, .btn-warning { flex: 1; padding: 16px; border-radius: 16px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; color: #fff; box-shadow: var(--shadow-sm); transition: 0.2s var(--ease-spring); display: flex; justify-content: center; align-items: center; gap: 8px; }
+.btn-primary { background: var(--ios-blue); }
+.btn-danger { background: var(--danger); }
+.btn-warning { background: var(--warning); }
+.btn-primary:active, .btn-danger:active, .btn-warning:active { transform: scale(0.95); }
+
+/* TICKET EASTER EGG CSS RECREATION */
+.bus-ticket { border: 2px solid var(--ios-text); background: var(--ios-card); border-radius: 8px; width: 100%; max-width: 400px; margin: 0 auto 20px auto; overflow: hidden; box-shadow: var(--shadow-md); font-family: 'Roboto', sans-serif;}
+.ticket-header { background: rgba(0,0,0,0.1); padding: 12px 20px; border-bottom: 2px solid var(--ios-text); display: flex; justify-content: space-between; align-items: center; color: var(--ios-text); }
+[data-theme="dark"] .ticket-header { background: rgba(255,255,255,0.1); }
+.ticket-title { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
+.ticket-body { padding: 20px; display: grid; grid-template-columns: 140px 1fr; gap: 10px; font-size: 14px; font-weight: 500; border-bottom: 2px solid var(--ios-text); color: var(--ios-text); }
+.ticket-body span:nth-child(even) { font-weight: 800; }
+.ticket-barcode { padding: 10px; text-align: center; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.barcode-font { font-family: 'Libre Barcode 39 Text', cursive; font-size: 48px; color: var(--ios-text); transform: scaleY(1.3); transform-origin: top; overflow: hidden; white-space: nowrap; max-width: 100%; }
+
+/* MODALS */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px; }
+.modal-bg.show { opacity: 1; pointer-events: auto; }
+.modal-card { background: var(--ios-modal); border-radius: 28px; width: 100%; max-width: 450px; padding: 30px; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border); transform: scale(0.9); transition: 0.4s var(--ease-spring); }
+.modal-bg.show .modal-card { transform: scale(1); }
+.modal-title { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+.lost-list-item { background: var(--ios-bg); padding: 12px; border-radius: 12px; font-weight: 600; margin-bottom: 8px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--glass-border); }
+
+/* Play Audio Button for Spelling */
+.play-audio-btn { background: var(--ios-blue-light); color: var(--ios-blue); border: none; padding: 12px 24px; border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.2s; box-shadow: var(--shadow-sm); }
+.play-audio-btn:active { transform: scale(0.95); background: var(--ios-blue); color: #fff; }
+</style>
+</head>
+<body data-theme="light">
+
+<div class="floating-controls">
+    <button class="lost-btn" onclick="showLostList()">
+        <span class="material-icons-round">sentiment_very_dissatisfied</span> 
+        Lost (<span id="lost-count">0</span>)
+    </button>
+    <button class="theme-toggle" onclick="toggleDarkMode()">
+        <span class="material-icons-round" id="dark-icon">dark_mode</span>
+    </button>
+</div>
+
+<div id="app-container">
+
+    <!-- SCREEN 1: WHEEL -->
+    <div id="screen-wheel" class="screen active">
+        <div style="text-align:center; margin-bottom: 10px;">
+            <h2 style="font-weight: 800; font-size: 32px; margin:0; color: var(--ios-text); letter-spacing:-0.02em;">Spin the Wheel!</h2>
+            <p style="color:var(--ios-text-sec); margin: 5px 0; font-weight:500;">Who will be the next player?</p>
+        </div>
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <canvas id="wheel"></canvas>
+            <button class="spin-btn" id="spin-btn" onclick="spinWheel()">SPIN</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: GAME SELECTION -->
+    <div id="screen-games" class="screen">
+        <div class="sel-student-card">
+            <button class="btn-remove-wheel" onclick="removeSelectedFromWheel()"><span class="material-icons-round" style="font-size:14px; vertical-align:middle;">delete</span> Remove</button>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ios-text-sec); text-transform: uppercase; margin-bottom: 8px; letter-spacing:1px;">Selected Player</div>
+            <div class="sel-name" id="disp-student-name">Student Name</div>
+            <div class="sel-cn" id="disp-student-cn">中文名</div>
+        </div>
+        
+        <h3 style="font-weight: 800; margin-bottom: 16px; align-self: flex-start; font-size:22px;">Choose Your Game:</h3>
+        
+        <div class="games-grid">
+            <div class="game-card" onclick="startGame('spelling')">
+                <span class="material-icons-round game-icon" style="color: #AF52DE;">spellcheck</span>
+                <div class="game-title">Spelling Bee</div>
+                <div class="game-desc">Listen to the word and type it correctly.</div>
+            </div>
+            <div class="game-card" onclick="startGame('guessing')">
+                <span class="material-icons-round game-icon" style="color: #FF9500;">psychology_alt</span>
+                <div class="game-title">Guessing Game</div>
+                <div class="game-desc">Solve logic riddles with MCQs.</div>
+            </div>
+            <div class="game-card" onclick="startGame('grammar')">
+                <span class="material-icons-round game-icon" style="color: #34C759;">rule</span>
+                <div class="game-title">Correct Grammar</div>
+                <div class="game-desc">Fix the incorrect word in the sentence.</div>
+            </div>
+            <div class="game-card" onclick="startGame('comprehension')">
+                <span class="material-icons-round game-icon" style="color: #007AFF;">fact_check</span>
+                <div class="game-title">Choose Correct Answer</div>
+                <div class="game-desc">Read the info ticket and answer the questions.</div>
+            </div>
+        </div>
+        <button class="btn-warning" style="margin-top: 24px; width: 100%; max-width: 300px; color:#fff;" onclick="cancelSelection()"><span class="material-icons-round">refresh</span> Spin Again</button>
+    </div>
+
+    <!-- SCREEN 3: GAMEPLAY -->
+    <div id="screen-play" class="screen">
+        <div class="play-header">
+            <div class="goal-pill" id="play-goal">Goal: 2/3</div>
+            <div class="score-tracker" id="play-score">Score: 0</div>
+            <div class="timer-pill" id="play-timer"><span class="material-icons-round">timer</span> <span id="time-val">60</span>s</div>
+        </div>
+
+        <div class="question-card" id="q-card">
+            
+            <!-- Spelling Settings -->
+            <div id="spelling-settings" style="display:none; width: 100%; text-align: center;">
+                <div class="seg-control" style="margin: 0 auto 15px auto;">
+                    <button class="seg-btn active" id="btn-accent-us" onclick="setAccent('US')">US Accent</button>
+                    <button class="seg-btn" id="btn-accent-uk" onclick="setAccent('UK')">UK Accent</button>
+                </div>
+            </div>
+
+            <!-- Ticket UI Injection (Hidden by default) -->
+            <div id="ticket-ui" style="display:none;">
+                <div class="bus-ticket">
+                    <div class="ticket-header">
+                        <span class="ticket-title">BUS TICKET</span>
+                        <span class="material-icons-round" style="font-size:32px;">directions_bus</span>
+                    </div>
+                    <div class="ticket-body">
+                        <span>DESTINATION</span> <span>: Kuala Lumpur to Melaka</span>
+                        <span>DEPARTURE</span> <span>: 9.00 a.m.</span>
+                        <span>ARRIVAL</span> <span>: 11.00 a.m.</span>
+                        <span>FARE</span> <span>: RM 15.00</span>
+                    </div>
+                    <div class="ticket-barcode"><div class="barcode-font" id="ticket-barcode-text">*STUDENT*</div></div>
+                </div>
+            </div>
+
+            <div class="q-text" id="q-text">Question Text Here</div>
+            
+            <!-- Spelling specific -->
+            <div id="audio-controls" style="display:none; text-align:center;">
+                <button class="play-audio-btn" onclick="playCurrentWord()"><span class="material-icons-round">volume_up</span> Hear Word</button>
+            </div>
+
+            <!-- MCQ Container -->
+            <div id="mcq-container" style="display:none; width:100%;"></div>
+
+            <!-- Input Container -->
+            <div id="input-container" style="display:none; width: 100%;">
+                <div class="v-input-display" id="v-input"></div>
+                <div class="v-keyboard" id="v-keyboard">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+        </div>
+
+        <div class="play-actions">
+            <button class="btn-danger" onclick="forfeitGame()"><span class="material-icons-round">flag</span> Forfeit</button>
+            <button class="btn-primary" id="btn-submit" onclick="submitAnswer()" style="display:none;"><span class="material-icons-round">check_circle</span> Submit</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODALS -->
+<!-- Lost List -->
+<div class="modal-bg" id="modal-lost">
+    <div class="modal-card">
+        <h2 class="modal-title" style="color: var(--danger); display:flex; align-items:center; justify-content:center; gap:8px;"><span class="material-icons-round">sentiment_very_dissatisfied</span> The "Lost" List</h2>
+        <div id="lost-list-content" style="max-height: 300px; overflow-y: auto; margin-bottom: 20px; padding: 5px;">
+            <!-- Items -->
+        </div>
+        <button class="btn-primary" style="width: 100%;" onclick="closeModal('modal-lost')">Close</button>
+    </div>
+</div>
+
+<!-- Result -->
+<div class="modal-bg" id="modal-result">
+    <div class="modal-card">
+        <span class="material-icons-round" id="res-icon" style="font-size: 80px; margin-bottom: 10px;"></span>
+        <h2 class="modal-title" id="res-title">Result</h2>
+        <p style="font-size: 16px; color: var(--ios-text-sec); margin-bottom: 24px; font-weight:600;" id="res-desc">You scored X out of Y.</p>
+        <button class="btn-primary" style="width: 100%;" onclick="endGameFlow()">Continue</button>
+    </div>
+</div>
+
+<script>
+// --- DARK MODE TOGGLE ---
+let isDark = false;
+function toggleDarkMode() {
+    isDark = !isDark;
+    document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    document.getElementById('dark-icon').innerText = isDark ? 'light_mode' : 'dark_mode';
+    if(document.getElementById('screen-wheel').classList.contains('active')) drawWheel();
+}
+
+// --- DATA: STUDENTS ---
+let studentsData = [
+    { name: "ALOYSIUS NG YU YI", cn: "黄昱毅" }, { name: "ALVIN TANG ZHENG HAO", cn: "汤正豪" },
+    { name: "CLEMENT SEAH JI WEN", cn: "佘其汶" }, { name: "ELVIS LOW YI HAO", cn: "罗苡豪" },
+    { name: "GAVIN CHUA WEN JIE", cn: "蔡文杰" }, { name: "GUI CEN EN", cn: "魏岑恩" },
+    { name: "JEREMY TAN WEI REN", cn: "陈伟仁" }, { name: "JONATHAN ONG KAH FATT", cn: "王家发" },
+    { name: "JOSEPH LIM", cn: "林家勇" }, { name: "KINGSTON GOH QI HAO", cn: "吴启豪" },
+    { name: "LAM YU YANG", cn: "林奕扬" }, { name: "LEXUS KUEK CHEN XIAN", cn: "郭承鑫" },
+    { name: "LIM JIA QING", cn: "林佳庆" }, { name: "LOO CHIN SIANG", cn: "罗俊翔" },
+    { name: "LOUIS NG WEI SOONG", cn: "黄炜松" }, { name: "NG JING KAI", cn: "黄竞凯" },
+    { name: "NG YU JIN", cn: "黄宇敬" }, { name: "ONG ZHI XIAN", cn: "王智贤" },
+    { name: "PANG MIN ZE", cn: "-" }, { name: "RAYSON BANG WEI XIANG", cn: "冯伟翔" },
+    { name: "RYAN CHOK ZI INN", cn: "卓致颖" }, { name: "SHADEESHAN", cn: "-" },
+    { name: "TAN GUAN HAN", cn: "陈冠翰" }, { name: "TAN YONG XI", cn: "陈荣熙" },
+    { name: "TAN YU ZHONG", cn: "陈宇仲" }, { name: "TAY KIM YAW", cn: "郑金耀" },
+    { name: "WEE KER SHENG", cn: "王科盛" }, { name: "WONG HUNG RUI", cn: "王浤睿" },
+    { name: "XANXUS TAI WEI XUAN", cn: "戴炜轩" }, { name: "YEOW JIA WEI", cn: "饶家玮" }
+];
+
+const hardTargets = ["LEXUS", "XANXUS", "RAYSON", "ALOYSIUS", "TAY KIM YAW", "WEE KER SHENG", "YEOW JIA WEI"];
+function isHardStudent(name) {
+    let upper = name.toUpperCase();
+    return hardTargets.some(t => upper.includes(t));
+}
+
+// --- GAME DATA POOLS ---
+const dbNormal = {
+    spelling: [
+        { q: "Spell the word you hear:", a: "ENVIRONMENT", audio: "Environment" },
+        { q: "Spell the word you hear:", a: "GOVERNMENT", audio: "Government" },
+        { q: "Spell the word you hear:", a: "NECESSARY", audio: "Necessary" },
+        { q: "Spell the word you hear:", a: "ACCOMMODATION", audio: "Accommodation" },
+        { q: "Spell the word you hear:", a: "RHYTHM", audio: "Rhythm" },
+        { q: "Spell the word you hear:", a: "EMBARRASS", audio: "Embarrass" },
+        { q: "Spell the word you hear:", a: "GUARANTEE", audio: "Guarantee" },
+        { q: "Spell the word you hear:", a: "DEFINITELY", audio: "Definitely" },
+        { q: "Spell the word you hear:", a: "SEPARATELY", audio: "Separately" },
+        { q: "Spell the word you hear:", a: "PRONUNCIATION", audio: "Pronunciation" },
+        { q: "Spell the word you hear:", a: "OCCASION", audio: "Occasion" },
+        { q: "Spell the word you hear:", a: "DISAPPEAR", audio: "Disappear" },
+        { q: "Spell the word you hear:", a: "RECEIPT", audio: "Receipt" },
+        { q: "Spell the word you hear:", a: "PARALLEL", audio: "Parallel" },
+        { q: "Spell the word you hear:", a: "SUCCESSFUL", audio: "Successful" }
+    ],
+    guessing: [
+        { q: "What has keys but can't open locks?", opts: ["A Piano", "A Map", "A Door"], a: "A Piano" },
+        { q: "What has to be broken before you can use it?", opts: ["An Egg", "A Coconut", "A Glass"], a: "An Egg" },
+        { q: "I’m tall when I’m young, and I’m short when I’m old. What am I?", opts: ["A Candle", "A Tree", "A Pencil"], a: "A Candle" },
+        { q: "What month of the year has 28 days?", opts: ["All of them", "February", "Leap Year"], a: "All of them" },
+        { q: "What is full of holes but still holds water?", opts: ["A Sponge", "A Bucket", "A Cloud"], a: "A Sponge" },
+        { q: "What can you catch but not throw?", opts: ["A Cold", "A Baseball", "A Boomerang"], a: "A Cold" },
+        { q: "The more of this there is, the less you see. What is it?", opts: ["Darkness", "Fog", "Tears"], a: "Darkness" },
+        { q: "I have branches, but no fruit, trunk or leaves. What am I?", opts: ["A Bank", "A Tree", "A River"], a: "A Bank" },
+        { q: "What can you keep after giving to someone?", opts: ["Your Word", "A Gift", "A Secret"], a: "Your Word" },
+        { q: "I shave every day, but my beard stays the same. What am I?", opts: ["A Barber", "A Magician", "An Animal"], a: "A Barber" }
+    ],
+    grammar: [
+        { q: "Fix the incorrect word:\n'She GO to school.'", a: "GOES" },
+        { q: "Fix the incorrect word:\n'They IS playing football.'", a: "ARE" },
+        { q: "Fix the incorrect word:\n'I didn't WENT there.'", a: "GO" },
+        { q: "Fix the incorrect word:\n'He DON'T like apples.'", a: "DOESNT" }, // Removed apostrophe for easier typing
+        { q: "Fix the incorrect word:\n'There IS many people here.'", a: "ARE" },
+        { q: "Fix the incorrect word:\n'She has WROTE a letter.'", a: "WRITTEN" },
+        { q: "Fix the incorrect word:\n'We WAS walking home.'", a: "WERE" },
+        { q: "Fix the incorrect word:\n'I have SAW that movie.'", a: "SEEN" },
+        { q: "Fix the incorrect word:\n'It is MORE BETTER.'", a: "BETTER" },
+        { q: "Fix the incorrect word:\n'The dog wagged IT'S tail.'", a: "ITS" }
+    ],
+    comprehension: [
+        { q: "Based on the ticket, what is the destination?", opts: ["Melaka", "Kuala Lumpur", "Johor"], a: "Melaka", showTicket: true },
+        { q: "Based on the ticket, the bus...", opts: ["leaves for Melaka at 9.00 a.m.", "leaves for KL at 9.00 a.m.", "arrives at 9.00 a.m."], a: "leaves for Melaka at 9.00 a.m.", showTicket: true },
+        { q: "Based on the ticket, how long is the journey?", opts: ["2 Hours", "1 Hour", "3 Hours"], a: "2 Hours", showTicket: true },
+        { q: "What is the fare for 2 people?", opts: ["RM 30", "RM 15", "RM 45"], a: "RM 30", showTicket: true },
+        { q: "Where does the bus depart from?", opts: ["Kuala Lumpur", "Melaka", "Seremban"], a: "Kuala Lumpur", showTicket: true }
+    ]
+};
+
+const dbHard = {
+    spelling: [
+        { q: "Spell the word you hear (Hard):", a: "SUSCEPTIBLE", audio: "Susceptible" },
+        { q: "Spell the word you hear (Hard):", a: "MANEUVER", audio: "Maneuver" },
+        { q: "Spell the word you hear (Hard):", a: "COLLOQUIAL", audio: "Colloquial" },
+        { q: "Spell the word you hear (Hard):", a: "QUINTESSENTIAL", audio: "Quintessential" },
+        { q: "Spell the word you hear (Hard):", a: "BOURGEOIS", audio: "Bourgeois" },
+        { q: "Spell the word you hear (Hard):", a: "PHLEGM", audio: "Phlegm" },
+        { q: "Spell the word you hear (Hard):", a: "CONSCIENTIOUS", audio: "Conscientious" },
+        { q: "Spell the word you hear (Hard):", a: "ONOMATOPOEIA", audio: "Onomatopoeia" },
+        { q: "Spell the word you hear (Hard):", a: "MISCHIEVOUS", audio: "Mischievous" },
+        { q: "Spell the word you hear (Hard):", a: "NAUSEOUS", audio: "Nauseous" }
+    ],
+    guessing: [
+        { q: "A woman shoots her husband, holds him under water for 5 minutes, and hangs him. Later they eat dinner. How?", opts: ["She took a photograph", "She is an executioner", "It was a dream"], a: "She took a photograph" },
+        { q: "I am a word of letters three, add two and fewer there will be. What am I?", opts: ["Few", "Less", "One"], a: "Few" },
+        { q: "What comes once in a minute, twice in a moment, but never in a thousand years?", opts: ["The letter M", "A second", "A thought"], a: "The letter M" },
+        { q: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", opts: ["An Echo", "A Ghost", "A Cloud"], a: "An Echo" },
+        { q: "You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. What am I?", opts: ["A Candle", "A Clock", "A Battery"], a: "A Candle" },
+        { q: "What disappears the second you say its name?", opts: ["Silence", "The Wind", "A Shadow"], a: "Silence" },
+        { q: "First you eat me, then you get eaten. What am I?", opts: ["A Fish Hook", "A Poison Apple", "A Lion"], a: "A Fish Hook" },
+        { q: "I have cities, but no houses. Mountains, but no trees. Water, but no fish. What am I?", opts: ["A Map", "A Globe", "A Desert"], a: "A Map" }
+    ],
+    grammar: [
+        { q: "Fix the incorrect word:\n'If I WAS you, I would leave.'", a: "WERE" },
+        { q: "Fix the incorrect word:\n'Scarcely had she left THAN the phone rang.'", a: "WHEN" },
+        { q: "Fix the incorrect word:\n'Neither the teacher nor the students IS ready.'", a: "ARE" },
+        { q: "Fix the incorrect word:\n'One of my friends ARE coming.'", a: "IS" },
+        { q: "Fix the incorrect word:\n'She plays tennis GOOD.'", a: "WELL" },
+        { q: "Fix the incorrect word:\n'I look forward to MEET you.'", a: "MEETING" },
+        { q: "Fix the incorrect word:\n'He insisted ON GO to the park.'", a: "GOING" },
+        { q: "Fix the incorrect word:\n'Between you and I, this is a secret.'", a: "ME" },
+        { q: "Fix the incorrect word:\n'Whom did you say IS calling?'", a: "WHO" },
+        { q: "Fix the incorrect word:\n'She is the girl WHICH won the prize.'", a: "WHO" }
+    ],
+    comprehension: [
+        { q: "If the bus is delayed by 45 minutes, what is the new estimated arrival time?", opts: ["11.45 a.m.", "11.00 a.m.", "12.00 p.m."], a: "11.45 a.m.", showTicket: true },
+        { q: "A family of 4 buys tickets with a 10% discount. How much do they pay in total?", opts: ["RM 54", "RM 60", "RM 45"], a: "RM 54", showTicket: true },
+        { q: "If the bus travels at an average speed of 80 km/h, what is the approximate distance?", opts: ["160 km", "80 km", "200 km"], a: "160 km", showTicket: true },
+        { q: "If they depart exactly on time and have a 15-minute rest stop, how much actual driving time is there?", opts: ["1 Hour 45 Mins", "2 Hours", "1 Hour 30 Mins"], a: "1 Hour 45 Mins", showTicket: true },
+        { q: "What fraction of RM 100 would you get back as change if you bought 3 tickets?", opts: ["11/20", "1/2", "9/20"], a: "11/20", showTicket: true }
+    ]
+};
+
+// Copy pools to splice from
+let poolNormal = JSON.parse(JSON.stringify(dbNormal));
+let poolHard = JSON.parse(JSON.stringify(dbHard));
+
+// --- STATE ---
+let currentStudent = null;
+let lostList = [];
+let currentGameType = '';
+let questions = [];
+let currentQIndex = 0;
+let score = 0;
+let passMark = 2; // Need 2 out of 3
+let timerInt;
+let timeLeft = 60;
+let inputText = "";
+let accentChoice = 'US';
+
+// Audio Context for spinning sound
+let audioCtx = null;
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+}
+function playTick() {
+    if(!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime); // low volume
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.05);
+}
+
+// --- UTILS ---
+function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+// Height Animation Helper
+function animateCardHeight(cardEl, callback) {
+    const startHeight = cardEl.offsetHeight;
+    cardEl.style.height = 'auto';
+    const targetHeight = cardEl.offsetHeight;
+    cardEl.style.height = startHeight + 'px';
+    void cardEl.offsetHeight; // force reflow
+    cardEl.style.transition = 'height 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+    cardEl.style.height = targetHeight + 'px';
+    
+    if (callback) callback();
+    
+    setTimeout(() => {
+        cardEl.style.height = 'auto';
+        cardEl.style.transition = '';
+    }, 400);
+}
+
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+// --- WHEEL LOGIC ---
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+let arc = 0;
+let startAngle = 0;
+let spinTimeout = null;
+let spinArcStart = 10;
+let spinTime = 0;
+let spinTimeTotal = 0;
+let lastSegment = 0;
+
+function drawWheel() {
+    if(studentsData.length === 0) return;
+    arc = Math.PI * 2 / studentsData.length;
+    
+    const dpr = window.devicePixelRatio || 1;
+    const size = 500;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    ctx.scale(dpr, dpr);
+    
+    let outsideRadius = size/2 - 10;
+    let textRadius = size/2 - 50;
+    let insideRadius = 50;
+    
+    ctx.clearRect(0,0,size,size);
+    ctx.translate(size/2, size/2);
+    
+    const colors = isDark 
+      ? ['#0056b3', '#228b22', '#cc7a00', '#b32400', '#7a28a3'] // Darker variants
+      : ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#AF52DE'];
+    
+    for(let i=0; i<studentsData.length; i++) {
+        let angle = startAngle + i * arc;
+        ctx.fillStyle = colors[i % colors.length];
+        
+        ctx.beginPath();
+        ctx.arc(0, 0, outsideRadius, angle, angle + arc, false);
+        ctx.arc(0, 0, insideRadius, angle + arc, angle, true);
+        ctx.fill();
+        ctx.stroke();
+        
+        ctx.save();
+        ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
+        ctx.shadowBlur = 2; ctx.shadowColor = "rgba(0,0,0,0.4)";
+        ctx.fillStyle = "white";
+        
+        // Translate to the middle of the arc
+        ctx.translate(Math.cos(angle + arc / 2) * textRadius, Math.sin(angle + arc / 2) * textRadius);
+        
+        // Rotate text pointing outwards
+        ctx.rotate(angle + arc / 2);
+        
+        let text = studentsData[i].name;
+        // Dynamically size text to fit
+        let fontSize = Math.min(16, (arc * textRadius) / 2);
+        ctx.font = `bold ${fontSize}px Inter, sans-serif`;
+        ctx.textAlign = "right"; // Right align to pull towards center
+        ctx.textBaseline = "middle";
+        
+        // Trim if still too long
+        if(text.length > 20) text = text.substring(0,18) + "..";
+        
+        ctx.fillText(text, 20, 0); // slight padding
+        ctx.restore();
+    }
+    ctx.translate(-size/2, -size/2); // reset
+}
+
+function easeOut(t, b, c, d) {
+    t /= d; t--;
+    return c * (t*t*t + 1) + b;
+}
+
+function rotateWheel() {
+    spinTime += 30;
+    if(spinTime >= spinTimeTotal) {
+        stopRotateWheel();
+        return;
+    }
+    let spinAngle = spinArcStart - easeOut(spinTime, 0, spinArcStart, spinTimeTotal);
+    startAngle += (spinAngle * Math.PI / 180);
+    
+    // Sound Logic: Calculate segment crossed
+    let degrees = (startAngle * 180 / Math.PI) % 360;
+    let arcd = arc * 180 / Math.PI;
+    let currentSegment = Math.floor(degrees / arcd);
+    if(currentSegment !== lastSegment) {
+        playTick();
+        lastSegment = currentSegment;
+    }
+    
+    drawWheel();
+    spinTimeout = setTimeout(rotateWheel, 30);
+}
+
+function spinWheel() {
+    if(studentsData.length === 0) { alert("No students left!"); return; }
+    initAudio();
+    document.getElementById('spin-btn').disabled = true;
+    spinArcStart = Math.random() * 10 + 10;
+    spinTime = 0;
+    spinTimeTotal = Math.random() * 3000 + 4000;
+    rotateWheel();
+}
+
+function stopRotateWheel() {
+    clearTimeout(spinTimeout);
+    
+    // Adjust logic due to -90deg canvas rotation in CSS
+    // The pointer is visually at Top (270 degrees in canvas space).
+    // Canvas rotation -90deg makes 0 rad at Top. 
+    // Wait, let's calculate exactly where pointer is.
+    // CSS transform: rotate(-90deg) puts 0 rad at the Top.
+    // The pointer is at the Top. So we just use startAngle reversed.
+    let degrees = startAngle * 180 / Math.PI;
+    let arcd = arc * 180 / Math.PI;
+    let index = Math.floor((360 - degrees % 360) / arcd) % studentsData.length;
+    
+    currentStudent = studentsData[index];
+    
+    // Proceed to Game Selection
+    setTimeout(() => {
+        document.getElementById('disp-student-name').innerText = currentStudent.name;
+        document.getElementById('disp-student-cn').innerText = currentStudent.cn !== "-" ? currentStudent.cn : "";
+        document.getElementById('spin-btn').disabled = false;
+        showScreen('screen-games');
+    }, 1000);
+}
+
+// Initial draw
+drawWheel();
+
+// --- GAME LOGIC ---
+
+function cancelSelection() {
+    currentStudent = null;
+    showScreen('screen-wheel');
+}
+
+function removeSelectedFromWheel() {
+    if(confirm(`Remove ${currentStudent.name} from the wheel?`)) {
+        studentsData = studentsData.filter(s => s.name !== currentStudent.name);
+        drawWheel();
+        cancelSelection();
+    }
+}
+
+// Function to fetch questions safely without running out
+function getQuestions(type, isHard, count) {
+    let sourcePool = isHard ? poolHard[type] : poolNormal[type];
+    let originalDb = isHard ? dbHard[type] : dbNormal[type];
+    
+    // Refill if not enough questions
+    if(sourcePool.length < count) {
+        poolHard[type] = JSON.parse(JSON.stringify(dbHard[type]));
+        poolNormal[type] = JSON.parse(JSON.stringify(dbNormal[type]));
+        sourcePool = isHard ? poolHard[type] : poolNormal[type];
+    }
+    
+    shuffle(sourcePool);
+    let selected = sourcePool.splice(0, count);
+    return selected;
+}
+
+function setAccent(choice) {
+    accentChoice = choice;
+    document.getElementById('btn-accent-us').classList.remove('active');
+    document.getElementById('btn-accent-uk').classList.remove('active');
+    if(choice === 'US') document.getElementById('btn-accent-us').classList.add('active');
+    if(choice === 'UK') document.getElementById('btn-accent-uk').classList.add('active');
+}
+
+function startGame(type) {
+    currentGameType = type;
+    score = 0;
+    currentQIndex = 0;
+    
+    let isHard = isHardStudent(currentStudent.name);
+    questions = getQuestions(type, isHard, 3);
+    
+    passMark = 2; // Need 2 to pass
+    
+    document.getElementById('play-goal').innerText = `Goal: ${passMark}/${questions.length}`;
+    document.getElementById('play-score').innerText = `Score: 0`;
+    
+    showScreen('screen-play');
+    loadQuestion();
+    startTimer(currentGameType === 'spelling' || currentGameType === 'grammar' ? 90 : 60); 
+}
+
+function loadQuestion() {
+    if (currentQIndex >= questions.length) {
+        finishGame(false);
+        return;
+    }
+    
+    let q = questions[currentQIndex];
+    document.getElementById('q-text').innerText = `Q${currentQIndex+1}: ${q.q}`;
+    
+    let mcqCont = document.getElementById('mcq-container');
+    let inpCont = document.getElementById('input-container');
+    let audCont = document.getElementById('audio-controls');
+    let tktUi = document.getElementById('ticket-ui');
+    let btnSub = document.getElementById('btn-submit');
+    let spellSet = document.getElementById('spelling-settings');
+    
+    const cardEl = document.getElementById('q-card');
+    
+    // Animate Card Height Transition
+    animateCardHeight(cardEl, () => {
+        mcqCont.style.display = 'none';
+        inpCont.style.display = 'none';
+        audCont.style.display = 'none';
+        tktUi.style.display = 'none';
+        btnSub.style.display = 'none';
+        spellSet.style.display = 'none';
+        
+        // Setup specific game UI
+        if (currentGameType === 'spelling') {
+            spellSet.style.display = 'block';
+            audCont.style.display = 'block';
+            inpCont.style.display = 'block';
+            btnSub.style.display = 'flex';
+            renderKeyboard();
+            inputText = "";
+            updateInputDisplay();
+            setTimeout(playCurrentWord, 500);
+        } 
+        else if (currentGameType === 'grammar') {
+            inpCont.style.display = 'block';
+            btnSub.style.display = 'flex';
+            renderKeyboard();
+            inputText = ""; // Blank input for grammar fixes
+            updateInputDisplay();
+        }
+        else if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
+            if (q.showTicket) {
+                tktUi.style.display = 'block';
+                // Barcode Easter Egg
+                document.getElementById('ticket-barcode-text').innerText = `*${currentStudent.name}*`;
+            }
+            mcqCont.style.display = 'block';
+            let optsHTML = '';
+            let opts = shuffle([...q.opts]);
+            opts.forEach(opt => {
+                optsHTML += `<button class="mcq-btn" onclick="checkMCQ(this, '${opt.replace(/'/g, "\\'")}', '${q.a.replace(/'/g, "\\'")}')">${opt}</button>`;
+            });
+            mcqCont.innerHTML = optsHTML;
+        }
+    });
+}
+
+// AUDIO (TTS)
+function playCurrentWord() {
+    if (currentGameType !== 'spelling') return;
+    let word = questions[currentQIndex].audio;
+    let u = new SpeechSynthesisUtterance(word);
+    
+    // Select Voice
+    let voices = window.speechSynthesis.getVoices();
+    let selectedVoice = null;
+    if (accentChoice === 'UK') {
+        selectedVoice = voices.find(v => v.lang === 'en-GB');
+    } else {
+        selectedVoice = voices.find(v => v.lang === 'en-US');
+    }
+    if(selectedVoice) u.voice = selectedVoice;
+    
+    u.rate = 0.85; 
+    speechSynthesis.speak(u);
+}
+// Force voices to load early
+window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+
+// KEYBOARD LOGIC
+function renderKeyboard() {
+    const kb = document.getElementById('v-keyboard');
+    const layout = [
+        ['Q','W','E','R','T','Y','U','I','O','P'],
+        ['A','S','D','F','G','H','J','K','L'],
+        ['Z','X','C','V','B','N','M', '\'']
+    ];
+    let html = '';
+    layout.forEach(row => {
+        html += '<div class="vk-row">';
+        row.forEach(key => {
+            html += `<div class="vk-key" onclick="typeKey('${key}')">${key}</div>`;
+        });
+        html += '</div>';
+    });
+    html += `<div class="vk-row">
+        <div class="vk-key wide" onclick="typeKey('CLEAR')">Clear</div>
+        <div class="vk-key space" onclick="typeKey(' ')">Space</div>
+        <div class="vk-key wide" onclick="typeKey('BACK')"><span class="material-icons-round">backspace</span></div>
+    </div>`;
+    kb.innerHTML = html;
+}
+
+function typeKey(key) {
+    if (key === 'BACK') {
+        inputText = inputText.slice(0, -1);
+    } else if (key === 'CLEAR') {
+        inputText = "";
+    } else {
+        inputText += key;
+    }
+    updateInputDisplay();
+}
+
+function updateInputDisplay() {
+    const disp = document.getElementById('v-input');
+    disp.innerText = inputText + "|"; 
+}
+
+// ANSWER CHECKING
+function submitAnswer() {
+    let q = questions[currentQIndex];
+    let userA = inputText.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
+    let realA = q.a.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
+    
+    if (userA === realA) {
+        score++;
+        showFeedback(true);
+    } else {
+        // Flash red on input
+        const disp = document.getElementById('v-input');
+        disp.style.borderColor = "var(--danger)";
+        disp.style.color = "var(--danger)";
+        disp.innerText = realA; // show correct answer
+        showFeedback(false);
+    }
+}
+
+function checkMCQ(btn, selected, correct) {
+    document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none');
+    
+    if (selected === correct) {
+        btn.classList.add('correct');
+        score++;
+        showFeedback(true);
+    } else {
+        btn.classList.add('wrong');
+        document.querySelectorAll('.mcq-btn').forEach(b => {
+            if(b.innerText === correct) b.classList.add('correct');
+        });
+        showFeedback(false);
+    }
+}
+
+function showFeedback(isCorrect) {
+    document.getElementById('play-score').innerText = `Score: ${score}`;
+    
+    setTimeout(() => {
+        // Reset input colors
+        const disp = document.getElementById('v-input');
+        if(disp) { disp.style.borderColor = "var(--ios-blue)"; disp.style.color = "inherit"; }
+        
+        currentQIndex++;
+        loadQuestion();
+    }, 1500); // 1.5s delay to review answer
+}
+
+// TIMER & FORFEIT
+function startTimer(seconds) {
+    clearInterval(timerInt);
+    timeLeft = seconds;
+    updateTimerUI();
+    timerInt = setInterval(() => {
+        timeLeft--;
+        updateTimerUI();
+        if (timeLeft <= 0) {
+            finishGame(true); 
+        }
+    }, 1000);
+}
+
+function updateTimerUI() {
+    document.getElementById('time-val').innerText = timeLeft;
+    let pill = document.getElementById('play-timer');
+    if (timeLeft <= 10) {
+        pill.style.background = 'var(--danger)';
+        pill.style.transform = 'scale(1.1)';
+        setTimeout(() => pill.style.transform = 'scale(1)', 200);
+    }
+    else pill.style.background = 'var(--warning)';
+}
+
+function forfeitGame() {
+    if(confirm("Are you sure you want to forfeit? Your current score will be evaluated.")) {
+        finishGame(false);
+    }
+}
+
+function finishGame(isTimeout) {
+    clearInterval(timerInt);
+    let win = score >= passMark;
+    
+    let resTitle = document.getElementById('res-title');
+    let resDesc = document.getElementById('res-desc');
+    let resIcon = document.getElementById('res-icon');
+    
+    resDesc.innerText = `You scored ${score} out of ${questions.length}. \nGoal was ${passMark}.`;
+    
+    if (win) {
+        resTitle.innerText = "You Won! 🎉";
+        resTitle.style.color = "var(--success)";
+        resIcon.innerText = "emoji_events";
+        resIcon.style.color = "var(--success)";
+    } else {
+        resTitle.innerText = isTimeout ? "Time's Up!" : "You Lost!";
+        resTitle.style.color = "var(--danger)";
+        resIcon.innerText = "sentiment_very_dissatisfied";
+        resIcon.style.color = "var(--danger)";
+        
+        if(!lostList.includes(currentStudent.name)) {
+            lostList.push(currentStudent.name);
+            document.getElementById('lost-count').innerText = lostList.length;
+        }
+    }
+    
+    openModal('modal-result');
+}
+
+function endGameFlow() {
+    closeModal('modal-result');
+    currentStudent = null;
+    showScreen('screen-wheel');
+}
+
+// LOST LIST
+function showLostList() {
+    let cont = document.getElementById('lost-list-content');
+    if (lostList.length === 0) {
+        cont.innerHTML = '<div style="color:var(--ios-text-sec); padding:20px; font-weight:500;">No one is on the list yet!</div>';
+    } else {
+        cont.innerHTML = lostList.map((name, i) => `
+            <div class="lost-list-item">
+                <span>${i+1}. ${name}</span>
+                <span class="material-icons-round" style="color:var(--danger); cursor:pointer; font-size:20px;" onclick="removeLost('${name}')">close</span>
+            </div>
+        `).join('');
+    }
+    openModal('modal-lost');
+}
+
+function removeLost(name) {
+    lostList = lostList.filter(n => n !== name);
+    document.getElementById('lost-count').innerText = lostList.length;
+    showLostList(); 
+}
+
+</script>
+</body>
+</html>
