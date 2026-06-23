@@ -317,6 +317,7 @@ function toggleDarkMode() {
 }
 
 // --- DATA: STUDENTS ---
+// LOO CHIN SIANG has been removed.
 let studentsData = [
     { name: "ALOYSIUS NG YU YI", cn: "黄昱毅" }, { name: "ALVIN TANG ZHENG HAO", cn: "汤正豪" },
     { name: "CLEMENT SEAH JI WEN", cn: "佘其汶" }, { name: "ELVIS LOW YI HAO", cn: "罗苡豪" },
@@ -478,14 +479,12 @@ function animateCardHeight(cardEl, callback) {
     const startHeight = cardEl.offsetHeight;
     cardEl.style.height = 'auto';
     
-    // Temporarily apply DOM changes to measure target height
     if (callback) callback();
     
     const targetHeight = cardEl.offsetHeight;
     
-    // Revert to start and animate to target
     cardEl.style.height = startHeight + 'px';
-    void cardEl.offsetHeight; // force reflow
+    void cardEl.offsetHeight; 
     cardEl.style.transition = 'height 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
     cardEl.style.height = targetHeight + 'px';
     
@@ -547,23 +546,20 @@ function drawWheel() {
         // Translate to the start radius inside the segment
         ctx.translate(Math.cos(angle + arc / 2) * textStartRadius, Math.sin(angle + arc / 2) * textStartRadius);
         
-        // Rotate text pointing outwards
         ctx.rotate(angle + arc / 2);
         
         let text = studentsData[i].name;
-        // Dynamically size text to fit (prevent horizontal bleed)
         let fontSize = Math.min(14, (arc * outsideRadius) / 1.5); 
         ctx.font = `bold ${fontSize}px Inter, sans-serif`;
-        ctx.textAlign = "left"; // Start from inside edge and go outwards!
+        ctx.textAlign = "left"; 
         ctx.textBaseline = "middle";
         
-        // Trim if too long to prevent overflowing outside of the wheel
         if(text.length > 17) text = text.substring(0,15) + "..";
         
         ctx.fillText(text, 0, 0); 
         ctx.restore();
     }
-    ctx.translate(-size/2, -size/2); // reset
+    ctx.translate(-size/2, -size/2); 
 }
 
 function easeOutQuart(t, b, c, d) {
@@ -578,12 +574,48 @@ function getRiggedTargetIndex() {
     if (spinCount === 1 && Math.random() < 0.69) {
         return studentsData.findIndex(s => s.name.includes("ELVIS LOW"));
     }
-    return -1; // Random
+    return -1; 
+}
+
+// SAFE AUDIO INIT
+function initAudio() {
+    try {
+        if (!audioCtx) {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if(AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    } catch(e) { console.warn("Audio init failed", e); }
+}
+
+function playTick() {
+    try {
+        if(!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+    } catch(e) {}
 }
 
 function spinWheel() {
     if(isSpinning) return;
-    if(studentsData.length === 0) { alert("No students left! Refresh the page to restart."); return; }
+    if(studentsData.length === 0) { 
+        document.getElementById('spin-btn').innerText = "DONE";
+        document.getElementById('spin-btn').disabled = true;
+        alert("No students left! Refresh the page to restart."); 
+        return; 
+    }
+    
     initAudio();
     isSpinning = true;
     document.getElementById('spin-btn').disabled = true;
@@ -594,21 +626,22 @@ function spinWheel() {
     }
 
     let arcd = 360 / studentsData.length;
-    // Calculate the required angle displacement to land squarely in the middle of targetIdx
     let requiredFinalMod = 360 - (targetIdx + 0.5) * arcd;
     if (requiredFinalMod < 0) requiredFinalMod += 360;
 
     let currentDeg = (startAngle * 180 / Math.PI) % 360;
+    if (currentDeg < 0) currentDeg += 360;
+
     let rotations = 8; // Really fast spinning!
     let degreesToSpin = (360 * rotations) + requiredFinalMod - currentDeg;
     
     initialAngle = startAngle;
     targetAngle = startAngle + (degreesToSpin * Math.PI / 180);
     
-    totalSpinTime = Math.random() * 500 + 2000; // 2s to 2.5s duration
+    totalSpinTime = Math.random() * 500 + 2000; 
     startTimestamp = null;
     
-    lastSegment = Math.floor(((startAngle * 180 / Math.PI) % 360) / arcd);
+    lastSegment = Math.floor(currentDeg / arcd);
     spinCount++;
 
     requestAnimationFrame(animateSpin);
@@ -641,6 +674,7 @@ function animateSpin(timestamp) {
 
 function stopRotateWheel() {
     isSpinning = false;
+    document.getElementById('spin-btn').disabled = false;
     
     let degrees = startAngle * 180 / Math.PI;
     let arcd = 360 / studentsData.length;
@@ -655,14 +689,13 @@ function stopRotateWheel() {
         document.getElementById('chosen-name').innerText = currentStudent.name;
         openModal('modal-chosen');
         drawWheel(); // Redraw wheel without them immediately
-    }, 500);
+    }, 400);
 }
 
 function proceedToGameSelect() {
     closeModal('modal-chosen');
     document.getElementById('disp-student-name').innerText = currentStudent.name;
     document.getElementById('disp-student-cn').innerText = currentStudent.cn !== "-" ? currentStudent.cn : "";
-    document.getElementById('spin-btn').disabled = false;
     showScreen('screen-games');
 }
 
@@ -682,6 +715,21 @@ function cancelSelectionFlow() {
             showScreen('screen-wheel');
         }
     );
+}
+
+// Function to fetch questions safely without running out
+function getQuestions(type, isHard, count) {
+    let pool = isHard ? activePools.hard[type] : activePools.normal[type];
+    
+    // Failsafe: Refill pool if out of questions
+    if(pool.length < count) {
+        let backup = isHard ? dbHard[type] : dbNormal[type];
+        pool.push(...JSON.parse(JSON.stringify(backup))); 
+    }
+    
+    shuffle(pool);
+    let selected = pool.splice(0, count); // permanently deletes from active pool
+    return selected;
 }
 
 function setAccent(choice) {
@@ -742,6 +790,7 @@ function loadQuestion() {
         
         // Reset Inputs
         if(disp) { 
+            disp.style.background = "var(--ios-input)";
             disp.style.borderColor = "var(--ios-blue)"; 
             disp.style.color = "inherit"; 
         }
@@ -798,9 +847,15 @@ function playCurrentWord() {
     
     // Strict Filtering for accents
     if (accentChoice === 'US') {
-        preferredVoices = voices.filter(v => (v.lang.includes('en-US') || v.lang.includes('en_US')) && !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain'));
+        preferredVoices = voices.filter(v => 
+            (v.lang.includes('en-US') || v.lang.includes('en_US')) && 
+            !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain') && !v.name.includes('GB')
+        );
     } else {
-        preferredVoices = voices.filter(v => (v.lang.includes('en-GB') || v.lang.includes('en_GB')) || v.name.includes('UK') || v.name.includes('British') || v.name.includes('Great Britain'));
+        preferredVoices = voices.filter(v => 
+            (v.lang.includes('en-GB') || v.lang.includes('en_GB')) || 
+            v.name.includes('UK') || v.name.includes('British') || v.name.includes('Great Britain')
+        );
     }
     
     let selectedVoice = preferredVoices.find(v => v.name.includes('Google') || v.name.includes('Natural')) || preferredVoices[0] || voices.find(v => v.lang.startsWith('en'));
@@ -860,11 +915,11 @@ function selectMCQ(btn, selectedVal) {
 
 function submitAnswer() {
     let q = questions[currentQIndex];
-    document.getElementById('btn-submit').style.display = 'none'; 
     
     if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
-        if(!currentSelectedOption) return; 
+        if(!currentSelectedOption) { alert("Please select an answer first."); return; }
         
+        document.getElementById('btn-submit').style.display = 'none'; 
         let btn = currentSelectedOption.btn;
         let selected = currentSelectedOption.val;
         let correct = q.a;
@@ -884,6 +939,9 @@ function submitAnswer() {
         }
     } else {
         // Spelling & Grammar
+        if(inputText.trim() === "") { alert("Please type an answer first."); return; }
+        
+        document.getElementById('btn-submit').style.display = 'none'; 
         let userA = inputText.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
         let realA = q.a.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
         
@@ -891,14 +949,17 @@ function submitAnswer() {
         document.getElementById('v-keyboard').style.pointerEvents = 'none'; 
         
         if (userA === realA) {
+            disp.style.background = "var(--success)";
             disp.style.borderColor = "var(--success)";
-            disp.style.color = "var(--success)";
+            disp.style.color = "#fff";
+            disp.innerText = "✔️ " + userA;
             score++;
             showFeedback(true);
         } else {
+            disp.style.background = "var(--danger)";
             disp.style.borderColor = "var(--danger)";
-            disp.style.color = "var(--danger)";
-            disp.innerText = realA; 
+            disp.style.color = "#fff";
+            disp.innerText = "✖️ " + realA; 
             showFeedback(false);
         }
     }
@@ -907,8 +968,6 @@ function submitAnswer() {
 function showFeedback(isCorrect) {
     document.getElementById('play-score').innerText = `Score: ${score}`;
     setTimeout(() => {
-        const disp = document.getElementById('v-input');
-        if(disp) { disp.style.borderColor = "var(--ios-blue)"; disp.style.color = "inherit"; }
         currentQIndex++;
         loadQuestion();
     }, 1500); // Wait 1.5s so user can visually see the correct answer
@@ -991,7 +1050,7 @@ function endGameFlow() {
 function showLostList() {
     let cont = document.getElementById('lost-list-content');
     if (lostList.length === 0) {
-        cont.innerHTML = '<div style="color:var(--ios-text-sec); padding:20px; font-weight:500;">No one is on the list yet!</div>';
+        cont.innerHTML = '<div style="color:var(--ios-text-sec); padding:20px; font-weight:500; text-align:center;">No one is on the list yet!</div>';
     } else {
         cont.innerHTML = lostList.map((name, i) => `
             <div class="lost-list-item">
