@@ -6,7 +6,7 @@
 <title>English Game 2026</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 <style>
 :root {
@@ -53,7 +53,6 @@ body {
 .screen { display: none; opacity: 0; animation: fadeUp 0.6s var(--ease-ios) forwards; width: 100%; }
 .screen.active { display: flex; flex-direction: column; align-items: center; }
 @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); filter: blur(4px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
-@keyframes pulseDanger { 0% { transform: scale(1); } 50% { transform: scale(1.05); color: #FF2D55; } 100% { transform: scale(1); } }
 
 /* WHEEL UI */
 .wheel-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1; margin: 20px auto; }
@@ -72,7 +71,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 
 /* GAME SELECTION UI */
 .sel-student-card { background: var(--ios-card); padding: 20px; border-radius: 24px; text-align: center; width: 100%; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); margin-bottom: 24px; position:relative; }
-.sel-name { font-size: 28px; font-weight: 800; color: var(--ios-blue); }
+.sel-name { font-size: 26px; font-weight: 800; color: var(--ios-blue); }
 .sel-cn { font-size: 16px; color: var(--ios-text-sec); margin-top: 4px; }
 
 .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; width: 100%; }
@@ -89,7 +88,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .score-tracker { font-weight: 800; font-size: 18px; color: var(--ios-text); }
 
 .question-card { background: var(--ios-card); width: 100%; border-radius: 24px; padding: 30px; border: 1px solid var(--glass-border); box-shadow: var(--shadow-md); margin-bottom: 20px; display: flex; flex-direction: column; justify-content: center; overflow: hidden; position: relative; }
-.q-text { font-size: 22px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 20px; white-space: pre-wrap; }
+.q-text { font-size: 22px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 20px; }
 
 /* MCQs */
 .mcq-btn { width: 100%; background: var(--ios-input); border: 2px solid var(--glass-border); padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 600; text-align: left; margin-bottom: 12px; cursor: pointer; transition: 0.2s; color: var(--ios-text); box-shadow: var(--shadow-sm); }
@@ -99,7 +98,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .mcq-btn.wrong { background: var(--danger) !important; color: #fff !important; border-color: var(--danger) !important; }
 
 /* VIRTUAL KEYBOARD */
-.v-input-display { width: 100%; background: var(--ios-input); border: 2px solid var(--ios-blue); padding: 16px 20px; border-radius: 16px; font-size: 24px; font-weight: 600; text-align: center; min-height: 64px; margin-bottom: 20px; word-break: break-all; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); transition: 0.2s; }
+.v-input-display { width: 100%; background: var(--ios-input); border: 2px solid var(--ios-blue); padding: 16px 20px; border-radius: 16px; font-size: 24px; font-weight: 600; text-align: center; min-height: 64px; margin-bottom: 20px; word-break: break-all; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); transition: 0.3s; }
 .v-keyboard { width: 100%; display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.05); padding: 12px; border-radius: 20px; }
 [data-theme="dark"] .v-keyboard { background: rgba(255,255,255,0.05); }
 .vk-row { display: flex; justify-content: center; gap: 6px; }
@@ -129,7 +128,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 /* MODALS */
 .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px; }
 .modal-bg.show { opacity: 1; pointer-events: auto; }
-.modal-card { background: var(--ios-modal); border-radius: 28px; width: 100%; max-width: 400px; padding: 30px; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border); transform: scale(0.9); transition: 0.4s var(--ease-spring); }
+.modal-card { background: var(--ios-modal); border-radius: 28px; width: 100%; max-width: 450px; padding: 30px; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border); transform: scale(0.9); transition: 0.4s var(--ease-spring); }
 .modal-bg.show .modal-card { transform: scale(1); }
 .modal-title { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
 .lost-list-item { background: var(--ios-bg); padding: 12px; border-radius: 12px; font-weight: 600; margin-bottom: 8px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--glass-border); }
@@ -169,7 +168,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
     <!-- SCREEN 2: GAME SELECTION -->
     <div id="screen-games" class="screen">
         <div class="sel-student-card">
-            <div style="font-size: 20px; font-weight: 800; color: var(--danger); text-transform: uppercase; margin-bottom: 8px; animation: pulseDanger 1s infinite;">🎉 You have been chosen! 🎉</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ios-text-sec); text-transform: uppercase; margin-bottom: 8px; letter-spacing:1px;">Selected Player</div>
             <div class="sel-name" id="disp-student-name">Student Name</div>
             <div class="sel-cn" id="disp-student-cn">中文名</div>
         </div>
@@ -185,7 +184,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
             <div class="game-card" onclick="startGame('guessing')">
                 <span class="material-icons-round game-icon" style="color: #FF9500;">psychology_alt</span>
                 <div class="game-title">Guessing Game</div>
-                <div class="game-desc">Solve logic riddles with MCQs.</div>
+                <div class="game-desc">Solve logic riddles with tricky MCQs.</div>
             </div>
             <div class="game-card" onclick="startGame('grammar')">
                 <span class="material-icons-round game-icon" style="color: #34C759;">rule</span>
@@ -195,10 +194,10 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
             <div class="game-card" onclick="startGame('comprehension')">
                 <span class="material-icons-round game-icon" style="color: #007AFF;">fact_check</span>
                 <div class="game-title">Choose Correct Answer</div>
-                <div class="game-desc">Read the info ticket and answer the questions.</div>
+                <div class="game-desc">Read the short text and answer the questions.</div>
             </div>
         </div>
-        <button class="btn-warning" style="margin-top: 24px; width: 100%; max-width: 300px; color:#fff;" onclick="cancelSelectionFlow()"><span class="material-icons-round">refresh</span> Spin Again</button>
+        <button class="btn-warning" style="margin-top: 24px; width: 100%; max-width: 300px;" onclick="cancelSelectionFlow()"><span class="material-icons-round">refresh</span> Spin Again</button>
     </div>
 
     <!-- SCREEN 3: GAMEPLAY -->
@@ -227,10 +226,10 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
                         <span class="material-icons-round" style="font-size:32px;">directions_bus</span>
                     </div>
                     <div class="ticket-body">
-                        <span>DESTINATION</span> <span id="t-dest">: Kuala Lumpur to Melaka</span>
-                        <span>DEPARTURE</span> <span id="t-dep">: 9.00 a.m.</span>
-                        <span>ARRIVAL</span> <span id="t-arr">: 11.00 a.m.</span>
-                        <span>FARE</span> <span id="t-fare">: RM 15.00</span>
+                        <span>DESTINATION</span> <span>: Kuala Lumpur to Melaka</span>
+                        <span>DEPARTURE</span> <span>: 9.00 a.m.</span>
+                        <span>ARRIVAL</span> <span>: 11.00 a.m.</span>
+                        <span>FARE</span> <span>: RM 15.00</span>
                     </div>
                     <div class="ticket-barcode"><div class="barcode-font" id="ticket-barcode-text">*STUDENT*</div></div>
                 </div>
@@ -264,6 +263,17 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 </div>
 
 <!-- MODALS -->
+
+<!-- Chosen Modal (New) -->
+<div class="modal-bg" id="modal-chosen">
+    <div class="modal-card" style="border: 4px solid var(--ios-blue);">
+        <span class="material-icons-round" style="font-size: 80px; margin-bottom: 10px; color: var(--ios-blue);">stars</span>
+        <h2 class="modal-title" style="color: var(--ios-blue);">You Have Been Chosen!</h2>
+        <p style="font-size: 26px; font-weight: 900; color: var(--ios-text); margin-bottom: 8px; text-transform: uppercase;" id="chosen-name">Name</p>
+        <p style="font-size: 16px; color: var(--ios-text-sec); margin-bottom: 24px; font-weight: 600;">It's your turn to play.</p>
+        <button class="btn-primary" style="width: 100%; font-size: 20px; padding: 18px;" onclick="closeModal('modal-chosen'); showScreen('screen-games'); document.getElementById('spin-btn').disabled = false; drawWheel();">Let's Go!</button>
+    </div>
+</div>
 
 <!-- In-UI Confirmation Modal -->
 <div class="modal-bg" id="modal-confirm">
@@ -309,7 +319,6 @@ function toggleDarkMode() {
 }
 
 // --- DATA: STUDENTS ---
-// LOO CHIN SIANG removed.
 let studentsData = [
     { name: "ALOYSIUS NG YU YI", cn: "黄昱毅" }, { name: "ALVIN TANG ZHENG HAO", cn: "汤正豪" },
     { name: "CLEMENT SEAH JI WEN", cn: "佘其汶" }, { name: "ELVIS LOW YI HAO", cn: "罗苡豪" },
@@ -328,123 +337,93 @@ let studentsData = [
     { name: "YEOW JIA WEI", cn: "饶家玮" }
 ];
 
-const hardTargets = ["LEXUS", "XANXUS", "RAYSON", "ALOYSIUS", "TAY KIM YAW", "WEE KER SHENG", "YEOW JIA WEI"];
-function isHardStudent(name) {
-    let upper = name.toUpperCase();
-    return hardTargets.some(t => upper.includes(t));
-}
-
-// --- MASSIVE GAME DATA POOLS (90 ITEMS EACH, COMPRESSED) ---
-
-// 1. SPELLING
-const spellNormArr = ["BEAUTIFUL","DANGEROUS","IMPORTANT","COMFORTABLE","EXPENSIVE","DELICIOUS","FAVORITE","LANGUAGE","DICTIONARY","VOCABULARY","TOMORROW","YESTERDAY","HAPPINESS","TOGETHER","BECAUSE","EXCELLENT","BELIEVE","DIFFERENT","INTERESTING","KNOWLEDGE","THROUGH","THOUGHT","ALTHOUGH","ENOUGH","SUDDENLY","PROBABLY","ESPECIALLY","USUALLY","SOMETIMES","ALWAYS","NEVER","OFTEN","SELDOM","RARELY","HARDLY","SCARCELY","ALMOST","ALREADY","ANYWAY","ANYWHERE","EVERYWHERE","SOMEWHERE","NOWHERE","ANYONE","EVERYONE","SOMEONE","NOBODY","ANYTHING","EVERYTHING","SOMETHING","NOTHING","ANYMORE","ANYHOW","SOMEHOW","WHATEVER","WHENEVER","WHEREVER","WHOEVER","WHOMEVER","WHICHEVER","HOWEVER","THEREFORE","MOREOVER","FURTHERMORE","NEVERTHELESS","OTHERWISE","INSTEAD","MEANWHILE","ANYWAY","BESIDES","CONSEQUENTLY","ACCORDINGLY","SUBSEQUENTLY","FINALLY","EVENTUALLY","ULTIMATELY","INITIALLY","ORIGINALLY","PREVIOUSLY","RECENTLY","CURRENTLY","PRESENTLY","SHORTLY","BRIEFLY","DIRECTLY","EXACTLY","PRECISELY","ACCURATELY","ABSOLUTELY","DEFINITELY","CERTAINLY"];
-const spellHardArr = ["ENVIRONMENT","GOVERNMENT","NECESSARY","ACCOMMODATION","EMBARRASS","GUARANTEE","SEPARATELY","PRONUNCIATION","OCCASION","DISAPPEAR","RECEIPT","PARALLEL","SUCCESSFUL","ACHIEVEMENT","SUSCEPTIBLE","MANEUVER","COLLOQUIAL","QUINTESSENTIAL","BOURGEOIS","PHLEGM","CONSCIENTIOUS","ONOMATOPOEIA","MISCHIEVOUS","NAUSEOUS","PRIVILEGE","RHYTHM","UBIQUITOUS","SYCOPHANT","CACOPHONY","ANONYMOUS","AESTHETIC","AMBIGUOUS","ANOMALY","BELLIGERENT","CAMOUFLAGE","CHARISMATIC","CHAUFFEUR","CONDESCENDING","DESPICABLE","ECCENTRIC","ECSTASY","ELOQUENT","EPITOME","EXACERBATE","EXHILARATING","FACETIOUS","FASTIDIOUS","FLUORESCENT","GREGARIOUS","HYPOCRISY","IDIOSYNCRASY","IMPECCABLE","INCONCEIVABLE","INDEFATIGABLE","INEFFABLE","INTRINSIC","IRRELEVANT","JUXTAPOSITION","KALEIDOSCOPE","LACKADAISICAL","LOQUACIOUS","MAGNANIMOUS","MELANCHOLY","METICULOUS","NONCHALANT","OBFUSCATE","OMNIPRESENT","OXYMORON","PARADIGM","PERSEVERANCE","PHILANTHROPY","PICTURESQUE","PLETHORA","PRECARIOUS","PRECOCIOUS","PREROGATIVE","PROPENSITY","RECONNAISSANCE","RENAISSANCE","RESILIENCE","RESUSCITATE","RHETORIC","SACRILEGIOUS","SERENDIPITY","SILHOUETTE","SOLILOQUY","SPONTANEOUS","SUBTERFUGE","SUPERFLUOUS","SURREPTITIOUS","TANTAMOUNT","VACILLATE","VICARIOUS"];
-
-// 2. GRAMMAR
-const gramNormArr = [["She GO to school.","GOES"],["They IS playing football.","ARE"],["I didn't WENT there.","GO"],["He DON'T like apples.","DOESNT"],["There IS many people here.","ARE"],["She has WROTE a letter.","WRITTEN"],["We WAS walking home.","WERE"],["I have SAW that movie.","SEEN"],["It is MORE BETTER.","BETTER"],["The dog wagged IT'S tail.","ITS"],["Everybody HAVE a book.","HAS"],["He works GOOD under pressure.","WELL"],["I am looking forward to MEET you.","MEETING"],["Can you ADVICE me?","ADVISE"],["This is the boy WHICH won.","WHO"],["She is MORE TALLER than him.","TALLER"],["I haven't NO money.","ANY"],["He is GOOD at sports.","WELL"],["I done IT yesterday.","DID"],["She don't KNOW nothing.","KNOWS"],["The children is PLAYING.","ARE"],["He runs FASTLY.","FAST"],["We seen HER at the mall.","SAW"],["She gives me an ADVICES.","ADVICE"],["I have less FRIENDS.","FEWER"],["She don't like ME.","DOESNT"],["They was LATE.","WERE"],["I could of GONE.","HAVE"],["Me and HIM went out.","HE"],["Her and I ARE friends.","SHE"],["This is HIS'S book.","HIS"],["I am VERY tired.","SO"],["He is A honest man.","AN"],["She sings BEAUTIFUL.","BEAUTIFULLY"],["He drives CAREFUL.","CAREFULLY"],["I feel BADLY about it.","BAD"],["The cake smells DELICIOUSLY.","DELICIOUS"],["He looks ANGRILY.","ANGRY"],["The music sounds LOUDLY.","LOUD"],["She seems HAPPILY.","HAPPY"],["I am AGREE with you.","AGREE"],["He is AFRAID from dogs.","OF"],["She is MARRIED with him.","TO"],["I am GOOD in math.","AT"],["He is INTERESTED on art.","IN"],["She is PROUD for him.","OF"],["I am RESPONSIBLE of it.","FOR"],["He is CAPABLE to do it.","OF"],["She is USED with it.","TO"],["I am FAMILIAR to it.","WITH"],["He is DIFFERENT than me.","FROM"],["She is SIMILAR with me.","TO"],["I am OPPOSED with it.","TO"],["He is DEPENDENT from it.","ON"],["She is INDEPENDENT of it.","FROM"],["I am AWARE about it.","OF"],["He is IGNORANT to it.","OF"],["She is CONSCIOUS about it.","OF"],["I am CONFIDENT on it.","IN"],["He is SURE about it.","OF"],["She is CERTAIN for it.","OF"],["I am GLAD for it.","OF"],["He is HAPPY of it.","ABOUT"],["She is SAD for it.","ABOUT"],["I am ANGRY to him.","WITH"],["He is MAD to me.","AT"],["She is ANNOYED to it.","BY"],["I am UPSET to it.","ABOUT"],["He is DISAPPOINTED to it.","IN"],["She is SATISFIED of it.","WITH"],["I am PLEASED of it.","WITH"],["He is DELIGHTED of it.","WITH"],["She is SURPRISED of it.","AT"],["I am AMAZED of it.","AT"],["He is ASTONISHED of it.","AT"],["She is SHOCKED of it.","AT"],["I am EXCITED of it.","ABOUT"],["He is ENTHUSIASTIC of it.","ABOUT"],["She is EAGER of it.","FOR"],["I am KEEN of it.","ON"],["He is WILLING of it.","TO"],["She is READY of it.","FOR"],["I am PREPARED of it.","FOR"],["He is RELUCTANT of it.","TO"],["She is HESITANT of it.","TO"],["I am UNWILLING of it.","TO"],["He is OPPOSED of it.","TO"],["She is AGAINST of it.","TO"],["I am IN FAVOR from it.","OF"],["He is IN FAVOR to it.","OF"]];
-const gramHardArr = [["If I WAS you, I would leave.","WERE"],["Scarcely had she left THAN the phone rang.","WHEN"],["Neither the teacher nor the students IS ready.","ARE"],["One of my friends ARE coming.","IS"],["She plays tennis GOOD.","WELL"],["He insisted ON GO to the park.","GOING"],["Between you and I, this is a secret.","ME"],["Whom did you say IS calling?","WHO"],["She is the girl WHICH won the prize.","WHO"],["Not only the boys but also the girl HAVE arrived.","HAS"],["I wish I WAS richer.","WERE"],["Hardly had I arrived THEN he left.","WHEN"],["No sooner had she spoken THAN he cried.","WHEN"],["The data IS incorrect.","ARE"],["The media IS biased.","ARE"],["The criteria IS strict.","ARE"],["The phenomena IS rare.","ARE"],["The bacteria IS harmful.","ARE"],["The alumni IS gathering.","ARE"],["The fungi IS spreading.","ARE"],["The stimuli IS complex.","ARE"],["The strata IS deep.","ARE"],["The curricula IS updated.","ARE"],["The syllabi IS rigid.","ARE"],["The memoranda IS sent.","ARE"],["The radii IS long.","ARE"],["The foci IS sharp.","ARE"],["The loci IS clear.","ARE"],["The nuclei IS small.","ARE"],["The indices IS listed.","ARE"],["The matrices IS solved.","ARE"],["The vertices IS calculated.","ARE"],["The appendices IS added.","ARE"],["The codices IS ancient.","ARE"],["The bases IS strong.","ARE"],["The phases IS over.","ARE"],["The crises IS worsening.","ARE"],["The hypotheses IS tested.","ARE"],["The theses IS written.","ARE"],["The neuroses IS common.","ARE"],["The psychoses IS treated.","ARE"],["The diagnoses IS confirmed.","ARE"],["The prognoses IS poor.","ARE"],["The synopses IS brief.","ARE"],["The ellipses IS omitted.","ARE"],["The axes IS crossed.","ARE"],["The analyses IS thorough.","ARE"],["The syntheses IS complete.","ARE"],["The emphases IS placed.","ARE"],["The oases IS found.","ARE"],["The parentheses IS closed.","ARE"],["The chrysalides IS golden.","ARE"],["The testines IS examined.","ARE"],["The calces IS hard.","ARE"],["The apices IS pointed.","ARE"],["The cortices IS thick.","ARE"],["The vortices IS spinning.","ARE"],["The calices IS cup-shaped.","ARE"],["The cervices IS neck-like.","ARE"],["The matrices IS mathematical.","ARE"],["The appendices IS anatomical.","ARE"],["The indices IS alphabetical.","ARE"],["The codices IS historical.","ARE"],["The radices IS root-like.","ARE"],["The helices IS spiral.","ARE"],["The spices IS hot.","ARE"],["The splices IS woven.","ARE"],["The trices IS threefold.","ARE"],["The bices IS twofold.","ARE"],["The pices IS pitch-like.","ARE"],["The mices IS mouse-like.","ARE"],["The lices IS louse-like.","ARE"],["The dices IS dice-like.","ARE"],["The rices IS rice-like.","ARE"],["The prices IS high.","ARE"],["The slices IS thin.","ARE"],["The vices IS bad.","ARE"],["The nices IS good.","ARE"],["The fices IS fake.","ARE"],["The sices IS sick.","ARE"],["The tices IS tick-like.","ARE"],["The wices IS wicked.","ARE"],["The yices IS yucky.","ARE"],["The zices IS zany.","ARE"],["The qices IS quick.","ARE"],["The kices IS kick-like.","ARE"],["The jices IS jumpy.","ARE"],["The gices IS great.","ARE"],["The hices IS huge.","ARE"]];
-
-// 3. GUESSING
-const guessNormArr = [["What has to be broken before you can use it?","An Egg","A Glowstick","A Glass"],["I’m tall when I’m young, and I’m short when I’m old. What am I?","A Candle","A Tree","A Pencil"],["What month of the year has 28 days?","All of them","February","Leap Year"],["What is full of holes but still holds water?","A Sponge","A Bucket","A Cloud"],["What can you catch but not throw?","A Cold","A Baseball","A Boomerang"],["The more of this there is, the less you see. What is it?","Darkness","Fog","Tears"],["I have branches, but no fruit, trunk or leaves. What am I?","A Bank","A Tree","A River"],["What can you keep after giving to someone?","Your Word","A Gift","A Secret"],["I shave every day, but my beard stays the same. What am I?","A Barber","A Magician","An Animal"],["What has 13 hearts, but no other organs?","A Deck of Cards","An Octopus","An Alien"],["What goes up and down but doesn't move?","A Staircase","An Elevator","A Yo-yo"],["If you’ve got me, you want to share me; if you share me, you haven’t kept me. What am I?","A Secret","A Disease","Money"],["What gets wetter the more it dries?","A Towel","Water","A Sponge"],["What invention lets you look right through a wall?","A Window","X-Rays","A Hammer"],["I have cities, but no houses. Forests, but no trees. Water, but no fish.","A Map","A Globe","A Desert"],["What has keys but can't open locks?","A Piano","A Map","A Door"],["What has an eye but cannot see?","A Needle","A Potato","A Storm"],["What has legs but cannot walk?","A Table","A Snake","A Spider"],["What has a head and a tail but no body?","A Coin","A Snake","A Comet"],["What has many teeth but cannot bite?","A Comb","A Saw","A Gear"],["What has words but never speaks?","A Book","A Parrot","A Sign"],["What has a thumb but four fingers and is not alive?","A Glove","A Hand","A Monkey"],["What goes around the world but stays in a corner?","A Stamp","A Plane","A Satellite"],["What runs around the whole yard without moving?","A Fence","A Dog","A Child"],["What has a bottom at the top?","Your Legs","A Mountain","A Bottle"],["What is always in front of you but can’t be seen?","The Future","Your Nose","The Air"],["What gets sharper the more you use it?","Your Brain","A Knife","A Pencil"],["What goes up but never comes down?","Your Age","A Balloon","A Rocket"],["What can fill a room but takes up no space?","Light","Water","Furniture"],["What starts with T, ends with T, and has T in it?","A Teapot","A Tent","A Target"],["What is so fragile that saying its name breaks it?","Silence","Glass","Ice"],["What has one eye, but can't see?","A Needle","A Cyclops","A Hurricane"],["What has a neck but no head?","A Bottle","A Guitar","A Shirt"],["What has two arms, a round belly, and holds a lot of water?","A Teapot","A Camel","A Cloud"],["What belongs to you, but other people use it more than you?","Your Name","Your House","Your Phone"],["What has four legs, a back, but no body?","A Chair","A Dog","A Bed"],["What is as big as you are and yet does not weigh anything?","Your Shadow","Your Reflection","Your Soul"],["What is light as a feather, but even the strongest person can't hold it for five minutes?","Your Breath","A Thought","A Secret"],["What has a ring but no finger?","A Telephone","A Planet","A Tree"],["What has hands but cannot clap?","A Clock","A Monkey","A Robot"],["What goes through towns and over hills but never moves?","A Road","A River","A Train"],["What is black when it’s clean and white when it’s dirty?","A Chalkboard","A Shirt","A Penguin"],["What has a face and two hands but no arms or legs?","A Clock","A Coin","A Person"],["What is easier to get into than out of?","Trouble","A Car","A Bed"],["What has a heart that doesn’t beat?","An Artichoke","A Robot","A Zombie"],["What begins with an E and only contains one letter?","An Envelope","An Eagle","An Eraser"],["What can travel around the world while staying in a corner?","A Stamp","A Postcard","A Pilot"],["What has a spine but no bones?","A Book","A Snake","A Fish"],["What has an endless supply of letters but starts empty?","A Mailbox","A Dictionary","A Library"],["What is at the end of a rainbow?","The letter W","A Pot of Gold","A Leprechaun"],["What runs but never walks, has a mouth but never talks?","A River","A Clock","A Car"],["What goes up as soon as the rain comes down?","An Umbrella","A Cloud","A Bird"],["What has a head, a tail, is brown, and has no legs?","A Penny","A Snake","A Worm"],["What has a bed but never sleeps?","A River","A Truck","A Garden"],["What has a tongue but cannot talk?","A Shoe","A Bell","A Snake"],["What has a heart but no other organs?","A Deck of Cards","An Artichoke","A Computer"],["What has a head but no eyes, nose, or mouth?","A Lettuce","A Cabbage","A Nail"],["What has an eye but cannot see?","A Hurricane","A Potato","A Needle"],["What has an ear but cannot hear?","A Corn","A Cup","A Phone"],["What has a mouth but cannot chew?","A Cave","A River","A Vacuum"],["What has a foot but no legs?","A Snail","A Ruler","A Mountain"],["What has a face but no head?","A Clock","A Coin","A Mountain"],["What has a hand but no fingers?","A Clock","A Monkey","A Robot"],["What has a back but no spine?","A Chair","A Book","A Sofa"],["What has a seat but no legs?","A Bicycle","A Car","A Train"],["What has a top but no bottom?","A Mountain","A Bottle","A Hat"],["What has a bottom but no top?","A Shoe","A Sock","A Foot"],["What has a front but no back?","A TV","A Mirror","A Computer"],["What has a back but no front?","A Chair","A Book","A Sofa"],["What has a side but no top or bottom?","A Box","A Square","A Triangle"],["What has an edge but no center?","A Sword","A Knife","A Coin"],["What has a center but no edge?","A Circle","A Sphere","A Donut"],["What has a corner but no sides?","A Room","A Street","A Box"],["What has a side but no corners?","A Circle","A Sphere","A Cylinder"],["What has a point but no lines?","A Pen","A Needle","A Star"],["What has a line but no points?","A Circle","A Sphere","A Ring"],["What has a surface but no depth?","A Shadow","A Reflection","A Dream"],["What has a depth but no surface?","A Black Hole","A Thought","A Feeling"],["What has a volume but no mass?","An Idea","A Sound","A Word"],["What has a mass but no volume?","A Point","A Singularity","A Pixel"],["What has a weight but no mass?","A Thought","A Feeling","A Word"],["What has a mass but no weight?","A Photon","A Neutrino","A Gluon"],["What has a charge but no mass?","A Quark","A Lepton","A Boson"],["What has a spin but no charge?","A Neutrino","A Photon","A Graviton"],["What has a color but no flavor?","A Quark","A Gluon","A Lepton"],["What has a flavor but no color?","A Neutrino","A Boson","A Photon"],["What has a charm but no strange?","A Quark","A Lepton","A Boson"],["What has a top but no bottom?","A Quark","A Lepton","A Boson"],["What has an up but no down?","A Quark","A Lepton","A Boson"]];
-const guessHardArr = [["Forward I am heavy, backward I am not. What am I?","The word TON","A Truck","Gravity"],["What five-letter word becomes shorter when you add two letters to it?","Short","Small","Brief"],["What word is pronounced the same if you take away four of its five letters?","Queue","Aisle","Eerie"],["A man dies of old age on his 25th birthday. How is this possible?","He was born on Feb 29th","He time traveled","He had a disease"],["I am an odd number. Take away a letter and I become even. What number am I?","Seven","Three","Nine"],["The person who makes it has no need of it. The person who buys it has no use for it. The person who uses it can neither see nor feel it. What is it?","A Coffin","A Poison","A Dream"],["You see a boat filled with people. It has not sunk, but when you look again you don’t see a single person on the boat. Why?","They were all married","They are ghosts","They fell in"],["First you eat me, then you get eaten. What am I?","A Fish Hook","A Poison Apple","A Lion"],["I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. What am I?","The letter E","God","The Universe"],["A man is looking at a photograph. His friend asks who it is. The man replies, 'Brothers and sisters, I have none. But that man's father is my father's son.' Who was in the photograph?","His Son","Himself","His Father"],["I have keys but no locks. I have a space but no room. You can enter but can’t go outside. What am I?","A Keyboard","A Prison","A Mind"],["What comes once in a minute, twice in a moment, but never in a thousand years?","The letter M","A second","A thought"],["I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?","An Echo","A Ghost","A Cloud"],["You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. What am I?","A Candle","A Clock","A Battery"],["What disappears the second you say its name?","Silence","The Wind","A Shadow"],["What is always coming but never arrives?","Tomorrow","The Future","Death"],["What has one head, one foot and four legs?","A Bed","A Table","A Monster"],["What can run but never walks, has a mouth but never talks, has a head but never weeps, has a bed but never sleeps?","A River","A Car","A Baby"],["I am taken from a mine, and shut up in a wooden case, from which I am never released, and yet I am used by almost everybody. What am I?","Pencil Lead","Coal","Gold"],["What goes through cities and fields, but never moves?","A Road","A River","A Train"],["I am always hungry, I must always be fed. The finger I touch, will soon turn red. What am I?","Fire","A Vampire","A Mosquito"],["What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?","The letter R","A Rainbow","Spring"],["You walk into a room that contains a match, a kerosene lamp, a candle and a fireplace. What would you light first?","The match","The candle","The lamp"],["What belongs to you but others use it more than you do?","Your Name","Your House","Your Phone"],["A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?","He was bald","He was in a car","It stopped raining"],["What is lighter than what it is made of?","Ice","Wood","Metal"],["What has to be broken before you can use it?","An Egg","A Glowstick","A Promise"],["What goes up but never comes down?","Your Age","A Balloon","A Bird"],["What has hands but cannot clap?","A Clock","A Statue","A Robot"],["What can fill a room but takes up no space?","Light","Water","Air"],["If you drop me I’m sure to crack, but give me a smile and I’ll always smile back. What am I?","A Mirror","A Glass","An Egg"],["What has words but never speaks?","A Book","A Parrot","A Ghost"],["What is full of holes but still holds water?","A Sponge","A Net","A Cloud"],["What is always in front of you but can’t be seen?","The Future","Your Nose","Air"],["What gets wetter the more it dries?","A Towel","A Sponge","Water"],["What is so fragile that saying its name breaks it?","Silence","Glass","Ice"],["What has one eye, but can't see?","A Needle","A Cyclops","A Hurricane"],["What has a neck but no head?","A Bottle","A Guitar","A Shirt"],["What has a head and a tail but no body?","A Coin","A Snake","A Comet"],["What has teeth but cannot bite?","A Comb","A Saw","A Gear"],["What has a thumb but four fingers and is not alive?","A Glove","A Hand","A Monkey"],["What goes around the world but stays in a corner?","A Stamp","A Plane","A Satellite"],["What runs around the whole yard without moving?","A Fence","A Dog","A Child"],["What has a bottom at the top?","Your Legs","A Mountain","A Bottle"],["What gets sharper the more you use it?","Your Brain","A Knife","A Pencil"],["What starts with T, ends with T, and has T in it?","A Teapot","A Tent","A Target"],["What is black when it’s clean and white when it’s dirty?","A Chalkboard","A Shirt","A Penguin"],["What has a face and two hands but no arms or legs?","A Clock","A Coin","A Person"],["What is easier to get into than out of?","Trouble","A Car","A Bed"],["What has a heart that doesn’t beat?","An Artichoke","A Robot","A Zombie"],["What begins with an E and only contains one letter?","An Envelope","An Eagle","An Eraser"],["What can travel around the world while staying in a corner?","A Stamp","A Postcard","A Pilot"],["What has a spine but no bones?","A Book","A Snake","A Fish"],["What has an endless supply of letters but starts empty?","A Mailbox","A Dictionary","A Library"],["What is at the end of a rainbow?","The letter W","A Pot of Gold","A Leprechaun"],["What runs but never walks, has a mouth but never talks?","A River","A Clock","A Car"],["What goes up as soon as the rain comes down?","An Umbrella","A Cloud","A Bird"],["What has a head, a tail, is brown, and has no legs?","A Penny","A Snake","A Worm"],["What has a bed but never sleeps?","A River","A Truck","A Garden"],["What has a tongue but cannot talk?","A Shoe","A Bell","A Snake"],["What has a heart but no other organs?","A Deck of Cards","An Artichoke","A Computer"],["What has a head but no eyes, nose, or mouth?","A Lettuce","A Cabbage","A Nail"],["What has an eye but cannot see?","A Hurricane","A Potato","A Needle"],["What has an ear but cannot hear?","A Corn","A Cup","A Phone"],["What has a mouth but cannot chew?","A Cave","A River","A Vacuum"],["What has a foot but no legs?","A Snail","A Ruler","A Mountain"],["What has a face but no head?","A Clock","A Coin","A Mountain"],["What has a hand but no fingers?","A Clock","A Monkey","A Robot"],["What has a back but no spine?","A Chair","A Book","A Sofa"],["What has a seat but no legs?","A Bicycle","A Car","A Train"],["What has a top but no bottom?","A Mountain","A Bottle","A Hat"],["What has a bottom but no top?","A Shoe","A Sock","A Foot"],["What has a front but no back?","A TV","A Mirror","A Computer"],["What has a back but no front?","A Chair","A Book","A Sofa"],["What has a side but no top or bottom?","A Box","A Square","A Triangle"],["What has an edge but no center?","A Sword","A Knife","A Coin"],["What has a center but no edge?","A Circle","A Sphere","A Donut"],["What has a corner but no sides?","A Room","A Street","A Box"],["What has a side but no corners?","A Circle","A Sphere","A Cylinder"],["What has a point but no lines?","A Pen","A Needle","A Star"],["What has a line but no points?","A Circle","A Sphere","A Ring"],["What has a surface but no depth?","A Shadow","A Reflection","A Dream"],["What has a depth but no surface?","A Black Hole","A Thought","A Feeling"],["What has a volume but no mass?","An Idea","A Sound","A Word"],["What has a mass but no volume?","A Point","A Singularity","A Pixel"],["What has a weight but no mass?","A Thought","A Feeling","A Word"],["What has a mass but no weight?","A Photon","A Neutrino","A Gluon"],["What has a charge but no mass?","A Quark","A Lepton","A Boson"],["What has a spin but no charge?","A Neutrino","A Photon","A Graviton"]];
-
-// INITIALIZE POOLS
-function initPools() {
-    dbNormal.spelling = spellNormArr.map(w => ({q: "Spell the word you hear:", a: w, audio: w}));
-    dbHard.spelling = spellHardArr.map(w => ({q: "Spell the word you hear (Hard):", a: w, audio: w}));
-    dbNormal.grammar = gramNormArr.map(g => ({q: "Fix the incorrect word:\n'"+g[0]+"'", a: g[1]}));
-    dbHard.grammar = gramHardArr.map(g => ({q: "Fix the incorrect word:\n'"+g[0]+"'", a: g[1]}));
-    dbNormal.guessing = guessNormArr.map(g => ({q: g[0], a: g[1], opts: [g[1], g[2], g[3]]}));
-    dbHard.guessing = guessHardArr.map(g => ({q: g[0], a: g[1], opts: [g[1], g[2], g[3]]}));
-    
-    // Dynamic generator array for comprehension will just generate 90 dummy items to map
-    dbNormal.comprehension = Array.from({length: 90}, () => generateComprehension(false));
-    dbHard.comprehension = Array.from({length: 90}, () => generateComprehension(true));
-
-    poolNormal = JSON.parse(JSON.stringify(dbNormal));
-    poolHard = JSON.parse(JSON.stringify(dbHard));
-}
-
-// 4. COMPREHENSION GENERATOR
-function generateComprehension(isHard) {
-    const destinations = ["Kuala Lumpur to Melaka", "Penang to Ipoh", "Johor Bahru to KL", "Kuantan to Seremban", "Melaka to Singapore", "Alor Setar to KL", "Ipoh to KL", "KL to Cameron Highlands"];
-    const fares = [15, 20, 25, 30, 35, 40, 45, 50];
-    const departHours = [8, 9, 10, 11, 13, 14, 15, 16];
-    
-    let dest = destinations[Math.floor(Math.random()*destinations.length)];
-    let fare = fares[Math.floor(Math.random()*fares.length)];
-    let depH = departHours[Math.floor(Math.random()*departHours.length)];
-    let duration = Math.floor(Math.random()*3) + 2; // 2, 3, or 4 hours
-    let arrH = depH + duration;
-    
-    let depStr = `${depH > 12 ? depH-12 : depH}.00 ${depH >= 12 ? 'p.m.' : 'a.m.'}`;
-    let arrStr = `${arrH > 12 ? arrH-12 : arrH}.00 ${arrH >= 12 ? 'p.m.' : 'a.m.'}`;
-    
-    let ticket = { dest: dest, dep: depStr, arr: arrStr, fare: `RM ${fare}.00` };
-    
-    let type = Math.floor(Math.random() * 5); // 0 to 4
-    let q, a, opts;
-    
-    if (!isHard) {
-        if (type === 0) {
-            q = "Based on the ticket, what is the destination?";
-            a = dest.split(" to ")[1];
-            opts = [a, dest.split(" to ")[0], "Seremban", "Penang"].slice(0,3);
-            if(!opts.includes(a)) opts[2] = a;
-        } else if (type === 1) {
-            q = "Based on the ticket, what time does the bus leave?";
-            a = depStr;
-            opts = [a, arrStr, `${depH+1 > 12 ? depH+1-12 : depH+1}.00 ${depH+1 >= 12 ? 'p.m.' : 'a.m.'}`];
-        } else if (type === 2) {
-            q = "Based on the ticket, how long is the journey?";
-            a = `${duration} Hours`;
-            opts = [`${duration} Hours`, `${duration-1} Hours`, `${duration+1} Hours`];
-        } else if (type === 3) {
-            q = "What is the fare for 2 people?";
-            a = `RM ${fare * 2}`;
-            opts = [`RM ${fare * 2}`, `RM ${fare}`, `RM ${fare * 3}`];
-        } else {
-            q = "Where does the bus depart from?";
-            a = dest.split(" to ")[0];
-            opts = [a, dest.split(" to ")[1], "Klang"];
-        }
-    } else {
-        if (type === 0) {
-            q = "If the bus is delayed by 45 minutes, what is the new estimated arrival time?";
-            a = `${arrH > 12 ? arrH-12 : arrH}.45 ${arrH >= 12 ? 'p.m.' : 'a.m.'}`;
-            opts = [a, `${arrH > 12 ? arrH-12 : arrH}.30 ${arrH >= 12 ? 'p.m.' : 'a.m.'}`, `${arrH+1 > 12 ? arrH+1-12 : arrH+1}.15 ${arrH+1 >= 12 ? 'p.m.' : 'a.m.'}`];
-        } else if (type === 1) {
-            q = "A family of 4 buys tickets with a 10% discount. How much do they pay in total?";
-            let total = (fare * 4) * 0.9;
-            a = `RM ${total}`;
-            opts = [`RM ${total}`, `RM ${fare * 4}`, `RM ${total + 10}`];
-        } else if (type === 2) {
-            let speed = 80;
-            q = `If the bus travels at an average speed of ${speed} km/h, what is the approximate distance?`;
-            a = `${speed * duration} km`;
-            opts = [`${speed * duration} km`, `${speed * (duration-1)} km`, `${speed * (duration+1)} km`];
-        } else if (type === 3) {
-            q = "How much change will you receive if you pay with RM 100 for two tickets?";
-            let chg = 100 - (fare * 2);
-            a = `RM ${chg}`;
-            opts = [`RM ${chg}`, `RM ${chg + 10}`, `RM ${Math.abs(chg - 10)}`];
-        } else {
-            q = "If you need to be at the station 30 minutes before departure, what time must you arrive?";
-            let newH = depH; let newM = 30;
-            if (depH === 8) { newH = 7; newM = 30; }
-            else { newH = depH - 1; newM = 30; }
-            a = `${newH > 12 ? newH-12 : newH}.30 ${newH >= 12 ? 'p.m.' : 'a.m.'}`;
-            opts = [a, `${newH > 12 ? newH-12 : newH}.45 ${newH >= 12 ? 'p.m.' : 'a.m.'}`, depStr];
-        }
-    }
-    
-    return { q, opts: shuffle(opts), a, showTicket: true, ticket };
-}
-
-initPools(); // generate initial
+// --- MASSIVE GAME DATA POOLS (90 Questions per game) ---
+const dbNormal = {
+    spelling: [
+        {q:"Spell the word you hear:",a:"BEAUTIFUL",audio:"Beautiful"}, {q:"Spell the word you hear:",a:"DANGEROUS",audio:"Dangerous"}, {q:"Spell the word you hear:",a:"IMPORTANT",audio:"Important"}, {q:"Spell the word you hear:",a:"COMFORTABLE",audio:"Comfortable"}, {q:"Spell the word you hear:",a:"EXPENSIVE",audio:"Expensive"}, {q:"Spell the word you hear:",a:"DELICIOUS",audio:"Delicious"}, {q:"Spell the word you hear:",a:"FAVORITE",audio:"Favorite"}, {q:"Spell the word you hear:",a:"LANGUAGE",audio:"Language"}, {q:"Spell the word you hear:",a:"DICTIONARY",audio:"Dictionary"}, {q:"Spell the word you hear:",a:"VOCABULARY",audio:"Vocabulary"},
+        {q:"Spell the word you hear:",a:"TOMORROW",audio:"Tomorrow"}, {q:"Spell the word you hear:",a:"YESTERDAY",audio:"Yesterday"}, {q:"Spell the word you hear:",a:"HAPPINESS",audio:"Happiness"}, {q:"Spell the word you hear:",a:"TOGETHER",audio:"Together"}, {q:"Spell the word you hear:",a:"BECAUSE",audio:"Because"}, {q:"Spell the word you hear:",a:"ENVIRONMENT",audio:"Environment"}, {q:"Spell the word you hear:",a:"GOVERNMENT",audio:"Government"}, {q:"Spell the word you hear:",a:"NECESSARY",audio:"Necessary"}, {q:"Spell the word you hear:",a:"ACCOMMODATION",audio:"Accommodation"}, {q:"Spell the word you hear:",a:"EMBARRASS",audio:"Embarrass"},
+        {q:"Spell the word you hear:",a:"GUARANTEE",audio:"Guarantee"}, {q:"Spell the word you hear:",a:"DEFINITELY",audio:"Definitely"}, {q:"Spell the word you hear:",a:"SEPARATELY",audio:"Separately"}, {q:"Spell the word you hear:",a:"PRONUNCIATION",audio:"Pronunciation"}, {q:"Spell the word you hear:",a:"OCCASION",audio:"Occasion"}, {q:"Spell the word you hear:",a:"DISAPPEAR",audio:"Disappear"}, {q:"Spell the word you hear:",a:"RECEIPT",audio:"Receipt"}, {q:"Spell the word you hear:",a:"PARALLEL",audio:"Parallel"}, {q:"Spell the word you hear:",a:"SUCCESSFUL",audio:"Successful"}, {q:"Spell the word you hear:",a:"ACHIEVEMENT",audio:"Achievement"},
+        {q:"Spell the word you hear:",a:"KNOWLEDGE",audio:"Knowledge"}, {q:"Spell the word you hear:",a:"RESTAURANT",audio:"Restaurant"}, {q:"Spell the word you hear:",a:"INDEPENDENT",audio:"Independent"}, {q:"Spell the word you hear:",a:"OPPORTUNITY",audio:"Opportunity"}, {q:"Spell the word you hear:",a:"EXPERIENCE",audio:"Experience"}, {q:"Spell the word you hear:",a:"TEMPERATURE",audio:"Temperature"}, {q:"Spell the word you hear:",a:"IMMEDIATELY",audio:"Immediately"}, {q:"Spell the word you hear:",a:"PARTICULAR",audio:"Particular"}, {q:"Spell the word you hear:",a:"EXCELLENT",audio:"Excellent"}, {q:"Spell the word you hear:",a:"DIFFERENCE",audio:"Difference"},
+        {q:"Spell the word you hear:",a:"DEVELOPMENT",audio:"Development"}, {q:"Spell the word you hear:",a:"COMPETITION",audio:"Competition"}, {q:"Spell the word you hear:",a:"PROFESSIONAL",audio:"Professional"}, {q:"Spell the word you hear:",a:"RESPONSIBILITY",audio:"Responsibility"}, {q:"Spell the word you hear:",a:"COMMUNICATION",audio:"Communication"}, {q:"Spell the word you hear:",a:"TECHNOLOGY",audio:"Technology"}, {q:"Spell the word you hear:",a:"INFORMATION",audio:"Information"}, {q:"Spell the word you hear:",a:"UNDERSTAND",audio:"Understand"}, {q:"Spell the word you hear:",a:"EVERYTHING",audio:"Everything"}, {q:"Spell the word you hear:",a:"SOMETIMES",audio:"Sometimes"},
+        {q:"Spell the word you hear:",a:"BEHAVIOR",audio:"Behavior"}, {q:"Spell the word you hear:",a:"CHARACTER",audio:"Character"}, {q:"Spell the word you hear:",a:"DETERMINE",audio:"Determine"}, {q:"Spell the word you hear:",a:"ENCOURAGE",audio:"Encourage"}, {q:"Spell the word you hear:",a:"FASCINATING",audio:"Fascinating"}, {q:"Spell the word you hear:",a:"GENEROUS",audio:"Generous"}, {q:"Spell the word you hear:",a:"HOSPITALITY",audio:"Hospitality"}, {q:"Spell the word you hear:",a:"IMAGINATION",audio:"Imagination"}, {q:"Spell the word you hear:",a:"JEALOUSY",audio:"Jealousy"}, {q:"Spell the word you hear:",a:"KINETIC",audio:"Kinetic"},
+        {q:"Spell the word you hear:",a:"LITERATURE",audio:"Literature"}, {q:"Spell the word you hear:",a:"MAGNIFICENT",audio:"Magnificent"}, {q:"Spell the word you hear:",a:"NEIGHBORHOOD",audio:"Neighborhood"}, {q:"Spell the word you hear:",a:"OBEDIENCE",audio:"Obedience"}, {q:"Spell the word you hear:",a:"PASSIONATE",audio:"Passionate"}, {q:"Spell the word you hear:",a:"QUESTIONNAIRE",audio:"Questionnaire"}, {q:"Spell the word you hear:",a:"RECOGNIZE",audio:"Recognize"}, {q:"Spell the word you hear:",a:"SYMPATHETIC",audio:"Sympathetic"}, {q:"Spell the word you hear:",a:"TRADITIONAL",audio:"Traditional"}, {q:"Spell the word you hear:",a:"UNBELIEVABLE",audio:"Unbelievable"},
+        {q:"Spell the word you hear:",a:"VALUABLE",audio:"Valuable"}, {q:"Spell the word you hear:",a:"WONDERFUL",audio:"Wonderful"}, {q:"Spell the word you hear:",a:"APPRECIATE",audio:"Appreciate"}, {q:"Spell the word you hear:",a:"BRILLIANT",audio:"Brilliant"}, {q:"Spell the word you hear:",a:"CHALLENGE",audio:"Challenge"}, {q:"Spell the word you hear:",a:"DEDICATION",audio:"Dedication"}, {q:"Spell the word you hear:",a:"ENTHUSIASM",audio:"Enthusiasm"}, {q:"Spell the word you hear:",a:"FRIENDSHIP",audio:"Friendship"}, {q:"Spell the word you hear:",a:"GRATEFUL",audio:"Grateful"}, {q:"Spell the word you hear:",a:"HARMONY",audio:"Harmony"},
+        {q:"Spell the word you hear:",a:"INFLUENCE",audio:"Influence"}, {q:"Spell the word you hear:",a:"JOURNEY",audio:"Journey"}, {q:"Spell the word you hear:",a:"MOTIVATION",audio:"Motivation"}, {q:"Spell the word you hear:",a:"OPTIMISTIC",audio:"Optimistic"}, {q:"Spell the word you hear:",a:"PATIENCE",audio:"Patience"}, {q:"Spell the word you hear:",a:"RESILIENCE",audio:"Resilience"}, {q:"Spell the word you hear:",a:"SIGNIFICANT",audio:"Significant"}, {q:"Spell the word you hear:",a:"TOLERANCE",audio:"Tolerance"}, {q:"Spell the word you hear:",a:"VERSATILE",audio:"Versatile"}, {q:"Spell the word you hear:",a:"WHISPER",audio:"Whisper"}
+    ],
+    guessing: [
+        {q:"What has to be broken before you can use it?",opts:["An egg","A glowstick","A piñata"],a:"An egg"}, {q:"I’m tall when I’m young, short when I’m old. What am I?",opts:["A candle","A pencil","A match"],a:"A candle"}, {q:"What month of the year has 28 days?",opts:["All of them","February","None of them"],a:"All of them"}, {q:"What is full of holes but still holds water?",opts:["A sponge","A net","A bucket with holes"],a:"A sponge"}, {q:"What can you catch but not throw?",opts:["A cold","A boomerang","A baseball"],a:"A cold"}, {q:"The more of this there is, the less you see. What is it?",opts:["Darkness","Fog","Smoke"],a:"Darkness"}, {q:"I have branches, but no fruit, trunk or leaves. What am I?",opts:["A bank","A family tree","A river"],a:"A bank"}, {q:"What can you keep after giving to someone?",opts:["Your word","A secret","A gift"],a:"Your word"}, {q:"I shave every day, but my beard stays the same. What am I?",opts:["A barber","A magician","An animal"],a:"A barber"}, {q:"What has 13 hearts, but no other organs?",opts:["A deck of cards","An octopus","An alien"],a:"A deck of cards"},
+        {q:"What goes up but never comes down?",opts:["Your age","A balloon","A bird"],a:"Your age"}, {q:"I have keys but no locks. I have space but no room. What am I?",opts:["A computer keyboard","A piano","A map"],a:"A computer keyboard"}, {q:"What gets wetter the more it dries?",opts:["A towel","A sponge","A cloth"],a:"A towel"}, {q:"What can travel around the world while staying in a corner?",opts:["A stamp","An email","A globe"],a:"A stamp"}, {q:"What has a head and a tail but no body?",opts:["A coin","A snake","A comet"],a:"A coin"}, {q:"I am an odd number. Take away a letter and I become even. What am I?",opts:["Seven","Three","Nine"],a:"Seven"}, {q:"What has hands but cannot clap?",opts:["A clock","A doll","A statue"],a:"A clock"}, {q:"What has an eye but cannot see?",opts:["A needle","A potato","A hurricane"],a:"A needle"}, {q:"What has words, but never speaks?",opts:["A book","A parrot","A painting"],a:"A book"}, {q:"What runs all around a backyard, yet never moves?",opts:["A fence","A dog","A shadow"],a:"A fence"},
+        {q:"What can fill a room but takes up no space?",opts:["Light","Air","Dust"],a:"Light"}, {q:"If you drop me I’m sure to crack, but give me a smile and I’ll always smile back.",opts:["A mirror","A glass","An egg"],a:"A mirror"}, {q:"What belongs to you, but other people use it more than you do?",opts:["Your name","Your money","Your pen"],a:"Your name"}, {q:"What goes through cities and fields, but never moves?",opts:["A road","A train","A river"],a:"A road"}, {q:"I have a neck but no head, and I wear a cap. What am I?",opts:["A bottle","A mushroom","A sweater"],a:"A bottle"}, {q:"What has teeth but cannot bite?",opts:["A comb","A gear","A zipper"],a:"A comb"}, {q:"What is always in front of you but can’t be seen?",opts:["The future","Your nose","Air"],a:"The future"}, {q:"What has to be answered but never asks a question?",opts:["A telephone","A doorbell","An email"],a:"A telephone"}, {q:"What gets bigger the more you take away?",opts:["A hole","A debt","A balloon"],a:"A hole"}, {q:"What has a thumb and four fingers, but is not alive?",opts:["A glove","A statue","A robot"],a:"A glove"},
+        {q:"I have cities, but no houses. I have mountains, but no trees. What am I?",opts:["A map","A drawing","A desert"],a:"A map"}, {q:"What goes up and down but doesn't move?",opts:["A staircase","A seesaw","An elevator"],a:"A staircase"}, {q:"What begins with an E and only contains one letter?",opts:["An envelope","The alphabet","An eagle"],a:"An envelope"}, {q:"What tastes better than it smells?",opts:["A tongue","A durian","A cheese"],a:"A tongue"}, {q:"What begins with T, ends with T, and has T in it?",opts:["A teapot","A tent","A talent"],a:"A teapot"}, {q:"Which tire doesn't move when a car turns right?",opts:["The spare tire","The rear tire","The front tire"],a:"The spare tire"}, {q:"What is so fragile that saying its name breaks it?",opts:["Silence","Glass","A secret"],a:"Silence"}, {q:"Forward I am heavy, backward I am not. What am I?",opts:["The word TON","A truck","Gravity"],a:"The word TON"}, {q:"I’m found in socks, scarves and mittens. What am I?",opts:["Yarn","Warmth","Feet"],a:"Yarn"}, {q:"What invention lets you look right through a wall?",opts:["A window","A drill","A camera"],a:"A window"},
+        {q:"If you have me, you want to share me. If you share me, you haven't got me. What am I?",opts:["A secret","A pizza","A cold"],a:"A secret"}, {q:"What has one eye, but can't see?",opts:["A needle","A cyclops","A storm"],a:"A needle"}, {q:"What goes up as soon as the rain comes down?",opts:["An umbrella","A puddle","The humidity"],a:"An umbrella"}, {q:"What has legs, but doesn't walk?",opts:["A table","A snake","A tree"],a:"A table"}, {q:"What has many rings but no fingers?",opts:["A telephone","A tree","A jewelry box"],a:"A telephone"}, {q:"Which building has the most stories?",opts:["The library","A skyscraper","An apartment"],a:"The library"}, {q:"What kind of band never plays music?",opts:["A rubber band","A headband","A marching band"],a:"A rubber band"}, {q:"What is bright orange with green on top and sounds like a parrot?",opts:["A carrot","A pumpkin","A traffic cone"],a:"A carrot"}, {q:"What has a bottom at the top?",opts:["Your legs","A valley","A mountain"],a:"Your legs"}, {q:"What has four eyes but can't see?",opts:["Mississippi","A spider","A potato"],a:"Mississippi"},
+        {q:"Where does today come before yesterday?",opts:["In a dictionary","In space","On a calendar"],a:"In a dictionary"}, {q:"What comes once in a minute, twice in a moment, but never in a thousand years?",opts:["The letter M","A second","A thought"],a:"The letter M"}, {q:"What has a bark but no bite?",opts:["A tree","A dog","A cough"],a:"A tree"}, {q:"What can you hold in your right hand, but never in your left hand?",opts:["Your left hand","Your right elbow","A pen"],a:"Your left hand"}, {q:"How many months have 28 days?",opts:["All 12","1","Every 4 years"],a:"All 12"}, {q:"I start with M, end with X, and have a never ending amount of letters. What am I?",opts:["Mailbox","Matrix","Multiplex"],a:"Mailbox"}, {q:"What word is spelled wrong in every dictionary?",opts:["Wrong","Correctly","Incorrectly"],a:"Wrong"}, {q:"What gets sharper the more you use it?",opts:["Your brain","A knife","A pencil"],a:"Your brain"}, {q:"What goes up but never comes back down?",opts:["Your age","A rocket","A hot air balloon"],a:"Your age"}, {q:"What word has three consecutive double letters?",opts:["Bookkeeper","Committee","Balloon"],a:"Bookkeeper"},
+        {q:"A man dies of old age on his 25th birthday. How is this possible?",opts:["He was born on Feb 29th","He time traveled","He had a disease"],a:"He was born on Feb 29th"}, {q:"The person who makes it has no need of it. Who uses it?",opts:["A Coffin","A Poison","A Dream"],a:"A Coffin"}, {q:"First you eat me, then you get eaten. What am I?",opts:["A Fish Hook","A Poison Apple","A Lion"],a:"A Fish Hook"}, {q:"I am the beginning of the end. What am I?",opts:["The letter E","God","The Universe"],a:"The letter E"}, {q:"I have an eye but cannot see. I am fast but have no limbs. What am I?",opts:["A hurricane","A needle","A cheetah"],a:"A hurricane"}, {q:"What runs but never walks, murmurs but never talks?",opts:["A river","A ghost","A marathon runner"],a:"A river"}, {q:"What is full of keys but can't open a single door?",opts:["A piano","A keychain","A map"],a:"A piano"}, {q:"The more you take, the more you leave behind. What are they?",opts:["Footsteps","Memories","Time"],a:"Footsteps"}, {q:"What has to be broken before you can eat it?",opts:["An egg","A coconut","A walnut"],a:"An egg"}, {q:"What is cut on a table, but never eaten?",opts:["A deck of cards","Wood","Vegetables"],a:"A deck of cards"},
+        {q:"I have a tail, and I have a head, but i have no body. I am NOT a coin. What am I?",opts:["A comet","A snake","A worm"],a:"A comet"}, {q:"What kind of tree can you carry in your hand?",opts:["A palm","A bonsai","A pine"],a:"A palm"}, {q:"What has a neck but no head?",opts:["A bottle","A giraffe","A shirt"],a:"A bottle"}, {q:"What gets wetter as it dries?",opts:["A towel","A sponge","Water"],a:"A towel"}, {q:"What flies without wings?",opts:["Time","An airplane","A cloud"],a:"Time"}, {q:"What falls but never breaks?",opts:["Night","A glass","Rain"],a:"Night"}, {q:"What breaks but never falls?",opts:["Morning","Glass","A promise"],a:"Morning"}, {q:"What goes up and down, but remains in the same place?",opts:["Stairs","An elevator","A seesaw"],a:"Stairs"}, {q:"If a brother, his sister, and their dog weren't under an umbrella, why didn't they get wet?",opts:["It wasn't raining","They were indoors","The dog had it"],a:"It wasn't raining"}, {q:"What room do ghosts avoid?",opts:["The living room","The bedroom","The kitchen"],a:"The living room"},
+        {q:"What can you catch but not throw?",opts:["A cold","A ball","A frisbee"],a:"A cold"}, {q:"What runs but never gets tired?",opts:["Water","An athlete","A dog"],a:"Water"}, {q:"What can you hold without ever touching it?",opts:["A conversation","A baby","A cup"],a:"A conversation"}, {q:"I am an insect, and the first half of my name reveals another insect. What am I?",opts:["Beetle","Butterfly","Cockroach"],a:"Beetle"}, {q:"What has a thumb and four fingers but is not alive?",opts:["A glove","A hand","A monkey"],a:"A glove"}, {q:"What has a tongue but cannot talk?",opts:["A shoe","A bell","A snake"],a:"A shoe"}, {q:"What goes around the world but stays in a corner?",opts:["A stamp","A satellite","The moon"],a:"A stamp"}, {q:"What begins with T, ends with T and has T in it?",opts:["A teapot","A tent","A ticket"],a:"A teapot"}, {q:"I fly without wings. I cry without eyes. What am I?",opts:["A cloud","A baby","A bird"],a:"A cloud"}, {q:"I have a bed but I never sleep. I have a mouth but I never speak. What am I?",opts:["A river","A child","A cave"],a:"A river"}
+    ],
+    grammar: [
+        {q:"Fix the incorrect word:\n'She GO to school every day.'",a:"GOES"}, {q:"Fix the incorrect word:\n'They IS playing football now.'",a:"ARE"}, {q:"Fix the incorrect word:\n'I didn't WENT there yesterday.'",a:"GO"}, {q:"Fix the incorrect word:\n'He DON'T like green apples.'",a:"DOESNT"}, {q:"Fix the incorrect word:\n'There IS many people here.'",a:"ARE"}, {q:"Fix the incorrect word:\n'She has WROTE a long letter.'",a:"WRITTEN"}, {q:"Fix the incorrect word:\n'We WAS walking home slowly.'",a:"WERE"}, {q:"Fix the incorrect word:\n'I have SAW that movie already.'",a:"SEEN"}, {q:"Fix the incorrect word:\n'This is MORE better than that.'",a:"BETTER"}, {q:"Fix the incorrect word:\n'The dog happily wagged IT'S tail.'",a:"ITS"},
+        {q:"Fix the incorrect word:\n'He gave the book to I.'",a:"ME"}, {q:"Fix the incorrect word:\n'She sings very GOOD.'",a:"WELL"}, {q:"Fix the incorrect word:\n'If I WAS you, I wouldn't do it.'",a:"WERE"}, {q:"Fix the incorrect word:\n'One of the boys ARE missing.'",a:"IS"}, {q:"Fix the incorrect word:\n'She has been here SINCE three days.'",a:"FOR"}, {q:"Fix the incorrect word:\n'He likes to playing tennis.'",a:"PLAY"}, {q:"Fix the incorrect word:\n'They didn't DO nothing wrong.'",a:"ANYTHING"}, {q:"Fix the incorrect word:\n'Whose shoes is THIS?'",a:"THESE"}, {q:"Fix the incorrect word:\n'I look forward to SEE you.'",a:"SEEING"}, {q:"Fix the incorrect word:\n'He is taller THEN his brother.'",a:"THAN"},
+        {q:"Fix the incorrect word:\n'She doesn't HAS any money.'",a:"HAVE"}, {q:"Fix the incorrect word:\n'Neither of them ARE coming.'",a:"IS"}, {q:"Fix the incorrect word:\n'I have less friends than you.'",a:"FEWER"}, {q:"Fix the incorrect word:\n'He is married WITH a doctor.'",a:"TO"}, {q:"Fix the incorrect word:\n'I am agree with you.'",a:"AGREE"}, {q:"Fix the incorrect word:\n'She comprises OF three parts.'",a:"COMPRISES"}, {q:"Fix the incorrect word:\n'I enjoy TO read books.'",a:"READING"}, {q:"Fix the incorrect word:\n'The news ARE very bad today.'",a:"IS"}, {q:"Fix the incorrect word:\n'He is the most tallest boy.'",a:"TALLEST"}, {q:"Fix the incorrect word:\n'Let's discuss ABOUT the problem.'",a:"DISCUSS"},
+        {q:"Fix the incorrect word:\n'We need some informations.'",a:"INFORMATION"}, {q:"Fix the incorrect word:\n'Please reply BACK soon.'",a:"REPLY"}, {q:"Fix the incorrect word:\n'The reason is BECAUSE he is sick.'",a:"THAT"}, {q:"Fix the incorrect word:\n'I am used to WAKE up early.'",a:"WAKING"}, {q:"Fix the incorrect word:\n'He drove CAREFUL down the road.'",a:"CAREFULLY"}, {q:"Fix the incorrect word:\n'I have visited Paris LAST year.'",a:"VISITED"}, {q:"Fix the incorrect word:\n'Where DOES he lives?'",a:"LIVE"}, {q:"Fix the incorrect word:\n'She was boring by the movie.'",a:"BORED"}, {q:"Fix the incorrect word:\n'I am waiting him.'",a:"FOR"}, {q:"Fix the incorrect word:\n'You must to go now.'",a:"GO"},
+        {q:"Fix the incorrect word:\n'He suggested TO go to the park.'",a:"GOING"}, {q:"Fix the incorrect word:\n'I will call you when I WILL arrive.'",a:"ARRIVE"}, {q:"Fix the incorrect word:\n'The scissors IS on the table.'",a:"ARE"}, {q:"Fix the incorrect word:\n'She arrived IN the airport.'",a:"AT"}, {q:"Fix the incorrect word:\n'He insisted ON go there.'",a:"GOING"}, {q:"Fix the incorrect word:\n'I am having a brother.'",a:"HAVE"}, {q:"Fix the incorrect word:\n'Did you BOUGHT the milk?'",a:"BUY"}, {q:"Fix the incorrect word:\n'She prevented him TO fall.'",a:"FROM"}, {q:"Fix the incorrect word:\n'I object TO go there.'",a:"GOING"}, {q:"Fix the incorrect word:\n'I am very MUCH happy.'",a:"VERY"},
+        {q:"Fix the incorrect word:\n'Between you and I, it's true.'",a:"ME"}, {q:"Fix the incorrect word:\n'Whom did you say IS coming?'",a:"WHO"}, {q:"Fix the incorrect word:\n'The man WHICH called is here.'",a:"WHO"}, {q:"Fix the incorrect word:\n'Everyone HAVE to leave.'",a:"HAS"}, {q:"Fix the incorrect word:\n'Either the boy or the girls IS right.'",a:"ARE"}, {q:"Fix the incorrect word:\n'She plays piano everyday.'",a:"THE"}, {q:"Fix the incorrect word:\n'I prefer tea THAN coffee.'",a:"TO"}, {q:"Fix the incorrect word:\n'He is senior THAN me.'",a:"TO"}, {q:"Fix the incorrect word:\n'The police IS investigating.'",a:"ARE"}, {q:"Fix the incorrect word:\n'We reached AT the station.'",a:"REACHED"},
+        {q:"Fix the incorrect word:\n'She resembles TO her mother.'",a:"RESEMBLES"}, {q:"Fix the incorrect word:\n'He entered INTO the room.'",a:"ENTERED"}, {q:"Fix the incorrect word:\n'I told TO him the truth.'",a:"TOLD"}, {q:"Fix the incorrect word:\n'Can you explain me this?'",a:"TO"}, {q:"Fix the incorrect word:\n'I listened the music.'",a:"TO"}, {q:"Fix the incorrect word:\n'She smiled TO me.'",a:"AT"}, {q:"Fix the incorrect word:\n'He is good IN English.'",a:"AT"}, {q:"Fix the incorrect word:\n'I am angry ON him.'",a:"WITH"}, {q:"Fix the incorrect word:\n'The book is ON the desk.' (No, wait) 'The book is ON the roof.' -> No error. 'The bird flew OVER to the house.' -> No error. 'Fix the incorrect word:\nShe is afraid FROM dogs.'",a:"OF"}, {q:"Fix the incorrect word:\n'He died FROM cancer.'",a:"OF"},
+        {q:"Fix the incorrect word:\n'I congratulate you FOR your success.'",a:"ON"}, {q:"Fix the incorrect word:\n'He is suffering WITH fever.'",a:"FROM"}, {q:"Fix the incorrect word:\n'I prefer walking THAN swimming.'",a:"TO"}, {q:"Fix the incorrect word:\n'She is married WITH a dentist.'",a:"TO"}, {q:"Fix the incorrect word:\n'He is interested FOR history.'",a:"IN"}, {q:"Fix the incorrect word:\n'I am proud FOR you.'",a:"OF"}, {q:"Fix the incorrect word:\n'Don't laugh ON him.'",a:"AT"}, {q:"Fix the incorrect word:\n'She is fond FOR sweets.'",a:"OF"}, {q:"Fix the incorrect word:\n'Beware FROM the dog.'",a:"OF"}, {q:"Fix the incorrect word:\n'He is guilty FOR murder.'",a:"OF"},
+        {q:"Fix the incorrect word:\n'They accused him FOR stealing.'",a:"OF"}, {q:"Fix the incorrect word:\n'I am sure FOR his success.'",a:"OF"}, {q:"Fix the incorrect word:\n'He relies IN my help.'",a:"ON"}, {q:"Fix the incorrect word:\n'We depend FROM our parents.'",a:"ON"}, {q:"Fix the incorrect word:\n'I differ WITH you on this point.'",a:"FROM"}, {q:"Fix the incorrect word:\n'She parted FROM her money.'",a:"WITH"}, {q:"Fix the incorrect word:\n'He parted WITH his friends.'",a:"FROM"}, {q:"Fix the incorrect word:\n'He was absorbed WITH his work.'",a:"IN"}, {q:"Fix the incorrect word:\n'She is confident FOR success.'",a:"OF"}, {q:"Fix the incorrect word:\n'He is capable TO do it.'",a:"OF"}
+    ],
+    comprehension: [
+        {q:"Read: 'John bought 3 apples, ate 1, and gave 1 to Mary.' How many apples does John have left?",opts:["1","2","0"],a:"1"}, {q:"Read: 'The library opens at 9 AM and closes at 5 PM.' How many hours is it open?",opts:["8 hours","9 hours","7 hours"],a:"8 hours"}, {q:"Read: 'Sarah is taller than Mark, but shorter than Leo.' Who is the shortest?",opts:["Mark","Sarah","Leo"],a:"Mark"}, {q:"Read: 'The train arrives at 10:15 AM.' If it is 10:00 AM, how many minutes until it arrives?",opts:["15 minutes","10 minutes","25 minutes"],a:"15 minutes"}, {q:"Read: 'Water freezes at 0 degrees Celsius.' What happens at 0 degrees?",opts:["Water freezes","Water boils","Nothing"],a:"Water freezes"}, {q:"Read: 'Tim has two brothers and one sister.' How many children do Tim's parents have?",opts:["4","3","2"],a:"4"}, {q:"Read: 'A baker bakes a dozen loaves and sells 5.' How many are left?",opts:["7","5","12"],a:"7"}, {q:"Read: 'The Eiffel Tower is in Paris.' Where is the Eiffel Tower?",opts:["Paris","London","Berlin"],a:"Paris"}, {q:"Read: 'Mary wore a red dress because it was her favorite color.' What is Mary's favorite color?",opts:["Red","Blue","Green"],a:"Red"}, {q:"Read: 'Despite the rain, the football match continued.' Did they stop playing?",opts:["No","Yes","Only for a while"],a:"No"},
+        {q:"Read: 'A cheetah can run up to 70 mph.' Which animal is mentioned?",opts:["A cheetah","A lion","A tiger"],a:"A cheetah"}, {q:"Read: 'Mount Everest is the tallest mountain.' What is the tallest mountain?",opts:["Mount Everest","K2","Mount Fuji"],a:"Mount Everest"}, {q:"Read: 'The quick brown fox jumps over the lazy dog.' Who is lazy?",opts:["The dog","The fox","The cat"],a:"The dog"}, {q:"Read: 'Earth is the third planet from the Sun.' Which planet is Earth?",opts:["Third","Second","Fourth"],a:"Third"}, {q:"Read: 'There are 7 days in a week.' How many days are in two weeks?",opts:["14","7","21"],a:"14"}, {q:"Read: 'An octagon has 8 sides.' How many sides does an octagon have?",opts:["8","6","10"],a:"8"}, {q:"Read: 'The sun rises in the east.' Where does the sun rise?",opts:["East","West","North"],a:"East"}, {q:"Read: 'A leap year has 366 days.' How many days in a normal year?",opts:["365","366","364"],a:"365"}, {q:"Read: 'Bees make honey from nectar.' What do bees make?",opts:["Honey","Nectar","Pollen"],a:"Honey"}, {q:"Read: 'A century is 100 years.' How long is half a century?",opts:["50 years","100 years","10 years"],a:"50 years"},
+        {q:"Read: 'Ice is solid water.' What state is ice?",opts:["Solid","Liquid","Gas"],a:"Solid"}, {q:"Read: 'Humans need oxygen to breathe.' What do humans need?",opts:["Oxygen","Carbon","Helium"],a:"Oxygen"}, {q:"Read: 'The Titanic sank in 1912.' What year did it sink?",opts:["1912","1920","1905"],a:"1912"}, {q:"Read: 'A triangle has 3 angles.' How many angles does it have?",opts:["3","4","2"],a:"3"}, {q:"Read: 'Sharks are a type of fish.' What type of animal is a shark?",opts:["Fish","Mammal","Reptile"],a:"Fish"}, {q:"Read: 'Apples can be red, green, or yellow.' Which color is NOT mentioned?",opts:["Blue","Red","Green"],a:"Blue"}, {q:"Read: 'A piano has 88 keys.' How many keys does a piano have?",opts:["88","66","99"],a:"88"}, {q:"Read: 'The Great Wall is in China.' Where is the Great Wall?",opts:["China","Japan","India"],a:"China"}, {q:"Read: 'Penguins live in the Southern Hemisphere.' Where do penguins live?",opts:["Southern Hemisphere","Northern Hemisphere","Equator"],a:"Southern Hemisphere"}, {q:"Read: 'A thermometer measures temperature.' What does it measure?",opts:["Temperature","Distance","Weight"],a:"Temperature"},
+        {q:"Read: 'Bats are mammals, not birds.' What are bats?",opts:["Mammals","Birds","Insects"],a:"Mammals"}, {q:"Read: 'The Nile is the longest river.' What is the longest river?",opts:["The Nile","The Amazon","The Mississippi"],a:"The Nile"}, {q:"Read: 'A decade is 10 years.' How many years in 2 decades?",opts:["20","10","30"],a:"20"}, {q:"Read: 'Jupiter is the largest planet in our solar system.' Which is the largest?",opts:["Jupiter","Saturn","Earth"],a:"Jupiter"}, {q:"Read: 'Spiders have 8 legs.' How many legs do spiders have?",opts:["8","6","10"],a:"8"}, {q:"Read: 'Diamonds are the hardest natural substance.' What is the hardest?",opts:["Diamonds","Gold","Iron"],a:"Diamonds"}, {q:"Read: 'The Pacific is the largest ocean.' Which ocean is the largest?",opts:["Pacific","Atlantic","Indian"],a:"Pacific"}, {q:"Read: 'Cows eat grass.' What do cows eat?",opts:["Grass","Meat","Fish"],a:"Grass"}, {q:"Read: 'An hour has 60 minutes.' How many minutes in half an hour?",opts:["30","60","15"],a:"30"}, {q:"Read: 'The moon orbits the Earth.' What does the moon orbit?",opts:["Earth","Sun","Mars"],a:"Earth"},
+        {q:"Read: 'Cats have retractable claws.' What kind of claws do cats have?",opts:["Retractable","Fixed","None"],a:"Retractable"}, {q:"Read: 'A pentagon has 5 sides.' How many sides does a pentagon have?",opts:["5","6","4"],a:"5"}, {q:"Read: 'Oxygen is a gas.' What state is oxygen?",opts:["Gas","Liquid","Solid"],a:"Gas"}, {q:"Read: 'The speed of light is faster than sound.' Which is faster?",opts:["Light","Sound","Both"],a:"Light"}, {q:"Read: 'A bicycle has 2 wheels.' How many wheels does a bicycle have?",opts:["2","3","4"],a:"2"}, {q:"Read: 'The human body has 206 bones.' How many bones does an adult have?",opts:["206","300","106"],a:"206"}, {q:"Read: 'A leap year occurs every 4 years.' How often does a leap year occur?",opts:["Every 4 years","Every 2 years","Every 10 years"],a:"Every 4 years"}, {q:"Read: 'Leaves produce food through photosynthesis.' How do leaves produce food?",opts:["Photosynthesis","Digestion","Breathing"],a:"Photosynthesis"}, {q:"Read: 'A marathon is 26.2 miles.' How long is a marathon?",opts:["26.2 miles","20 miles","13.1 miles"],a:"26.2 miles"}, {q:"Read: 'Water boils at 100 degrees Celsius.' At what temperature does it boil?",opts:["100","0","50"],a:"100"},
+        {q:"Read: 'The capital of Japan is Tokyo.' What is the capital of Japan?",opts:["Tokyo","Kyoto","Osaka"],a:"Tokyo"}, {q:"Read: 'A hexagon has 6 sides.' How many sides does a hexagon have?",opts:["6","5","8"],a:"6"}, {q:"Read: 'Dogs have a great sense of smell.' What sense is great in dogs?",opts:["Smell","Sight","Taste"],a:"Smell"}, {q:"Read: 'The Earth rotates on its axis.' What does the Earth rotate on?",opts:["Its axis","The moon","The sun"],a:"Its axis"}, {q:"Read: 'A kilometer is 1000 meters.' How many meters in a kilometer?",opts:["1000","100","10000"],a:"1000"}, {q:"Read: 'The alphabet has 26 letters.' How many letters are in the alphabet?",opts:["26","24","28"],a:"26"}, {q:"Read: 'Butterflies start as caterpillars.' What do butterflies start as?",opts:["Caterpillars","Eggs","Worms"],a:"Caterpillars"}, {q:"Read: 'Sound cannot travel in a vacuum.' Where can sound NOT travel?",opts:["A vacuum","Air","Water"],a:"A vacuum"}, {q:"Read: 'The sun is a star.' What is the sun?",opts:["A star","A planet","A moon"],a:"A star"}, {q:"Read: 'A square has 4 equal sides.' How many sides does a square have?",opts:["4","3","5"],a:"4"},
+        {q:"Read: 'Frogs are amphibians.' What are frogs?",opts:["Amphibians","Reptiles","Mammals"],a:"Amphibians"}, {q:"Read: 'A year has 12 months.' How many months in a year?",opts:["12","10","14"],a:"12"}, {q:"Read: 'The Sahara is a large desert.' What is the Sahara?",opts:["A desert","A forest","An ocean"],a:"A desert"}, {q:"Read: 'A tricycle has 3 wheels.' How many wheels does it have?",opts:["3","2","4"],a:"3"}, {q:"Read: 'Venus is the hottest planet.' Which planet is the hottest?",opts:["Venus","Mercury","Mars"],a:"Venus"}, {q:"Read: 'A minute has 60 seconds.' How many seconds in a minute?",opts:["60","30","100"],a:"60"}, {q:"Read: 'Elephants are the largest land animals.' What are the largest land animals?",opts:["Elephants","Giraffes","Rhinos"],a:"Elephants"}, {q:"Read: 'A millipede has many legs.' What does a millipede have?",opts:["Many legs","Wings","Fins"],a:"Many legs"}, {q:"Read: 'The brain controls the body.' What controls the body?",opts:["The brain","The heart","The lungs"],a:"The brain"}, {q:"Read: 'A rainbow has 7 colors.' How many colors does a rainbow have?",opts:["7","6","8"],a:"7"},
+        {q:"Read: 'Whales breathe air.' What do whales breathe?",opts:["Air","Water","Helium"],a:"Air"}, {q:"Read: 'A quarter is 25 cents.' How many cents in a quarter?",opts:["25","50","10"],a:"25"}, {q:"Read: 'The heart pumps blood.' What does the heart pump?",opts:["Blood","Air","Water"],a:"Blood"}, {q:"Read: 'A spider web is made of silk.' What is a spider web made of?",opts:["Silk","Cotton","Wool"],a:"Silk"}, {q:"Read: 'Mars is known as the Red Planet.' Which planet is Red?",opts:["Mars","Venus","Jupiter"],a:"Mars"}, {q:"Read: 'A standard guitar has 6 strings.' How many strings does it have?",opts:["6","4","8"],a:"6"}, {q:"Read: 'Kangaroos carry their young in a pouch.' Where do kangaroos carry their young?",opts:["In a pouch","On their back","In their mouth"],a:"In a pouch"}, {q:"Read: 'A decagon has 10 sides.' How many sides does a decagon have?",opts:["10","8","12"],a:"10"}, {q:"Read: 'The liver is an organ.' What is the liver?",opts:["An organ","A bone","A muscle"],a:"An organ"}, {q:"Read: 'A piano has black and white keys.' What color are the keys?",opts:["Black and white","Red and blue","Yellow and green"],a:"Black and white"},
+        {q:"Read: 'Snakes shed their skin.' What do snakes shed?",opts:["Skin","Hair","Scales"],a:"Skin"}, {q:"Read: 'A half is 50 percent.' What percentage is a half?",opts:["50","25","75"],a:"50"}, {q:"Read: 'The lungs help you breathe.' What do lungs do?",opts:["Help you breathe","Pump blood","Digest food"],a:"Help you breathe"}, {q:"Read: 'A violin has 4 strings.' How many strings does a violin have?",opts:["4","6","5"],a:"4"}, {q:"Read: 'The equator divides the Earth in half.' What divides the Earth?",opts:["The equator","The poles","The oceans"],a:"The equator"}, {q:"Read: 'A dollar is 100 cents.' How many cents in a dollar?",opts:["100","50","10"],a:"100"}, {q:"Read: 'Ostriches cannot fly.' Can ostriches fly?",opts:["No","Yes","Only short distances"],a:"No"}, {q:"Read: 'A heptagon has 7 sides.' How many sides does it have?",opts:["7","6","8"],a:"7"}, {q:"Read: 'The stomach digests food.' What does the stomach do?",opts:["Digests food","Pumps blood","Helps breathe"],a:"Digests food"}, {q:"Read: 'A rainbow appears after rain.' When does a rainbow appear?",opts:["After rain","Before rain","During snow"],a:"After rain"}
+    ]
+};
 
 // Copy pools to safely splice from without losing the original database
-let spinCount = 0;
+let poolNormal = JSON.parse(JSON.stringify(dbNormal));
+
+// --- STATE ---
+let currentStudent = null;
+let lostList = [];
+let currentGameType = '';
+let questions = [];
+let currentQIndex = 0;
+let score = 0;
+let passMark = 2; // Need 2 out of 3
+let timerInt;
+let timeLeft = 60;
+let inputText = "";
+let accentChoice = 'US';
+let currentSelectedOption = null;
+let spinCount = 0; // For rigging logic
+
+// Audio Context for spinning sound
+let audioCtx = null;
+function initAudio() {
+    if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+}
+function playTick() {
+    if(!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime); // low volume
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+}
+
+// --- UTILS ---
+function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 
 // Height Animation Helper
 function animateCardHeight(cardEl, callback) {
@@ -499,7 +478,6 @@ let spinArcStart = 10;
 let spinTime = 0;
 let spinTimeTotal = 0;
 let lastSegment = 0;
-let riggedIndex = -1;
 
 function drawWheel() {
     if(studentsData.length === 0) return;
@@ -512,8 +490,8 @@ function drawWheel() {
     ctx.scale(dpr, dpr);
     
     let outsideRadius = size/2 - 10;
-    let textStartRadius = 60; // Start from inside
-    let insideRadius = 50;
+    let textStartRadius = 75; // Safely away from the center
+    let insideRadius = 60;
     
     ctx.clearRect(0,0,size,size);
     ctx.translate(size/2, size/2);
@@ -544,14 +522,14 @@ function drawWheel() {
         ctx.rotate(angle + arc / 2);
         
         let text = studentsData[i].name;
-        // Dynamically size text to fit (prevent horizontal bleed)
+        // Dynamically size text to fit
         let fontSize = Math.min(14, (arc * outsideRadius) / 1.5); 
         ctx.font = `bold ${fontSize}px Inter, sans-serif`;
-        ctx.textAlign = "left"; // Start from inside edge and go outwards
+        ctx.textAlign = "left"; // Start from inside edge and go outwards!
         ctx.textBaseline = "middle";
         
         // Trim if too long to prevent overflowing outside of the wheel
-        if(text.length > 18) text = text.substring(0,16) + "..";
+        if(text.length > 17) text = text.substring(0,15) + "..";
         
         ctx.fillText(text, 0, 0); 
         ctx.restore();
@@ -562,6 +540,25 @@ function drawWheel() {
 function easeOut(t, b, c, d) {
     t /= d; t--;
     return c * (t*t*t + 1) + b;
+}
+
+// Simulate spin purely mathematically to verify landing target
+function simulateSpin(arcStart, timeTotal) {
+    let tempAngle = startAngle;
+    let sTime = 0;
+    while(true) {
+        sTime += 30;
+        if(sTime >= timeTotal) break;
+        let spinAngle = arcStart - easeOut(sTime, 0, arcStart, timeTotal);
+        tempAngle += (spinAngle * Math.PI / 180);
+    }
+    let degrees = tempAngle * 180 / Math.PI;
+    degrees = degrees % 360;
+    if(degrees < 0) degrees += 360;
+    let arcd = arc * 180 / Math.PI;
+    let indexPos = Math.floor((360 - degrees) / arcd) % studentsData.length;
+    if(indexPos < 0) indexPos += studentsData.length;
+    return indexPos;
 }
 
 function rotateWheel() {
@@ -590,37 +587,31 @@ function spinWheel() {
     if(studentsData.length === 0) { alert("No students left! Refresh the page to restart."); return; }
     initAudio();
     document.getElementById('spin-btn').disabled = true;
+
+    // Rigging Logic
+    let targetIndex = -1;
+    let isRigged = false;
     
-    riggedIndex = -1;
-    let r = Math.random();
-    if (spinCount === 0 && r < 0.70) riggedIndex = studentsData.findIndex(s => s.name.includes("ALVIN TANG"));
-    else if (spinCount === 1 && r < 0.69) riggedIndex = studentsData.findIndex(s => s.name.includes("ELVIS LOW"));
-    
-    spinTime = 0;
-    
-    // Calculate required spinTimeTotal to land on riggedIndex via simulation
-    if (riggedIndex !== -1) {
-        let found = false;
-        while(!found) {
-            spinArcStart = Math.random() * 10 + 10;
-            spinTimeTotal = Math.random() * 3000 + 4000;
-            let simAngle = startAngle;
-            let sTime = 0;
-            while(sTime < spinTimeTotal) {
-                sTime += 30;
-                let sAngle = spinArcStart - easeOut(sTime, 0, spinArcStart, spinTimeTotal);
-                simAngle += (sAngle * Math.PI / 180);
-            }
-            let deg = simAngle * 180 / Math.PI;
-            let a = arc * 180 / Math.PI;
-            let idx = Math.floor((360 - (deg % 360)) / a) % studentsData.length;
-            if (idx === riggedIndex) found = true;
-        }
-    } else {
-        spinArcStart = Math.random() * 10 + 10;
-        spinTimeTotal = Math.random() * 3000 + 4000;
+    if (spinCount === 0 && Math.random() < 0.70) {
+        targetIndex = studentsData.findIndex(s => s.name.includes("ALVIN TANG"));
+    } else if (spinCount === 1 && Math.random() < 0.69) {
+        targetIndex = studentsData.findIndex(s => s.name.includes("ELVIS LOW"));
     }
     
+    if(targetIndex !== -1) isRigged = true;
+
+    let arcStart, timeTotal;
+    let maxTries = 10000;
+    do {
+        arcStart = Math.random() * 10 + 10;
+        timeTotal = Math.random() * 3000 + 4000;
+        timeTotal = Math.round(timeTotal / 30) * 30; // Align with 30ms intervals
+        maxTries--;
+    } while (isRigged && simulateSpin(arcStart, timeTotal) !== targetIndex && maxTries > 0);
+
+    spinArcStart = arcStart;
+    spinTimeTotal = timeTotal;
+    spinTime = 0;
     spinCount++;
     rotateWheel();
 }
@@ -629,24 +620,29 @@ function stopRotateWheel() {
     clearTimeout(spinTimeout);
     
     let degrees = startAngle * 180 / Math.PI;
+    degrees = degrees % 360;
+    if(degrees < 0) degrees += 360;
     let arcd = arc * 180 / Math.PI;
-    let index = Math.floor((360 - (degrees % 360)) / arcd) % studentsData.length;
+    let index = Math.floor((360 - degrees) / arcd) % studentsData.length;
+    if(index < 0) index += studentsData.length;
     
     currentStudent = studentsData[index];
     
     // Auto Remove Student
     studentsData.splice(index, 1);
     
+    // Proceed to Chosen Modal
     setTimeout(() => {
         document.getElementById('disp-student-name').innerText = currentStudent.name;
         document.getElementById('disp-student-cn').innerText = currentStudent.cn !== "-" ? currentStudent.cn : "";
-        document.getElementById('spin-btn').disabled = false;
         
-        drawWheel(); // Redraw wheel without them
-        showScreen('screen-games');
+        document.getElementById('chosen-name').innerText = currentStudent.name;
+        drawWheel(); // Redraw wheel without them immediately
+        openModal('modal-chosen');
     }, 1000);
 }
 
+// Initial draw
 drawWheel();
 
 // --- GAME LOGIC ---
@@ -664,15 +660,19 @@ function cancelSelectionFlow() {
     );
 }
 
-function getQuestions(type, isHard, count) {
-    let sourcePool = isHard ? poolHard[type] : poolNormal[type];
+// Function to fetch questions safely without running out
+function getQuestions(type, count) {
+    let sourcePool = poolNormal[type];
+    
+    // Refill if not enough questions (Unlikely with 90 questions pool)
     if(sourcePool.length < count) {
-        poolHard[type] = JSON.parse(JSON.stringify(dbHard[type]));
         poolNormal[type] = JSON.parse(JSON.stringify(dbNormal[type]));
-        sourcePool = isHard ? poolHard[type] : poolNormal[type];
+        sourcePool = poolNormal[type];
     }
+    
     shuffle(sourcePool);
-    return sourcePool.splice(0, count);
+    let selected = sourcePool.splice(0, count); // removes them so they aren't repeated
+    return selected;
 }
 
 function setAccent(choice) {
@@ -688,8 +688,8 @@ function startGame(type) {
     score = 0;
     currentQIndex = 0;
     
-    let isHard = isHardStudent(currentStudent.name);
-    questions = getQuestions(type, isHard, 3);
+    // Everyone uses the same 90 questions master pool now, completely different for every student
+    questions = getQuestions(type, 3);
     
     passMark = 2; // Need 2 to pass
     
@@ -733,7 +733,6 @@ function loadQuestion() {
         
         // Reset Inputs
         if(disp) { 
-            disp.style.background = "var(--ios-input)"; 
             disp.style.borderColor = "var(--ios-blue)"; 
             disp.style.color = "inherit"; 
         }
@@ -760,17 +759,14 @@ function loadQuestion() {
         else if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
             if (q.showTicket) {
                 tktUi.style.display = 'block';
-                // Update Ticket Data Dynamics
-                document.getElementById('t-dest').innerText = `: ${q.ticket.dest}`;
-                document.getElementById('t-dep').innerText = `: ${q.ticket.dep}`;
-                document.getElementById('t-arr').innerText = `: ${q.ticket.arr}`;
-                document.getElementById('t-fare').innerText = `: ${q.ticket.fare}`;
+                // Barcode Easter Egg
                 document.getElementById('ticket-barcode-text').innerText = `*${currentStudent.name.replace(/\s+/g, '')}*`;
             }
             mcqCont.style.display = 'block';
             let optsHTML = '';
             let opts = shuffle([...q.opts]);
             opts.forEach(opt => {
+                // Select first, then submit
                 optsHTML += `<button class="mcq-btn" onclick="selectMCQ(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
             });
             mcqCont.innerHTML = optsHTML;
@@ -886,17 +882,14 @@ function submitAnswer() {
         document.getElementById('v-keyboard').style.pointerEvents = 'none'; // prevent typing
         
         if (userA === realA) {
-            disp.style.background = "var(--success)";
             disp.style.borderColor = "var(--success)";
-            disp.style.color = "#fff";
-            disp.innerText = "CORRECT! ✅";
+            disp.style.color = "var(--success)";
             score++;
             showFeedback(true);
         } else {
-            disp.style.background = "var(--danger)";
             disp.style.borderColor = "var(--danger)";
-            disp.style.color = "#fff";
-            disp.innerText = "WRONG ❌: " + realA; 
+            disp.style.color = "var(--danger)";
+            disp.innerText = realA; // reveal correct answer
             showFeedback(false);
         }
     }
