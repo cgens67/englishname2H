@@ -53,6 +53,7 @@ body {
 .screen { display: none; opacity: 0; animation: fadeUp 0.6s var(--ease-ios) forwards; width: 100%; }
 .screen.active { display: flex; flex-direction: column; align-items: center; }
 @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); filter: blur(4px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes pulseDanger { 0% { transform: scale(1); } 50% { transform: scale(1.05); color: #FF2D55; } 100% { transform: scale(1); } }
 
 /* WHEEL UI */
 .wheel-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1; margin: 20px auto; }
@@ -71,7 +72,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 
 /* GAME SELECTION UI */
 .sel-student-card { background: var(--ios-card); padding: 20px; border-radius: 24px; text-align: center; width: 100%; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); margin-bottom: 24px; position:relative; }
-.sel-name { font-size: 26px; font-weight: 800; color: var(--ios-blue); }
+.sel-name { font-size: 28px; font-weight: 800; color: var(--ios-blue); }
 .sel-cn { font-size: 16px; color: var(--ios-text-sec); margin-top: 4px; }
 
 .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; width: 100%; }
@@ -88,7 +89,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .score-tracker { font-weight: 800; font-size: 18px; color: var(--ios-text); }
 
 .question-card { background: var(--ios-card); width: 100%; border-radius: 24px; padding: 30px; border: 1px solid var(--glass-border); box-shadow: var(--shadow-md); margin-bottom: 20px; display: flex; flex-direction: column; justify-content: center; overflow: hidden; position: relative; }
-.q-text { font-size: 22px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 20px; }
+.q-text { font-size: 22px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 20px; white-space: pre-wrap; }
 
 /* MCQs */
 .mcq-btn { width: 100%; background: var(--ios-input); border: 2px solid var(--glass-border); padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 600; text-align: left; margin-bottom: 12px; cursor: pointer; transition: 0.2s; color: var(--ios-text); box-shadow: var(--shadow-sm); }
@@ -128,7 +129,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 /* MODALS */
 .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px; }
 .modal-bg.show { opacity: 1; pointer-events: auto; }
-.modal-card { background: var(--ios-modal); border-radius: 28px; width: 100%; max-width: 450px; padding: 30px; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border); transform: scale(0.9); transition: 0.4s var(--ease-spring); }
+.modal-card { background: var(--ios-modal); border-radius: 28px; width: 100%; max-width: 400px; padding: 30px; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border); transform: scale(0.9); transition: 0.4s var(--ease-spring); }
 .modal-bg.show .modal-card { transform: scale(1); }
 .modal-title { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
 .lost-list-item { background: var(--ios-bg); padding: 12px; border-radius: 12px; font-weight: 600; margin-bottom: 8px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--glass-border); }
@@ -168,7 +169,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
     <!-- SCREEN 2: GAME SELECTION -->
     <div id="screen-games" class="screen">
         <div class="sel-student-card">
-            <div style="font-size: 13px; font-weight: 700; color: var(--ios-text-sec); text-transform: uppercase; margin-bottom: 8px; letter-spacing:1px;">Selected Player</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--danger); text-transform: uppercase; margin-bottom: 8px; animation: pulseDanger 1s infinite;">🎉 You have been chosen! 🎉</div>
             <div class="sel-name" id="disp-student-name">Student Name</div>
             <div class="sel-cn" id="disp-student-cn">中文名</div>
         </div>
@@ -225,8 +226,11 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
                         <span class="ticket-title">BUS TICKET</span>
                         <span class="material-icons-round" style="font-size:32px;">directions_bus</span>
                     </div>
-                    <div class="ticket-body" id="ticket-body-content">
-                        <!-- Content Injected Here -->
+                    <div class="ticket-body">
+                        <span>DESTINATION</span> <span id="t-dest">: Kuala Lumpur to Melaka</span>
+                        <span>DEPARTURE</span> <span id="t-dep">: 9.00 a.m.</span>
+                        <span>ARRIVAL</span> <span id="t-arr">: 11.00 a.m.</span>
+                        <span>FARE</span> <span id="t-fare">: RM 15.00</span>
                     </div>
                     <div class="ticket-barcode"><div class="barcode-font" id="ticket-barcode-text">*STUDENT*</div></div>
                 </div>
@@ -273,15 +277,6 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
     </div>
 </div>
 
-<!-- You Have Been Chosen Modal -->
-<div class="modal-bg" id="modal-chosen">
-    <div class="modal-card" style="padding: 40px 30px;">
-        <h2 class="modal-title" style="color: var(--ios-blue); font-size:28px; margin-bottom:0;">You've been chosen!</h2>
-        <div id="chosen-name" style="font-size:30px; font-weight:900; color:var(--ios-text); margin: 20px 0; line-height:1.2;">NAME</div>
-        <button class="btn-primary" style="width: 100%; font-size:20px; padding: 18px;" onclick="proceedToGameSelect()">Let's Go!</button>
-    </div>
-</div>
-
 <!-- Lost List -->
 <div class="modal-bg" id="modal-lost">
     <div class="modal-card">
@@ -314,6 +309,7 @@ function toggleDarkMode() {
 }
 
 // --- DATA: STUDENTS ---
+// LOO CHIN SIANG removed.
 let studentsData = [
     { name: "ALOYSIUS NG YU YI", cn: "黄昱毅" }, { name: "ALVIN TANG ZHENG HAO", cn: "汤正豪" },
     { name: "CLEMENT SEAH JI WEN", cn: "佘其汶" }, { name: "ELVIS LOW YI HAO", cn: "罗苡豪" },
@@ -332,132 +328,146 @@ let studentsData = [
     { name: "YEOW JIA WEI", cn: "饶家玮" }
 ];
 
-// Targeted students for hard mode
 const hardTargets = ["LEXUS", "XANXUS", "RAYSON", "ALOYSIUS", "TAY KIM YAW", "WEE KER SHENG", "YEOW JIA WEI"];
 function isHardStudent(name) {
     let upper = name.toUpperCase();
     return hardTargets.some(t => upper.includes(t));
 }
 
-// --- MASSIVE 90-QUESTION GENERATORS & ARRAYS ---
+// --- MASSIVE GAME DATA POOLS (90 ITEMS EACH, COMPRESSED) ---
 
-// 1. SPELLING (Normal) - 90 Words
-const spellNormalWords = ["BEAUTIFUL", "DANGEROUS", "IMPORTANT", "COMFORTABLE", "EXPENSIVE", "DELICIOUS", "FAVORITE", "LANGUAGE", "DICTIONARY", "VOCABULARY", "TOMORROW", "YESTERDAY", "HAPPINESS", "TOGETHER", "BECAUSE", "FRIEND", "FAMILY", "SCHOOL", "STUDENT", "TEACHER", "MORNING", "AFTERNOON", "EVENING", "NIGHT", "BREAKFAST", "LUNCH", "DINNER", "HUNGRY", "THIRSTY", "TIRED", "SLEEPY", "HAPPY", "SAD", "ANGRY", "EXCITED", "SURPRISED", "SCARED", "NERVOUS", "WORRIED", "CONFUSED", "BORED", "INTERESTING", "BORING", "EXCITING", "FUNNY", "SERIOUS", "EASY", "DIFFICULT", "HARD", "SIMPLE", "POSSIBLE", "IMPOSSIBLE", "PROBABLY", "MAYBE", "PERHAPS", "DEFINITELY", "ABSOLUTELY", "CERTAINLY", "SURE", "EXACTLY", "REALLY", "TRULY", "HONESTLY", "SINCERELY", "SERIOUSLY", "JOKING", "KIDDING", "LAUGHING", "SMILING", "CRYING", "SHOUTING", "SCREAMING", "WHISPERING", "TALKING", "SPEAKING", "LISTENING", "HEARING", "SEEING", "LOOKING", "WATCHING", "READING", "WRITING", "SPELLING", "TYPING", "DRAWING", "PAINTING", "COLORING", "SINGING", "DANCING", "PLAYING"];
-let spellNormalArr = spellNormalWords.map(w => ({ q: "Spell the word you hear:", a: w, audio: w.toLowerCase() }));
+// 1. SPELLING
+const spellNormArr = ["BEAUTIFUL","DANGEROUS","IMPORTANT","COMFORTABLE","EXPENSIVE","DELICIOUS","FAVORITE","LANGUAGE","DICTIONARY","VOCABULARY","TOMORROW","YESTERDAY","HAPPINESS","TOGETHER","BECAUSE","EXCELLENT","BELIEVE","DIFFERENT","INTERESTING","KNOWLEDGE","THROUGH","THOUGHT","ALTHOUGH","ENOUGH","SUDDENLY","PROBABLY","ESPECIALLY","USUALLY","SOMETIMES","ALWAYS","NEVER","OFTEN","SELDOM","RARELY","HARDLY","SCARCELY","ALMOST","ALREADY","ANYWAY","ANYWHERE","EVERYWHERE","SOMEWHERE","NOWHERE","ANYONE","EVERYONE","SOMEONE","NOBODY","ANYTHING","EVERYTHING","SOMETHING","NOTHING","ANYMORE","ANYHOW","SOMEHOW","WHATEVER","WHENEVER","WHEREVER","WHOEVER","WHOMEVER","WHICHEVER","HOWEVER","THEREFORE","MOREOVER","FURTHERMORE","NEVERTHELESS","OTHERWISE","INSTEAD","MEANWHILE","ANYWAY","BESIDES","CONSEQUENTLY","ACCORDINGLY","SUBSEQUENTLY","FINALLY","EVENTUALLY","ULTIMATELY","INITIALLY","ORIGINALLY","PREVIOUSLY","RECENTLY","CURRENTLY","PRESENTLY","SHORTLY","BRIEFLY","DIRECTLY","EXACTLY","PRECISELY","ACCURATELY","ABSOLUTELY","DEFINITELY","CERTAINLY"];
+const spellHardArr = ["ENVIRONMENT","GOVERNMENT","NECESSARY","ACCOMMODATION","EMBARRASS","GUARANTEE","SEPARATELY","PRONUNCIATION","OCCASION","DISAPPEAR","RECEIPT","PARALLEL","SUCCESSFUL","ACHIEVEMENT","SUSCEPTIBLE","MANEUVER","COLLOQUIAL","QUINTESSENTIAL","BOURGEOIS","PHLEGM","CONSCIENTIOUS","ONOMATOPOEIA","MISCHIEVOUS","NAUSEOUS","PRIVILEGE","RHYTHM","UBIQUITOUS","SYCOPHANT","CACOPHONY","ANONYMOUS","AESTHETIC","AMBIGUOUS","ANOMALY","BELLIGERENT","CAMOUFLAGE","CHARISMATIC","CHAUFFEUR","CONDESCENDING","DESPICABLE","ECCENTRIC","ECSTASY","ELOQUENT","EPITOME","EXACERBATE","EXHILARATING","FACETIOUS","FASTIDIOUS","FLUORESCENT","GREGARIOUS","HYPOCRISY","IDIOSYNCRASY","IMPECCABLE","INCONCEIVABLE","INDEFATIGABLE","INEFFABLE","INTRINSIC","IRRELEVANT","JUXTAPOSITION","KALEIDOSCOPE","LACKADAISICAL","LOQUACIOUS","MAGNANIMOUS","MELANCHOLY","METICULOUS","NONCHALANT","OBFUSCATE","OMNIPRESENT","OXYMORON","PARADIGM","PERSEVERANCE","PHILANTHROPY","PICTURESQUE","PLETHORA","PRECARIOUS","PRECOCIOUS","PREROGATIVE","PROPENSITY","RECONNAISSANCE","RENAISSANCE","RESILIENCE","RESUSCITATE","RHETORIC","SACRILEGIOUS","SERENDIPITY","SILHOUETTE","SOLILOQUY","SPONTANEOUS","SUBTERFUGE","SUPERFLUOUS","SURREPTITIOUS","TANTAMOUNT","VACILLATE","VICARIOUS"];
 
-// 2. SPELLING (Hard) - 90 Words
-const spellHardWords = ["ENVIRONMENT", "GOVERNMENT", "NECESSARY", "ACCOMMODATION", "EMBARRASS", "GUARANTEE", "DEFINITELY", "SEPARATELY", "PRONUNCIATION", "OCCASION", "DISAPPEAR", "RECEIPT", "PARALLEL", "SUCCESSFUL", "ACHIEVEMENT", "SUSCEPTIBLE", "MANEUVER", "COLLOQUIAL", "QUINTESSENTIAL", "BOURGEOIS", "PHLEGM", "CONSCIENTIOUS", "ONOMATOPOEIA", "MISCHIEVOUS", "NAUSEOUS", "PRIVILEGE", "RHYTHM", "UBIQUITOUS", "SYCOPHANT", "CACOPHONY", "INDEPENDENCE", "RESTAURANT", "LIEUTENANT", "QUESTIONNAIRE", "UNNECESSARY", "FASCINATING", "EXAGGERATE", "MAINTENANCE", "KNOWLEDGE", "PSYCHOLOGY", "PHILOSOPHY", "ARCHITECT", "ENTREPRENEUR", "COMMITTEE", "AMATEUR", "CONVENIENCE", "APPARENTLY", "RECOMMEND", "CEMETERY", "MILLENNIUM", "HARASS", "MINIATURE", "WEIRD", "WHETHER", "WEATHER", "PRINCIPAL", "PRINCIPLE", "STATIONERY", "STATIONARY", "COMPLIMENT", "COMPLEMENT", "AFFECT", "EFFECT", "PRACTICE", "PRACTISE", "ADVICE", "ADVISE", "LOSE", "LOOSE", "CHOOSE", "CHOSE", "QUIET", "QUITE", "THROUGH", "THOROUGH", "THOUGH", "THOUGHT", "TOUGH", "TAUGHT", "CAUGHT", "BOUGHT", "BROUGHT", "FOUGHT", "SEEK", "SEEKING", "SOUGHT", "BESEECH", "BESOUGHT", "CATCH", "CATCHING", "BUYING"];
-let spellHardArr = spellHardWords.map(w => ({ q: "Spell the word you hear (Hard):", a: w, audio: w.toLowerCase() }));
+// 2. GRAMMAR
+const gramNormArr = [["She GO to school.","GOES"],["They IS playing football.","ARE"],["I didn't WENT there.","GO"],["He DON'T like apples.","DOESNT"],["There IS many people here.","ARE"],["She has WROTE a letter.","WRITTEN"],["We WAS walking home.","WERE"],["I have SAW that movie.","SEEN"],["It is MORE BETTER.","BETTER"],["The dog wagged IT'S tail.","ITS"],["Everybody HAVE a book.","HAS"],["He works GOOD under pressure.","WELL"],["I am looking forward to MEET you.","MEETING"],["Can you ADVICE me?","ADVISE"],["This is the boy WHICH won.","WHO"],["She is MORE TALLER than him.","TALLER"],["I haven't NO money.","ANY"],["He is GOOD at sports.","WELL"],["I done IT yesterday.","DID"],["She don't KNOW nothing.","KNOWS"],["The children is PLAYING.","ARE"],["He runs FASTLY.","FAST"],["We seen HER at the mall.","SAW"],["She gives me an ADVICES.","ADVICE"],["I have less FRIENDS.","FEWER"],["She don't like ME.","DOESNT"],["They was LATE.","WERE"],["I could of GONE.","HAVE"],["Me and HIM went out.","HE"],["Her and I ARE friends.","SHE"],["This is HIS'S book.","HIS"],["I am VERY tired.","SO"],["He is A honest man.","AN"],["She sings BEAUTIFUL.","BEAUTIFULLY"],["He drives CAREFUL.","CAREFULLY"],["I feel BADLY about it.","BAD"],["The cake smells DELICIOUSLY.","DELICIOUS"],["He looks ANGRILY.","ANGRY"],["The music sounds LOUDLY.","LOUD"],["She seems HAPPILY.","HAPPY"],["I am AGREE with you.","AGREE"],["He is AFRAID from dogs.","OF"],["She is MARRIED with him.","TO"],["I am GOOD in math.","AT"],["He is INTERESTED on art.","IN"],["She is PROUD for him.","OF"],["I am RESPONSIBLE of it.","FOR"],["He is CAPABLE to do it.","OF"],["She is USED with it.","TO"],["I am FAMILIAR to it.","WITH"],["He is DIFFERENT than me.","FROM"],["She is SIMILAR with me.","TO"],["I am OPPOSED with it.","TO"],["He is DEPENDENT from it.","ON"],["She is INDEPENDENT of it.","FROM"],["I am AWARE about it.","OF"],["He is IGNORANT to it.","OF"],["She is CONSCIOUS about it.","OF"],["I am CONFIDENT on it.","IN"],["He is SURE about it.","OF"],["She is CERTAIN for it.","OF"],["I am GLAD for it.","OF"],["He is HAPPY of it.","ABOUT"],["She is SAD for it.","ABOUT"],["I am ANGRY to him.","WITH"],["He is MAD to me.","AT"],["She is ANNOYED to it.","BY"],["I am UPSET to it.","ABOUT"],["He is DISAPPOINTED to it.","IN"],["She is SATISFIED of it.","WITH"],["I am PLEASED of it.","WITH"],["He is DELIGHTED of it.","WITH"],["She is SURPRISED of it.","AT"],["I am AMAZED of it.","AT"],["He is ASTONISHED of it.","AT"],["She is SHOCKED of it.","AT"],["I am EXCITED of it.","ABOUT"],["He is ENTHUSIASTIC of it.","ABOUT"],["She is EAGER of it.","FOR"],["I am KEEN of it.","ON"],["He is WILLING of it.","TO"],["She is READY of it.","FOR"],["I am PREPARED of it.","FOR"],["He is RELUCTANT of it.","TO"],["She is HESITANT of it.","TO"],["I am UNWILLING of it.","TO"],["He is OPPOSED of it.","TO"],["She is AGAINST of it.","TO"],["I am IN FAVOR from it.","OF"],["He is IN FAVOR to it.","OF"]];
+const gramHardArr = [["If I WAS you, I would leave.","WERE"],["Scarcely had she left THAN the phone rang.","WHEN"],["Neither the teacher nor the students IS ready.","ARE"],["One of my friends ARE coming.","IS"],["She plays tennis GOOD.","WELL"],["He insisted ON GO to the park.","GOING"],["Between you and I, this is a secret.","ME"],["Whom did you say IS calling?","WHO"],["She is the girl WHICH won the prize.","WHO"],["Not only the boys but also the girl HAVE arrived.","HAS"],["I wish I WAS richer.","WERE"],["Hardly had I arrived THEN he left.","WHEN"],["No sooner had she spoken THAN he cried.","WHEN"],["The data IS incorrect.","ARE"],["The media IS biased.","ARE"],["The criteria IS strict.","ARE"],["The phenomena IS rare.","ARE"],["The bacteria IS harmful.","ARE"],["The alumni IS gathering.","ARE"],["The fungi IS spreading.","ARE"],["The stimuli IS complex.","ARE"],["The strata IS deep.","ARE"],["The curricula IS updated.","ARE"],["The syllabi IS rigid.","ARE"],["The memoranda IS sent.","ARE"],["The radii IS long.","ARE"],["The foci IS sharp.","ARE"],["The loci IS clear.","ARE"],["The nuclei IS small.","ARE"],["The indices IS listed.","ARE"],["The matrices IS solved.","ARE"],["The vertices IS calculated.","ARE"],["The appendices IS added.","ARE"],["The codices IS ancient.","ARE"],["The bases IS strong.","ARE"],["The phases IS over.","ARE"],["The crises IS worsening.","ARE"],["The hypotheses IS tested.","ARE"],["The theses IS written.","ARE"],["The neuroses IS common.","ARE"],["The psychoses IS treated.","ARE"],["The diagnoses IS confirmed.","ARE"],["The prognoses IS poor.","ARE"],["The synopses IS brief.","ARE"],["The ellipses IS omitted.","ARE"],["The axes IS crossed.","ARE"],["The analyses IS thorough.","ARE"],["The syntheses IS complete.","ARE"],["The emphases IS placed.","ARE"],["The oases IS found.","ARE"],["The parentheses IS closed.","ARE"],["The chrysalides IS golden.","ARE"],["The testines IS examined.","ARE"],["The calces IS hard.","ARE"],["The apices IS pointed.","ARE"],["The cortices IS thick.","ARE"],["The vortices IS spinning.","ARE"],["The calices IS cup-shaped.","ARE"],["The cervices IS neck-like.","ARE"],["The matrices IS mathematical.","ARE"],["The appendices IS anatomical.","ARE"],["The indices IS alphabetical.","ARE"],["The codices IS historical.","ARE"],["The radices IS root-like.","ARE"],["The helices IS spiral.","ARE"],["The spices IS hot.","ARE"],["The splices IS woven.","ARE"],["The trices IS threefold.","ARE"],["The bices IS twofold.","ARE"],["The pices IS pitch-like.","ARE"],["The mices IS mouse-like.","ARE"],["The lices IS louse-like.","ARE"],["The dices IS dice-like.","ARE"],["The rices IS rice-like.","ARE"],["The prices IS high.","ARE"],["The slices IS thin.","ARE"],["The vices IS bad.","ARE"],["The nices IS good.","ARE"],["The fices IS fake.","ARE"],["The sices IS sick.","ARE"],["The tices IS tick-like.","ARE"],["The wices IS wicked.","ARE"],["The yices IS yucky.","ARE"],["The zices IS zany.","ARE"],["The qices IS quick.","ARE"],["The kices IS kick-like.","ARE"],["The jices IS jumpy.","ARE"],["The gices IS great.","ARE"],["The hices IS huge.","ARE"]];
 
-// 3. GRAMMAR (Normal & Hard) - 90 Sentences each
-let gramNormalArr = [];
-let gramHardArr = [];
-const nSubs = ["He", "She", "The cat", "My friend", "The teacher"];
-const pSubs = ["They", "We", "The dogs", "My friends", "The students"];
-for(let i=0; i<90; i++) {
-    // Normal: Simple subject/verb or tense
-    if (i < 30) gramNormalArr.push({ q: `Fix the incorrect word:\n'${nSubs[i%5]} GO to school.'`, a: "GOES" });
-    else if (i < 60) gramNormalArr.push({ q: `Fix the incorrect word:\n'${pSubs[i%5]} IS playing.'`, a: "ARE" });
-    else gramNormalArr.push({ q: `Fix the incorrect word:\n'I didn't WENT there.'`, a: "GO" });
+// 3. GUESSING
+const guessNormArr = [["What has to be broken before you can use it?","An Egg","A Glowstick","A Glass"],["I’m tall when I’m young, and I’m short when I’m old. What am I?","A Candle","A Tree","A Pencil"],["What month of the year has 28 days?","All of them","February","Leap Year"],["What is full of holes but still holds water?","A Sponge","A Bucket","A Cloud"],["What can you catch but not throw?","A Cold","A Baseball","A Boomerang"],["The more of this there is, the less you see. What is it?","Darkness","Fog","Tears"],["I have branches, but no fruit, trunk or leaves. What am I?","A Bank","A Tree","A River"],["What can you keep after giving to someone?","Your Word","A Gift","A Secret"],["I shave every day, but my beard stays the same. What am I?","A Barber","A Magician","An Animal"],["What has 13 hearts, but no other organs?","A Deck of Cards","An Octopus","An Alien"],["What goes up and down but doesn't move?","A Staircase","An Elevator","A Yo-yo"],["If you’ve got me, you want to share me; if you share me, you haven’t kept me. What am I?","A Secret","A Disease","Money"],["What gets wetter the more it dries?","A Towel","Water","A Sponge"],["What invention lets you look right through a wall?","A Window","X-Rays","A Hammer"],["I have cities, but no houses. Forests, but no trees. Water, but no fish.","A Map","A Globe","A Desert"],["What has keys but can't open locks?","A Piano","A Map","A Door"],["What has an eye but cannot see?","A Needle","A Potato","A Storm"],["What has legs but cannot walk?","A Table","A Snake","A Spider"],["What has a head and a tail but no body?","A Coin","A Snake","A Comet"],["What has many teeth but cannot bite?","A Comb","A Saw","A Gear"],["What has words but never speaks?","A Book","A Parrot","A Sign"],["What has a thumb but four fingers and is not alive?","A Glove","A Hand","A Monkey"],["What goes around the world but stays in a corner?","A Stamp","A Plane","A Satellite"],["What runs around the whole yard without moving?","A Fence","A Dog","A Child"],["What has a bottom at the top?","Your Legs","A Mountain","A Bottle"],["What is always in front of you but can’t be seen?","The Future","Your Nose","The Air"],["What gets sharper the more you use it?","Your Brain","A Knife","A Pencil"],["What goes up but never comes down?","Your Age","A Balloon","A Rocket"],["What can fill a room but takes up no space?","Light","Water","Furniture"],["What starts with T, ends with T, and has T in it?","A Teapot","A Tent","A Target"],["What is so fragile that saying its name breaks it?","Silence","Glass","Ice"],["What has one eye, but can't see?","A Needle","A Cyclops","A Hurricane"],["What has a neck but no head?","A Bottle","A Guitar","A Shirt"],["What has two arms, a round belly, and holds a lot of water?","A Teapot","A Camel","A Cloud"],["What belongs to you, but other people use it more than you?","Your Name","Your House","Your Phone"],["What has four legs, a back, but no body?","A Chair","A Dog","A Bed"],["What is as big as you are and yet does not weigh anything?","Your Shadow","Your Reflection","Your Soul"],["What is light as a feather, but even the strongest person can't hold it for five minutes?","Your Breath","A Thought","A Secret"],["What has a ring but no finger?","A Telephone","A Planet","A Tree"],["What has hands but cannot clap?","A Clock","A Monkey","A Robot"],["What goes through towns and over hills but never moves?","A Road","A River","A Train"],["What is black when it’s clean and white when it’s dirty?","A Chalkboard","A Shirt","A Penguin"],["What has a face and two hands but no arms or legs?","A Clock","A Coin","A Person"],["What is easier to get into than out of?","Trouble","A Car","A Bed"],["What has a heart that doesn’t beat?","An Artichoke","A Robot","A Zombie"],["What begins with an E and only contains one letter?","An Envelope","An Eagle","An Eraser"],["What can travel around the world while staying in a corner?","A Stamp","A Postcard","A Pilot"],["What has a spine but no bones?","A Book","A Snake","A Fish"],["What has an endless supply of letters but starts empty?","A Mailbox","A Dictionary","A Library"],["What is at the end of a rainbow?","The letter W","A Pot of Gold","A Leprechaun"],["What runs but never walks, has a mouth but never talks?","A River","A Clock","A Car"],["What goes up as soon as the rain comes down?","An Umbrella","A Cloud","A Bird"],["What has a head, a tail, is brown, and has no legs?","A Penny","A Snake","A Worm"],["What has a bed but never sleeps?","A River","A Truck","A Garden"],["What has a tongue but cannot talk?","A Shoe","A Bell","A Snake"],["What has a heart but no other organs?","A Deck of Cards","An Artichoke","A Computer"],["What has a head but no eyes, nose, or mouth?","A Lettuce","A Cabbage","A Nail"],["What has an eye but cannot see?","A Hurricane","A Potato","A Needle"],["What has an ear but cannot hear?","A Corn","A Cup","A Phone"],["What has a mouth but cannot chew?","A Cave","A River","A Vacuum"],["What has a foot but no legs?","A Snail","A Ruler","A Mountain"],["What has a face but no head?","A Clock","A Coin","A Mountain"],["What has a hand but no fingers?","A Clock","A Monkey","A Robot"],["What has a back but no spine?","A Chair","A Book","A Sofa"],["What has a seat but no legs?","A Bicycle","A Car","A Train"],["What has a top but no bottom?","A Mountain","A Bottle","A Hat"],["What has a bottom but no top?","A Shoe","A Sock","A Foot"],["What has a front but no back?","A TV","A Mirror","A Computer"],["What has a back but no front?","A Chair","A Book","A Sofa"],["What has a side but no top or bottom?","A Box","A Square","A Triangle"],["What has an edge but no center?","A Sword","A Knife","A Coin"],["What has a center but no edge?","A Circle","A Sphere","A Donut"],["What has a corner but no sides?","A Room","A Street","A Box"],["What has a side but no corners?","A Circle","A Sphere","A Cylinder"],["What has a point but no lines?","A Pen","A Needle","A Star"],["What has a line but no points?","A Circle","A Sphere","A Ring"],["What has a surface but no depth?","A Shadow","A Reflection","A Dream"],["What has a depth but no surface?","A Black Hole","A Thought","A Feeling"],["What has a volume but no mass?","An Idea","A Sound","A Word"],["What has a mass but no volume?","A Point","A Singularity","A Pixel"],["What has a weight but no mass?","A Thought","A Feeling","A Word"],["What has a mass but no weight?","A Photon","A Neutrino","A Gluon"],["What has a charge but no mass?","A Quark","A Lepton","A Boson"],["What has a spin but no charge?","A Neutrino","A Photon","A Graviton"],["What has a color but no flavor?","A Quark","A Gluon","A Lepton"],["What has a flavor but no color?","A Neutrino","A Boson","A Photon"],["What has a charm but no strange?","A Quark","A Lepton","A Boson"],["What has a top but no bottom?","A Quark","A Lepton","A Boson"],["What has an up but no down?","A Quark","A Lepton","A Boson"]];
+const guessHardArr = [["Forward I am heavy, backward I am not. What am I?","The word TON","A Truck","Gravity"],["What five-letter word becomes shorter when you add two letters to it?","Short","Small","Brief"],["What word is pronounced the same if you take away four of its five letters?","Queue","Aisle","Eerie"],["A man dies of old age on his 25th birthday. How is this possible?","He was born on Feb 29th","He time traveled","He had a disease"],["I am an odd number. Take away a letter and I become even. What number am I?","Seven","Three","Nine"],["The person who makes it has no need of it. The person who buys it has no use for it. The person who uses it can neither see nor feel it. What is it?","A Coffin","A Poison","A Dream"],["You see a boat filled with people. It has not sunk, but when you look again you don’t see a single person on the boat. Why?","They were all married","They are ghosts","They fell in"],["First you eat me, then you get eaten. What am I?","A Fish Hook","A Poison Apple","A Lion"],["I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. What am I?","The letter E","God","The Universe"],["A man is looking at a photograph. His friend asks who it is. The man replies, 'Brothers and sisters, I have none. But that man's father is my father's son.' Who was in the photograph?","His Son","Himself","His Father"],["I have keys but no locks. I have a space but no room. You can enter but can’t go outside. What am I?","A Keyboard","A Prison","A Mind"],["What comes once in a minute, twice in a moment, but never in a thousand years?","The letter M","A second","A thought"],["I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?","An Echo","A Ghost","A Cloud"],["You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. What am I?","A Candle","A Clock","A Battery"],["What disappears the second you say its name?","Silence","The Wind","A Shadow"],["What is always coming but never arrives?","Tomorrow","The Future","Death"],["What has one head, one foot and four legs?","A Bed","A Table","A Monster"],["What can run but never walks, has a mouth but never talks, has a head but never weeps, has a bed but never sleeps?","A River","A Car","A Baby"],["I am taken from a mine, and shut up in a wooden case, from which I am never released, and yet I am used by almost everybody. What am I?","Pencil Lead","Coal","Gold"],["What goes through cities and fields, but never moves?","A Road","A River","A Train"],["I am always hungry, I must always be fed. The finger I touch, will soon turn red. What am I?","Fire","A Vampire","A Mosquito"],["What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?","The letter R","A Rainbow","Spring"],["You walk into a room that contains a match, a kerosene lamp, a candle and a fireplace. What would you light first?","The match","The candle","The lamp"],["What belongs to you but others use it more than you do?","Your Name","Your House","Your Phone"],["A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?","He was bald","He was in a car","It stopped raining"],["What is lighter than what it is made of?","Ice","Wood","Metal"],["What has to be broken before you can use it?","An Egg","A Glowstick","A Promise"],["What goes up but never comes down?","Your Age","A Balloon","A Bird"],["What has hands but cannot clap?","A Clock","A Statue","A Robot"],["What can fill a room but takes up no space?","Light","Water","Air"],["If you drop me I’m sure to crack, but give me a smile and I’ll always smile back. What am I?","A Mirror","A Glass","An Egg"],["What has words but never speaks?","A Book","A Parrot","A Ghost"],["What is full of holes but still holds water?","A Sponge","A Net","A Cloud"],["What is always in front of you but can’t be seen?","The Future","Your Nose","Air"],["What gets wetter the more it dries?","A Towel","A Sponge","Water"],["What is so fragile that saying its name breaks it?","Silence","Glass","Ice"],["What has one eye, but can't see?","A Needle","A Cyclops","A Hurricane"],["What has a neck but no head?","A Bottle","A Guitar","A Shirt"],["What has a head and a tail but no body?","A Coin","A Snake","A Comet"],["What has teeth but cannot bite?","A Comb","A Saw","A Gear"],["What has a thumb but four fingers and is not alive?","A Glove","A Hand","A Monkey"],["What goes around the world but stays in a corner?","A Stamp","A Plane","A Satellite"],["What runs around the whole yard without moving?","A Fence","A Dog","A Child"],["What has a bottom at the top?","Your Legs","A Mountain","A Bottle"],["What gets sharper the more you use it?","Your Brain","A Knife","A Pencil"],["What starts with T, ends with T, and has T in it?","A Teapot","A Tent","A Target"],["What is black when it’s clean and white when it’s dirty?","A Chalkboard","A Shirt","A Penguin"],["What has a face and two hands but no arms or legs?","A Clock","A Coin","A Person"],["What is easier to get into than out of?","Trouble","A Car","A Bed"],["What has a heart that doesn’t beat?","An Artichoke","A Robot","A Zombie"],["What begins with an E and only contains one letter?","An Envelope","An Eagle","An Eraser"],["What can travel around the world while staying in a corner?","A Stamp","A Postcard","A Pilot"],["What has a spine but no bones?","A Book","A Snake","A Fish"],["What has an endless supply of letters but starts empty?","A Mailbox","A Dictionary","A Library"],["What is at the end of a rainbow?","The letter W","A Pot of Gold","A Leprechaun"],["What runs but never walks, has a mouth but never talks?","A River","A Clock","A Car"],["What goes up as soon as the rain comes down?","An Umbrella","A Cloud","A Bird"],["What has a head, a tail, is brown, and has no legs?","A Penny","A Snake","A Worm"],["What has a bed but never sleeps?","A River","A Truck","A Garden"],["What has a tongue but cannot talk?","A Shoe","A Bell","A Snake"],["What has a heart but no other organs?","A Deck of Cards","An Artichoke","A Computer"],["What has a head but no eyes, nose, or mouth?","A Lettuce","A Cabbage","A Nail"],["What has an eye but cannot see?","A Hurricane","A Potato","A Needle"],["What has an ear but cannot hear?","A Corn","A Cup","A Phone"],["What has a mouth but cannot chew?","A Cave","A River","A Vacuum"],["What has a foot but no legs?","A Snail","A Ruler","A Mountain"],["What has a face but no head?","A Clock","A Coin","A Mountain"],["What has a hand but no fingers?","A Clock","A Monkey","A Robot"],["What has a back but no spine?","A Chair","A Book","A Sofa"],["What has a seat but no legs?","A Bicycle","A Car","A Train"],["What has a top but no bottom?","A Mountain","A Bottle","A Hat"],["What has a bottom but no top?","A Shoe","A Sock","A Foot"],["What has a front but no back?","A TV","A Mirror","A Computer"],["What has a back but no front?","A Chair","A Book","A Sofa"],["What has a side but no top or bottom?","A Box","A Square","A Triangle"],["What has an edge but no center?","A Sword","A Knife","A Coin"],["What has a center but no edge?","A Circle","A Sphere","A Donut"],["What has a corner but no sides?","A Room","A Street","A Box"],["What has a side but no corners?","A Circle","A Sphere","A Cylinder"],["What has a point but no lines?","A Pen","A Needle","A Star"],["What has a line but no points?","A Circle","A Sphere","A Ring"],["What has a surface but no depth?","A Shadow","A Reflection","A Dream"],["What has a depth but no surface?","A Black Hole","A Thought","A Feeling"],["What has a volume but no mass?","An Idea","A Sound","A Word"],["What has a mass but no volume?","A Point","A Singularity","A Pixel"],["What has a weight but no mass?","A Thought","A Feeling","A Word"],["What has a mass but no weight?","A Photon","A Neutrino","A Gluon"],["What has a charge but no mass?","A Quark","A Lepton","A Boson"],["What has a spin but no charge?","A Neutrino","A Photon","A Graviton"]];
 
-    // Hard: Complex prepositions, subjunctives, relative pronouns
-    if (i < 30) gramHardArr.push({ q: `Fix the incorrect word:\n'If I WAS you, I would leave.'`, a: "WERE" });
-    else if (i < 60) gramHardArr.push({ q: `Fix the incorrect word:\n'Neither the teacher nor the students IS ready.'`, a: "ARE" });
-    else gramHardArr.push({ q: `Fix the incorrect word:\n'He insisted ON GO to the park.'`, a: "GOING" });
-}
-
-// 4. GUESSING GAME (Normal & Hard) - 90 Riddles each
-let guessNormalArr = [];
-const gN_templates = [
-    ["What has to be broken before you can use it?", ["An Egg", "A Coconut", "A Glass"], "An Egg"],
-    ["I’m tall when I’m young, and I’m short when I’m old. What am I?", ["A Candle", "A Tree", "A Pencil"], "A Candle"],
-    ["What month of the year has 28 days?", ["All of them", "February", "Leap Year"], "All of them"],
-    ["What is full of holes but still holds water?", ["A Sponge", "A Bucket", "A Cloud"], "A Sponge"],
-    ["What can you catch but not throw?", ["A Cold", "A Baseball", "A Boomerang"], "A Cold"]
-];
-for(let i=0; i<90; i++) {
-    let t = gN_templates[i % gN_templates.length];
-    guessNormalArr.push({ q: t[0], opts: t[1], a: t[2] });
-}
-
-let guessHardArr = [];
-const gH_templates = [
-    ["Forward I am heavy, backward I am not. What am I?", ["The word TON", "A Truck", "Gravity"], "The word TON"],
-    ["A man dies of old age on his 25th birthday. How is this possible?", ["He was born on Feb 29", "He time traveled", "He had a disease"], "He was born on Feb 29"],
-    ["First you eat me, then you get eaten. What am I?", ["A Fish Hook", "A Poison Apple", "A Lion"], "A Fish Hook"],
-    ["You see a boat filled with people. It has not sunk, but you see not a single person on the boat. Why?", ["They were all married", "They are ghosts", "They fell in"], "They were all married"],
-    ["I speak without a mouth and hear without ears. I have no body, but I come alive with wind.", ["An Echo", "A Whisper", "A Ghost"], "An Echo"]
-];
-for(let i=0; i<90; i++) {
-    let t = gH_templates[i % gH_templates.length];
-    guessHardArr.push({ q: t[0], opts: t[1], a: t[2] });
-}
-
-// 5. COMPREHENSION - 90 Dynamically Generated Questions
-let compArr = [];
-const dCities = ["Kuala Lumpur", "Johor", "Penang", "Ipoh"];
-const aCities = ["Melaka", "Seremban", "Kuantan", "Alor Setar"];
-
-for(let i=1; i<=90; i++) {
-    let type = i % 4;
-    let pax = (i % 5) + 2;
-    let discount = (i % 4) * 5 + 5; 
-    let delay = (i % 6) * 5 + 5;
+// INITIALIZE POOLS
+function initPools() {
+    dbNormal.spelling = spellNormArr.map(w => ({q: "Spell the word you hear:", a: w, audio: w}));
+    dbHard.spelling = spellHardArr.map(w => ({q: "Spell the word you hear (Hard):", a: w, audio: w}));
+    dbNormal.grammar = gramNormArr.map(g => ({q: "Fix the incorrect word:\n'"+g[0]+"'", a: g[1]}));
+    dbHard.grammar = gramHardArr.map(g => ({q: "Fix the incorrect word:\n'"+g[0]+"'", a: g[1]}));
+    dbNormal.guessing = guessNormArr.map(g => ({q: g[0], a: g[1], opts: [g[1], g[2], g[3]]}));
+    dbHard.guessing = guessHardArr.map(g => ({q: g[0], a: g[1], opts: [g[1], g[2], g[3]]}));
     
-    // Dynamic Ticket Variables
-    let dCity = dCities[i % 4];
-    let aCity = aCities[i % 4];
-    let depHour = 8 + (i % 4);
-    let fare = 15 + (i % 5);
-    let tkt = {
-        dest: `${dCity} to ${aCity}`,
-        dep: `${depHour}.00 a.m.`,
-        arr: `${depHour + 2}.00 a.m.`,
-        fare: `RM ${fare}.00`
-    };
+    // Dynamic generator array for comprehension will just generate 90 dummy items to map
+    dbNormal.comprehension = Array.from({length: 90}, () => generateComprehension(false));
+    dbHard.comprehension = Array.from({length: 90}, () => generateComprehension(true));
+
+    poolNormal = JSON.parse(JSON.stringify(dbNormal));
+    poolHard = JSON.parse(JSON.stringify(dbHard));
+}
+
+// 4. COMPREHENSION GENERATOR
+function generateComprehension(isHard) {
+    const destinations = ["Kuala Lumpur to Melaka", "Penang to Ipoh", "Johor Bahru to KL", "Kuantan to Seremban", "Melaka to Singapore", "Alor Setar to KL", "Ipoh to KL", "KL to Cameron Highlands"];
+    const fares = [15, 20, 25, 30, 35, 40, 45, 50];
+    const departHours = [8, 9, 10, 11, 13, 14, 15, 16];
     
-    if (type === 0) { // Math: Total Cost
-        let cost = pax * fare;
-        compArr.push({ q: `How much would it cost for a group of ${pax} people to travel?`, opts: [`RM ${cost - 15}`, `RM ${cost + 5}`, `RM ${cost}`], a: `RM ${cost}`, showTicket: true, tkt: tkt });
-    } else if (type === 1) { // Math: Discount
-        let finalCost = fare * (1 - discount/100);
-        compArr.push({ q: `If there is a ${discount}% discount on a ticket, how much is the new fare?`, opts: [`RM ${(finalCost+2).toFixed(2)}`, `RM ${(finalCost-1).toFixed(2)}`, `RM ${finalCost.toFixed(2)}`], a: `RM ${finalCost.toFixed(2)}`, showTicket: true, tkt: tkt });
-    } else if (type === 2) { // Math: Time Delay
-        let arriveMins = delay % 60;
-        let arriveHrs = (depHour + 2) + Math.floor(delay / 60);
-        let arriveStr = `${arriveHrs > 12 ? arriveHrs-12 : arriveHrs}.${arriveMins.toString().padStart(2,'0')} ${arriveHrs >= 12 ? 'p.m.' : 'a.m.'}`;
-        let w1 = `${arriveHrs > 12 ? arriveHrs-12 : arriveHrs}.${(arriveMins+10).toString().padStart(2,'0')} ${arriveHrs >= 12 ? 'p.m.' : 'a.m.'}`;
-        let w2 = `${arriveHrs > 12 ? arriveHrs-12 : arriveHrs}.${(arriveMins+15).toString().padStart(2,'0')} ${arriveHrs >= 12 ? 'p.m.' : 'a.m.'}`;
-        compArr.push({ q: `If the bus is delayed by ${delay} minutes, what is the new estimated arrival time?`, opts: [w1, w2, arriveStr], a: arriveStr, showTicket: true, tkt: tkt });
-    } else { // Facts
-        let w1 = dCities[(i+1) % 4];
-        let w2 = aCities[(i+2) % 4];
-        compArr.push({ q: `Based on the ticket, what is the destination?`, opts: [aCity, w1, w2], a: aCity, showTicket: true, tkt: tkt });
+    let dest = destinations[Math.floor(Math.random()*destinations.length)];
+    let fare = fares[Math.floor(Math.random()*fares.length)];
+    let depH = departHours[Math.floor(Math.random()*departHours.length)];
+    let duration = Math.floor(Math.random()*3) + 2; // 2, 3, or 4 hours
+    let arrH = depH + duration;
+    
+    let depStr = `${depH > 12 ? depH-12 : depH}.00 ${depH >= 12 ? 'p.m.' : 'a.m.'}`;
+    let arrStr = `${arrH > 12 ? arrH-12 : arrH}.00 ${arrH >= 12 ? 'p.m.' : 'a.m.'}`;
+    
+    let ticket = { dest: dest, dep: depStr, arr: arrStr, fare: `RM ${fare}.00` };
+    
+    let type = Math.floor(Math.random() * 5); // 0 to 4
+    let q, a, opts;
+    
+    if (!isHard) {
+        if (type === 0) {
+            q = "Based on the ticket, what is the destination?";
+            a = dest.split(" to ")[1];
+            opts = [a, dest.split(" to ")[0], "Seremban", "Penang"].slice(0,3);
+            if(!opts.includes(a)) opts[2] = a;
+        } else if (type === 1) {
+            q = "Based on the ticket, what time does the bus leave?";
+            a = depStr;
+            opts = [a, arrStr, `${depH+1 > 12 ? depH+1-12 : depH+1}.00 ${depH+1 >= 12 ? 'p.m.' : 'a.m.'}`];
+        } else if (type === 2) {
+            q = "Based on the ticket, how long is the journey?";
+            a = `${duration} Hours`;
+            opts = [`${duration} Hours`, `${duration-1} Hours`, `${duration+1} Hours`];
+        } else if (type === 3) {
+            q = "What is the fare for 2 people?";
+            a = `RM ${fare * 2}`;
+            opts = [`RM ${fare * 2}`, `RM ${fare}`, `RM ${fare * 3}`];
+        } else {
+            q = "Where does the bus depart from?";
+            a = dest.split(" to ")[0];
+            opts = [a, dest.split(" to ")[1], "Klang"];
+        }
+    } else {
+        if (type === 0) {
+            q = "If the bus is delayed by 45 minutes, what is the new estimated arrival time?";
+            a = `${arrH > 12 ? arrH-12 : arrH}.45 ${arrH >= 12 ? 'p.m.' : 'a.m.'}`;
+            opts = [a, `${arrH > 12 ? arrH-12 : arrH}.30 ${arrH >= 12 ? 'p.m.' : 'a.m.'}`, `${arrH+1 > 12 ? arrH+1-12 : arrH+1}.15 ${arrH+1 >= 12 ? 'p.m.' : 'a.m.'}`];
+        } else if (type === 1) {
+            q = "A family of 4 buys tickets with a 10% discount. How much do they pay in total?";
+            let total = (fare * 4) * 0.9;
+            a = `RM ${total}`;
+            opts = [`RM ${total}`, `RM ${fare * 4}`, `RM ${total + 10}`];
+        } else if (type === 2) {
+            let speed = 80;
+            q = `If the bus travels at an average speed of ${speed} km/h, what is the approximate distance?`;
+            a = `${speed * duration} km`;
+            opts = [`${speed * duration} km`, `${speed * (duration-1)} km`, `${speed * (duration+1)} km`];
+        } else if (type === 3) {
+            q = "How much change will you receive if you pay with RM 100 for two tickets?";
+            let chg = 100 - (fare * 2);
+            a = `RM ${chg}`;
+            opts = [`RM ${chg}`, `RM ${chg + 10}`, `RM ${Math.abs(chg - 10)}`];
+        } else {
+            q = "If you need to be at the station 30 minutes before departure, what time must you arrive?";
+            let newH = depH; let newM = 30;
+            if (depH === 8) { newH = 7; newM = 30; }
+            else { newH = depH - 1; newM = 30; }
+            a = `${newH > 12 ? newH-12 : newH}.30 ${newH >= 12 ? 'p.m.' : 'a.m.'}`;
+            opts = [a, `${newH > 12 ? newH-12 : newH}.45 ${newH >= 12 ? 'p.m.' : 'a.m.'}`, depStr];
+        }
     }
+    
+    return { q, opts: shuffle(opts), a, showTicket: true, ticket };
 }
 
-// Compile the active pools
-const activePools = {
-    normal: { spelling: spellNormalArr, guessing: guessNormalArr, grammar: gramNormalArr, comprehension: [...compArr] },
-    hard: { spelling: spellHardArr, guessing: guessHardArr, grammar: gramHardArr, comprehension: [...compArr] }
-};
+initPools(); // generate initial
 
-// --- STATE ---
-let currentStudent = null;
-let lostList = [];
-let currentGameType = '';
-let questions = [];
-let currentQIndex = 0;
-let score = 0;
-let passMark = 2; // Need 2 out of 3
-let timerInt;
-let timeLeft = 60;
-let inputText = "";
-let accentChoice = 'US';
-let currentSelectedOption = null;
-let spinCount = 0; // Tracks spins for the rigged logic
+// Copy pools to safely splice from without losing the original database
+let spinCount = 0;
 
-// --- MODAL UTILS ---
+// Height Animation Helper
+function animateCardHeight(cardEl, callback) {
+    const startHeight = cardEl.offsetHeight;
+    cardEl.style.height = 'auto';
+    
+    // Temporarily apply DOM changes to measure target height
+    if (callback) callback();
+    
+    const targetHeight = cardEl.offsetHeight;
+    
+    // Revert to start and animate to target
+    cardEl.style.height = startHeight + 'px';
+    void cardEl.offsetHeight; // force reflow
+    cardEl.style.transition = 'height 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+    cardEl.style.height = targetHeight + 'px';
+    
+    setTimeout(() => {
+        cardEl.style.height = 'auto';
+        cardEl.style.transition = '';
+    }, 400);
+}
+
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -479,27 +489,7 @@ function showConfirm(title, desc, btnText, btnColor, onConfirm) {
     openModal('modal-confirm');
 }
 
-// Height Animation Helper
-function animateCardHeight(cardEl, callback) {
-    const startHeight = cardEl.offsetHeight;
-    cardEl.style.height = 'auto';
-    
-    if (callback) callback();
-    
-    const targetHeight = cardEl.offsetHeight;
-    
-    cardEl.style.height = startHeight + 'px';
-    void cardEl.offsetHeight; 
-    cardEl.style.transition = 'height 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-    cardEl.style.height = targetHeight + 'px';
-    
-    setTimeout(() => {
-        cardEl.style.height = 'auto';
-        cardEl.style.transition = '';
-    }, 400);
-}
-
-// --- WHEEL LOGIC (FIXED OVERLAP & MATH RIGGING) ---
+// --- WHEEL LOGIC ---
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 let arc = 0;
@@ -509,29 +499,7 @@ let spinArcStart = 10;
 let spinTime = 0;
 let spinTimeTotal = 0;
 let lastSegment = 0;
-
-// Audio Context for spinning sound
-let audioCtx = null;
-function initAudio() {
-    try {
-        if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-        if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-    } catch(e) { console.warn("AudioContext failed", e); }
-}
-function playTick() {
-    try {
-        if(!audioCtx) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime); 
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-    } catch(e) {}
-}
+let riggedIndex = -1;
 
 function drawWheel() {
     if(studentsData.length === 0) return;
@@ -544,14 +512,14 @@ function drawWheel() {
     ctx.scale(dpr, dpr);
     
     let outsideRadius = size/2 - 10;
-    let textStartRadius = 60; // Safely away from the center
+    let textStartRadius = 60; // Start from inside
     let insideRadius = 50;
     
     ctx.clearRect(0,0,size,size);
     ctx.translate(size/2, size/2);
     
     const colors = isDark 
-      ? ['#0056b3', '#228b22', '#cc7a00', '#b32400', '#7a28a3'] 
+      ? ['#0056b3', '#228b22', '#cc7a00', '#b32400', '#7a28a3'] // Darker variants
       : ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#AF52DE'];
     
     for(let i=0; i<studentsData.length; i++) {
@@ -569,79 +537,31 @@ function drawWheel() {
         ctx.shadowBlur = 2; ctx.shadowColor = "rgba(0,0,0,0.4)";
         ctx.fillStyle = "white";
         
-        // Starts drawing from the inner edge pointing outwards
+        // Translate to the start radius inside the segment
         ctx.translate(Math.cos(angle + arc / 2) * textStartRadius, Math.sin(angle + arc / 2) * textStartRadius);
+        
+        // Rotate text pointing outwards
         ctx.rotate(angle + arc / 2);
         
         let text = studentsData[i].name;
+        // Dynamically size text to fit (prevent horizontal bleed)
         let fontSize = Math.min(14, (arc * outsideRadius) / 1.5); 
         ctx.font = `bold ${fontSize}px Inter, sans-serif`;
-        ctx.textAlign = "left"; 
+        ctx.textAlign = "left"; // Start from inside edge and go outwards
         ctx.textBaseline = "middle";
         
-        // Trim if too long
-        if(text.length > 17) text = text.substring(0,15) + "..";
+        // Trim if too long to prevent overflowing outside of the wheel
+        if(text.length > 18) text = text.substring(0,16) + "..";
         
         ctx.fillText(text, 0, 0); 
         ctx.restore();
     }
-    ctx.translate(-size/2, -size/2); 
+    ctx.translate(-size/2, -size/2); // reset
 }
 
-function getRiggedTargetIndex() {
-    // 1st Spin: 70% Alvin
-    if (spinCount === 0 && Math.random() < 0.70) {
-        return studentsData.findIndex(s => s.name.includes("ALVIN TANG"));
-    }
-    // 2nd Spin: 69% Elvis
-    if (spinCount === 1 && Math.random() < 0.69) {
-        return studentsData.findIndex(s => s.name.includes("ELVIS LOW"));
-    }
-    return -1; // Random
-}
-
-function spinWheel() {
-    if(studentsData.length === 0) { alert("No students left! Refresh the page to restart."); return; }
-    initAudio();
-    document.getElementById('spin-btn').disabled = true;
-    
-    let targetIdx = getRiggedTargetIndex();
-    
-    // Mathematical Rigging (O(1) time complexity, no while loops)
-    if (targetIdx !== -1) {
-        let arcd = 360 / studentsData.length;
-        // Pointer is at Top. CSS rotates canvas by -90deg.
-        let targetAngle = 360 - (targetIdx + 0.5) * arcd; 
-        let currentDeg = (startAngle * 180 / Math.PI) % 360;
-        let requiredRotation = targetAngle - currentDeg;
-        
-        while (requiredRotation < 0) requiredRotation += 360;
-        requiredRotation += 360 * 3; // Add 3 fast full revolutions
-        
-        spinTimeTotal = 2000; // Exact 2 seconds
-        
-        // Calculate the sum of velocities
-        let K_sum = 0;
-        let t = 0;
-        while(t < spinTimeTotal) {
-            t += 30;
-            if(t >= spinTimeTotal) break;
-            let u = t/spinTimeTotal - 1;
-            K_sum += -(u * u * u);
-        }
-        
-        // Velocity needed to reach exactly Required Rotation
-        spinArcStart = requiredRotation / K_sum; 
-        
-    } else {
-        // Normal random spin
-        spinArcStart = Math.random() * 15 + 40; // 40-55 fast!
-        spinTimeTotal = Math.random() * 500 + 1500; 
-    }
-    
-    spinTime = 0;
-    spinCount++;
-    rotateWheel();
+function easeOut(t, b, c, d) {
+    t /= d; t--;
+    return c * (t*t*t + 1) + b;
 }
 
 function rotateWheel() {
@@ -650,12 +570,7 @@ function rotateWheel() {
         stopRotateWheel();
         return;
     }
-    
-    // easeOut simulation
-    let t = spinTime / spinTimeTotal; t--;
-    let easeVal = spinArcStart * (t*t*t + 1);
-    let spinAngle = spinArcStart - easeVal;
-    
+    let spinAngle = spinArcStart - easeOut(spinTime, 0, spinArcStart, spinTimeTotal);
     startAngle += (spinAngle * Math.PI / 180);
     
     // Sound Logic
@@ -671,6 +586,45 @@ function rotateWheel() {
     spinTimeout = setTimeout(rotateWheel, 30);
 }
 
+function spinWheel() {
+    if(studentsData.length === 0) { alert("No students left! Refresh the page to restart."); return; }
+    initAudio();
+    document.getElementById('spin-btn').disabled = true;
+    
+    riggedIndex = -1;
+    let r = Math.random();
+    if (spinCount === 0 && r < 0.70) riggedIndex = studentsData.findIndex(s => s.name.includes("ALVIN TANG"));
+    else if (spinCount === 1 && r < 0.69) riggedIndex = studentsData.findIndex(s => s.name.includes("ELVIS LOW"));
+    
+    spinTime = 0;
+    
+    // Calculate required spinTimeTotal to land on riggedIndex via simulation
+    if (riggedIndex !== -1) {
+        let found = false;
+        while(!found) {
+            spinArcStart = Math.random() * 10 + 10;
+            spinTimeTotal = Math.random() * 3000 + 4000;
+            let simAngle = startAngle;
+            let sTime = 0;
+            while(sTime < spinTimeTotal) {
+                sTime += 30;
+                let sAngle = spinArcStart - easeOut(sTime, 0, spinArcStart, spinTimeTotal);
+                simAngle += (sAngle * Math.PI / 180);
+            }
+            let deg = simAngle * 180 / Math.PI;
+            let a = arc * 180 / Math.PI;
+            let idx = Math.floor((360 - (deg % 360)) / a) % studentsData.length;
+            if (idx === riggedIndex) found = true;
+        }
+    } else {
+        spinArcStart = Math.random() * 10 + 10;
+        spinTimeTotal = Math.random() * 3000 + 4000;
+    }
+    
+    spinCount++;
+    rotateWheel();
+}
+
 function stopRotateWheel() {
     clearTimeout(spinTimeout);
     
@@ -684,21 +638,15 @@ function stopRotateWheel() {
     studentsData.splice(index, 1);
     
     setTimeout(() => {
-        document.getElementById('chosen-name').innerText = currentStudent.name;
-        openModal('modal-chosen');
-        drawWheel(); // Redraw wheel without them in the background
-    }, 500);
+        document.getElementById('disp-student-name').innerText = currentStudent.name;
+        document.getElementById('disp-student-cn').innerText = currentStudent.cn !== "-" ? currentStudent.cn : "";
+        document.getElementById('spin-btn').disabled = false;
+        
+        drawWheel(); // Redraw wheel without them
+        showScreen('screen-games');
+    }, 1000);
 }
 
-function proceedToGameSelect() {
-    closeModal('modal-chosen');
-    document.getElementById('disp-student-name').innerText = currentStudent.name;
-    document.getElementById('disp-student-cn').innerText = currentStudent.cn !== "-" ? currentStudent.cn : "";
-    document.getElementById('spin-btn').disabled = false;
-    showScreen('screen-games');
-}
-
-// Initial draw
 drawWheel();
 
 // --- GAME LOGIC ---
@@ -706,7 +654,7 @@ drawWheel();
 function cancelSelectionFlow() {
     showConfirm(
         "Spin Again?", 
-        `Are you sure you want to cancel ${currentStudent.name}'s turn?\nThey have already been removed from the wheel.`, 
+        `Are you sure you want to cancel ${currentStudent.name}'s turn? They have already been removed from the wheel.`, 
         "Spin Again", 
         "var(--warning)",
         () => {
@@ -716,18 +664,15 @@ function cancelSelectionFlow() {
     );
 }
 
-// Fetch questions safely without running out
 function getQuestions(type, isHard, count) {
-    let pool = isHard ? activePools.hard[type] : activePools.normal[type];
-    
-    // If pool is running low, restock it deeply
-    if(pool.length < count) {
-        let backup = isHard ? dbHard[type] : dbNormal[type];
-        pool.push(...JSON.parse(JSON.stringify(backup))); 
+    let sourcePool = isHard ? poolHard[type] : poolNormal[type];
+    if(sourcePool.length < count) {
+        poolHard[type] = JSON.parse(JSON.stringify(dbHard[type]));
+        poolNormal[type] = JSON.parse(JSON.stringify(dbNormal[type]));
+        sourcePool = isHard ? poolHard[type] : poolNormal[type];
     }
-    
-    shuffle(pool);
-    return pool.splice(0, count); // Permanent removal per session
+    shuffle(sourcePool);
+    return sourcePool.splice(0, count);
 }
 
 function setAccent(choice) {
@@ -773,10 +718,11 @@ function loadQuestion() {
     let spellSet = document.getElementById('spelling-settings');
     const disp = document.getElementById('v-input');
     
-    currentSelectedOption = null; 
+    currentSelectedOption = null; // reset MCQ selection
     
     const cardEl = document.getElementById('q-card');
     
+    // Animate Card Height Transition
     animateCardHeight(cardEl, () => {
         mcqCont.style.display = 'none';
         inpCont.style.display = 'none';
@@ -787,6 +733,7 @@ function loadQuestion() {
         
         // Reset Inputs
         if(disp) { 
+            disp.style.background = "var(--ios-input)"; 
             disp.style.borderColor = "var(--ios-blue)"; 
             disp.style.color = "inherit"; 
         }
@@ -813,12 +760,11 @@ function loadQuestion() {
         else if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
             if (q.showTicket) {
                 tktUi.style.display = 'block';
-                // Build dynamic ticket body
-                let tktHtml = `<span>DESTINATION</span> <span>: ${q.tkt.dest}</span>
-                               <span>DEPARTURE</span> <span>: ${q.tkt.dep}</span>
-                               <span>ARRIVAL</span> <span>: ${q.tkt.arr}</span>
-                               <span>FARE</span> <span>: ${q.tkt.fare}</span>`;
-                document.getElementById('ticket-body-content').innerHTML = tktHtml;
+                // Update Ticket Data Dynamics
+                document.getElementById('t-dest').innerText = `: ${q.ticket.dest}`;
+                document.getElementById('t-dep').innerText = `: ${q.ticket.dep}`;
+                document.getElementById('t-arr').innerText = `: ${q.ticket.arr}`;
+                document.getElementById('t-fare').innerText = `: ${q.ticket.fare}`;
                 document.getElementById('ticket-barcode-text').innerText = `*${currentStudent.name.replace(/\s+/g, '')}*`;
             }
             mcqCont.style.display = 'block';
@@ -832,7 +778,7 @@ function loadQuestion() {
     });
 }
 
-// AUDIO (TTS) STRICT US/UK
+// AUDIO (TTS)
 if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
     window.speechSynthesis.getVoices(); 
@@ -847,18 +793,12 @@ function playCurrentWord() {
     let preferredVoices = [];
     
     if (accentChoice === 'US') {
-        preferredVoices = voices.filter(v => 
-            (v.lang === 'en-US' || v.lang === 'en_US') && 
-            !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain')
-        );
+        preferredVoices = voices.filter(v => (v.lang === 'en-US' || v.lang === 'en_US') && !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain'));
     } else {
-        preferredVoices = voices.filter(v => 
-            v.lang === 'en-GB' || v.lang === 'en_GB' || 
-            v.name.includes('UK') || v.name.includes('British')
-        );
+        preferredVoices = voices.filter(v => v.lang === 'en-GB' || v.lang === 'en_GB' || v.name.includes('UK') || v.name.includes('British'));
     }
     
-    let selectedVoice = preferredVoices.find(v => v.name.includes('Google') || v.name.includes('Natural')) || preferredVoices[0] || voices.find(v => v.lang.startsWith('en'));
+    let selectedVoice = preferredVoices.find(v => v.name.includes('Google')) || preferredVoices[0] || voices.find(v => v.lang.startsWith('en'));
     if(selectedVoice) u.voice = selectedVoice;
     
     u.rate = 0.85; 
@@ -910,12 +850,12 @@ function selectMCQ(btn, selectedVal) {
     document.querySelectorAll('.mcq-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     currentSelectedOption = { btn: btn, val: selectedVal };
-    document.getElementById('btn-submit').style.display = 'flex'; 
+    document.getElementById('btn-submit').style.display = 'flex'; // show submit
 }
 
 function submitAnswer() {
     let q = questions[currentQIndex];
-    document.getElementById('btn-submit').style.display = 'none'; 
+    document.getElementById('btn-submit').style.display = 'none'; // hide during review
     
     if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
         if(!currentSelectedOption) return; 
@@ -943,17 +883,20 @@ function submitAnswer() {
         let realA = q.a.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
         
         const disp = document.getElementById('v-input');
-        document.getElementById('v-keyboard').style.pointerEvents = 'none'; 
+        document.getElementById('v-keyboard').style.pointerEvents = 'none'; // prevent typing
         
         if (userA === realA) {
+            disp.style.background = "var(--success)";
             disp.style.borderColor = "var(--success)";
-            disp.style.color = "var(--success)";
+            disp.style.color = "#fff";
+            disp.innerText = "CORRECT! ✅";
             score++;
             showFeedback(true);
         } else {
+            disp.style.background = "var(--danger)";
             disp.style.borderColor = "var(--danger)";
-            disp.style.color = "var(--danger)";
-            disp.innerText = realA; 
+            disp.style.color = "#fff";
+            disp.innerText = "WRONG ❌: " + realA; 
             showFeedback(false);
         }
     }
@@ -962,13 +905,9 @@ function submitAnswer() {
 function showFeedback(isCorrect) {
     document.getElementById('play-score').innerText = `Score: ${score}`;
     setTimeout(() => {
-        // Reset input colors
-        const disp = document.getElementById('v-input');
-        if(disp) { disp.style.borderColor = "var(--ios-blue)"; disp.style.color = "inherit"; }
-        
         currentQIndex++;
         loadQuestion();
-    }, 2000); 
+    }, 2000); // 2s delay to review answer
 }
 
 // TIMER & FORFEIT
