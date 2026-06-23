@@ -6,22 +6,44 @@
 <title>English Game 2026</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
-<!-- Added Libre Barcode for the Easter Egg -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 <style>
-/* CORE VARIABLES FROM REFERENCE HTML */
-:root{--ios-bg:#E8F0FE;--ios-card:rgba(255,255,255,0.85);--ios-modal:rgba(255,255,255,0.85);--ios-text:#1D1D1F;--ios-text-sec:rgba(29,29,31,0.6);--ios-sep:rgba(0,0,0,0.08);--ios-blue:#007AFF;--ios-blue-text:#007AFF;--ios-blue-light:rgba(0,122,255,0.15);--ios-input:rgba(255,255,255,0.7);--grad-1:#e0c3fc;--grad-2:#8ec5fc;--grad-3:#4facfe;--glass-border:rgba(255,255,255,0.8);--glass-highlight:inset 0 1px 1px rgba(255,255,255,0.8);--glass-shadow:0 4px 16px rgba(31,38,135,0.05);--glass-blur:blur(16px) saturate(180%);--chip-bg:#FFFFFF;--chip-border:#D1D1D6;--chip-shadow:0 1px 3px rgba(0,0,0,0.06);--chip-txt:#1D1D1F;--chip-act-bg:var(--ios-blue);--chip-act-border:var(--ios-blue);--chip-act-txt:#FFFFFF;--shadow-sm:0 4px 16px rgba(0,0,0,0.04);--shadow-md:0 8px 24px rgba(0,0,0,0.08);--shadow-lg:0 16px 48px rgba(0,0,0,0.15);--ease-ios:cubic-bezier(0.25,1,0.5,1);--ease-spring:cubic-bezier(0.175,0.885,0.32,1.275);--font-stack:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Noto Sans SC",sans-serif; --danger: #FF3B30; --success: #34C759; --warning: #FF9500;}
-[data-theme="dark"]{--ios-bg:#000000;--ios-card:rgba(30,30,30,0.85);--ios-modal:rgba(40,40,40,0.85);--ios-text:#FFFFFF;--ios-text-sec:rgba(255,255,255,0.6);--ios-sep:rgba(255,255,255,0.1);--ios-input:rgba(255,255,255,0.15);--glass-border:rgba(255,255,255,0.12);--glass-highlight:inset 0 1px 1px rgba(255,255,255,0.15);--glass-shadow:0 4px 16px rgba(0,0,0,0.4);--chip-bg:rgba(255,255,255,0.12);--chip-border:rgba(255,255,255,0.15);--chip-shadow:none;--chip-txt:#FFFFFF;--shadow-lg:0 16px 48px rgba(0,0,0,0.6); --grad-1:#0f2027;--grad-2:#203a43;--grad-3:#2c5364;}
+:root {
+    --ios-bg: #E8F0FE; --ios-card: rgba(255,255,255,0.85); --ios-modal: rgba(255,255,255,0.85);
+    --ios-text: #1D1D1F; --ios-text-sec: rgba(29,29,31,0.6); --ios-sep: rgba(0,0,0,0.08);
+    --ios-blue: #007AFF; --ios-blue-light: rgba(0,122,255,0.15);
+    --ios-input: rgba(255,255,255,0.7); --grad-1: #e0c3fc; --grad-2: #8ec5fc; --grad-3: #4facfe;
+    --glass-border: rgba(255,255,255,0.8); --glass-highlight: inset 0 1px 1px rgba(255,255,255,0.8);
+    --glass-shadow: 0 4px 16px rgba(31,38,135,0.05); --glass-blur: blur(20px) saturate(180%);
+    --shadow-sm: 0 4px 16px rgba(0,0,0,0.04); --shadow-md: 0 8px 24px rgba(0,0,0,0.08); --shadow-lg: 0 16px 48px rgba(0,0,0,0.15);
+    --ease-ios: cubic-bezier(0.25,1,0.5,1); --ease-spring: cubic-bezier(0.175,0.885,0.32,1.275);
+    --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+    --danger: #FF3B30; --success: #34C759; --warning: #FF9500;
+}
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;outline:0;user-select:none;}
-body{margin:0;padding:0;font-family:var(--font-stack);color:var(--ios-text);background-color:var(--ios-bg);background-image:linear-gradient(135deg,var(--grad-1) 0%,var(--grad-2) 50%,var(--grad-3) 100%);background-attachment:fixed;background-size:cover;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;transition:background-image 1s ease,background-color .4s ease,color .4s var(--ease-ios)}
+[data-theme="dark"]{
+    --ios-bg:#000000; --ios-card:rgba(30,30,30,0.85); --ios-modal:rgba(40,40,40,0.85);
+    --ios-text:#FFFFFF; --ios-text-sec:rgba(255,255,255,0.6); --ios-sep:rgba(255,255,255,0.1);
+    --ios-input:rgba(255,255,255,0.15); --glass-border:rgba(255,255,255,0.12);
+    --glass-highlight:inset 0 1px 1px rgba(255,255,255,0.15); --glass-shadow:0 4px 16px rgba(0,0,0,0.4);
+    --grad-1:#0f2027; --grad-2:#203a43; --grad-3:#2c5364;
+}
 
-/* FLOATING CONTROLS (Since Header is Removed) */
-.floating-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px; align-items: center; }
-.theme-toggle{width:42px;height:42px;background:var(--ios-input);border-radius:50%;border:1px solid var(--chip-border);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;color:var(--ios-text);cursor:pointer;transition:transform .2s var(--ease-spring),opacity .2s,background-color .2s}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: 0; }
+
+body {
+    margin: 0; padding: 0; font-family: var(--font-stack); color: var(--ios-text); background-color: var(--ios-bg);
+    background-image: linear-gradient(135deg, var(--grad-1) 0%, var(--grad-2) 50%, var(--grad-3) 100%);
+    background-attachment: fixed; background-size: cover; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; min-height: 100vh; user-select: none; transition: background-image 1s ease, color 0.4s;
+}
+
+/* FLOATING CONTROLS */
+.floating-controls { position: absolute; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px; align-items: center; }
+.theme-toggle{width:42px;height:42px;background:var(--ios-input);border-radius:50%;border:1px solid var(--glass-border);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;color:var(--ios-text);cursor:pointer;transition:transform .2s var(--ease-spring),opacity .2s,background-color .2s}
 .theme-toggle:active{transform:scale(.85);opacity:.7}
-.lost-btn { background: var(--ios-input); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--chip-border); box-shadow: var(--shadow-sm); padding: 0 16px; height: 42px; border-radius: 21px; font-weight: 700; color: var(--danger); cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s var(--ease-spring); }
+.lost-btn { background: var(--ios-input); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); box-shadow: var(--shadow-sm); padding: 0 16px; height: 42px; border-radius: 21px; font-weight: 700; color: var(--danger); cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s var(--ease-spring); }
 .lost-btn:active { transform: scale(0.92); }
 
 /* MAIN CONTAINER */
@@ -41,9 +63,11 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .spin-btn:disabled { background: var(--ios-text-sec); cursor: not-allowed; transform: translate(-50%, -50%); }
 
 /* SEGMENT CONTROL (Accents) */
-.seg-control{display:flex;background:var(--ios-input);border:1px solid var(--chip-border);box-shadow:var(--glass-highlight);padding:4px;border-radius:12px;margin-bottom:20px;gap:4px; width:100%; max-width:300px;}
+.seg-control{display:flex;background:var(--ios-input);border:1px solid var(--glass-border);box-shadow:var(--glass-highlight);padding:4px;border-radius:12px;margin-bottom:20px;gap:4px; width:100%; max-width:300px;}
 .seg-btn{flex:1;border:none;background:0 0;padding:8px;border-radius:8px;font-weight:600;font-size:14px;color:var(--ios-text-sec);cursor:pointer;transition:all .2s ease;}
-.seg-btn:active{transform:scale(.95)}.seg-btn.active{background:var(--ios-card);border:1px solid var(--glass-border);box-shadow:0 2px 8px rgba(0,0,0,0.08);color:var(--ios-text);font-weight:700}[data-theme="dark"] .seg-btn.active{background:rgba(255,255,255,0.15);color:var(--ios-blue)}
+.seg-btn:active{transform:scale(.95)}
+.seg-btn.active{background:var(--ios-card);border:1px solid var(--glass-border);box-shadow:0 2px 8px rgba(0,0,0,0.08);color:var(--ios-text);font-weight:700;}
+[data-theme="dark"] .seg-btn.active{background:rgba(255,255,255,0.15);color:var(--ios-blue)}
 
 /* GAME SELECTION UI */
 .sel-student-card { background: var(--ios-card); padding: 20px; border-radius: 24px; text-align: center; width: 100%; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); margin-bottom: 24px; position:relative; }
@@ -65,7 +89,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .goal-pill { background: var(--ios-blue); color: #fff; font-weight: 700; padding: 6px 12px; border-radius: 12px; font-size: 14px; box-shadow: var(--shadow-sm); }
 .score-tracker { font-weight: 800; font-size: 18px; color: var(--ios-text); }
 
-.question-card { background: var(--ios-card); width: 100%; border-radius: 24px; padding: 30px; border: 1px solid var(--glass-border); box-shadow: var(--shadow-md); margin-bottom: 20px; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.question-card { background: var(--ios-card); width: 100%; border-radius: 24px; padding: 30px; border: 1px solid var(--glass-border); box-shadow: var(--shadow-md); margin-bottom: 20px; display: flex; flex-direction: column; justify-content: center; overflow: hidden; position: relative; }
 .q-text { font-size: 22px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 20px; }
 
 /* MCQs */
@@ -93,7 +117,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .btn-primary:active, .btn-danger:active, .btn-warning:active { transform: scale(0.95); }
 
 /* TICKET EASTER EGG CSS RECREATION */
-.bus-ticket { border: 2px solid var(--ios-text); background: var(--ios-card); border-radius: 8px; width: 100%; max-width: 400px; margin: 0 auto 20px auto; overflow: hidden; box-shadow: var(--shadow-md); font-family: 'Roboto', sans-serif;}
+.bus-ticket { border: 2px solid var(--ios-text); background: var(--ios-card); border-radius: 8px; width: 100%; max-width: 400px; margin: 0 auto 20px auto; overflow: hidden; box-shadow: var(--shadow-md); font-family: 'Inter', sans-serif;}
 .ticket-header { background: rgba(0,0,0,0.1); padding: 12px 20px; border-bottom: 2px solid var(--ios-text); display: flex; justify-content: space-between; align-items: center; color: var(--ios-text); }
 [data-theme="dark"] .ticket-header { background: rgba(255,255,255,0.1); }
 .ticket-title { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
@@ -297,7 +321,7 @@ function isHardStudent(name) {
     return hardTargets.some(t => upper.includes(t));
 }
 
-// --- GAME DATA POOLS ---
+// --- MASSIVE GAME DATA POOLS ---
 const dbNormal = {
     spelling: [
         { q: "Spell the word you hear:", a: "ENVIRONMENT", audio: "Environment" },
@@ -314,10 +338,14 @@ const dbNormal = {
         { q: "Spell the word you hear:", a: "DISAPPEAR", audio: "Disappear" },
         { q: "Spell the word you hear:", a: "RECEIPT", audio: "Receipt" },
         { q: "Spell the word you hear:", a: "PARALLEL", audio: "Parallel" },
-        { q: "Spell the word you hear:", a: "SUCCESSFUL", audio: "Successful" }
+        { q: "Spell the word you hear:", a: "SUCCESSFUL", audio: "Successful" },
+        { q: "Spell the word you hear:", a: "ACHIEVEMENT", audio: "Achievement" },
+        { q: "Spell the word you hear:", a: "KNOWLEDGE", audio: "Knowledge" },
+        { q: "Spell the word you hear:", a: "MAINTENANCE", audio: "Maintenance" },
+        { q: "Spell the word you hear:", a: "FASCINATING", audio: "Fascinating" },
+        { q: "Spell the word you hear:", a: "EXAGGERATE", audio: "Exaggerate" }
     ],
     guessing: [
-        { q: "What has keys but can't open locks?", opts: ["A Piano", "A Map", "A Door"], a: "A Piano" },
         { q: "What has to be broken before you can use it?", opts: ["An Egg", "A Coconut", "A Glass"], a: "An Egg" },
         { q: "I’m tall when I’m young, and I’m short when I’m old. What am I?", opts: ["A Candle", "A Tree", "A Pencil"], a: "A Candle" },
         { q: "What month of the year has 28 days?", opts: ["All of them", "February", "Leap Year"], a: "All of them" },
@@ -326,26 +354,39 @@ const dbNormal = {
         { q: "The more of this there is, the less you see. What is it?", opts: ["Darkness", "Fog", "Tears"], a: "Darkness" },
         { q: "I have branches, but no fruit, trunk or leaves. What am I?", opts: ["A Bank", "A Tree", "A River"], a: "A Bank" },
         { q: "What can you keep after giving to someone?", opts: ["Your Word", "A Gift", "A Secret"], a: "Your Word" },
-        { q: "I shave every day, but my beard stays the same. What am I?", opts: ["A Barber", "A Magician", "An Animal"], a: "A Barber" }
+        { q: "I shave every day, but my beard stays the same. What am I?", opts: ["A Barber", "A Magician", "An Animal"], a: "A Barber" },
+        { q: "What has 13 hearts, but no other organs?", opts: ["A Deck of Cards", "An Octopus", "An Alien"], a: "A Deck of Cards" },
+        { q: "What goes up and down but doesn't move?", opts: ["A Staircase", "An Elevator", "A Yo-yo"], a: "A Staircase" },
+        { q: "If you’ve got me, you want to share me; if you share me, you haven’t kept me. What am I?", opts: ["A Secret", "A Disease", "Money"], a: "A Secret" },
+        { q: "What gets wetter the more it dries?", opts: ["A Towel", "Water", "A Sponge"], a: "A Towel" },
+        { q: "What invention lets you look right through a wall?", opts: ["A Window", "X-Rays", "A Hammer"], a: "A Window" },
+        { q: "I have cities, but no houses. Forests, but no trees. Water, but no fish.", opts: ["A Map", "A Globe", "A Desert"], a: "A Map" }
     ],
     grammar: [
         { q: "Fix the incorrect word:\n'She GO to school.'", a: "GOES" },
         { q: "Fix the incorrect word:\n'They IS playing football.'", a: "ARE" },
         { q: "Fix the incorrect word:\n'I didn't WENT there.'", a: "GO" },
-        { q: "Fix the incorrect word:\n'He DON'T like apples.'", a: "DOESNT" }, // Removed apostrophe for easier typing
+        { q: "Fix the incorrect word:\n'He DON'T like apples.'", a: "DOESNT" }, 
         { q: "Fix the incorrect word:\n'There IS many people here.'", a: "ARE" },
         { q: "Fix the incorrect word:\n'She has WROTE a letter.'", a: "WRITTEN" },
         { q: "Fix the incorrect word:\n'We WAS walking home.'", a: "WERE" },
         { q: "Fix the incorrect word:\n'I have SAW that movie.'", a: "SEEN" },
         { q: "Fix the incorrect word:\n'It is MORE BETTER.'", a: "BETTER" },
-        { q: "Fix the incorrect word:\n'The dog wagged IT'S tail.'", a: "ITS" }
+        { q: "Fix the incorrect word:\n'The dog wagged IT'S tail.'", a: "ITS" },
+        { q: "Fix the incorrect word:\n'Everybody HAVE a book.'", a: "HAS" },
+        { q: "Fix the incorrect word:\n'He works GOOD under pressure.'", a: "WELL" },
+        { q: "Fix the incorrect word:\n'I am looking forward to MEET you.'", a: "MEETING" },
+        { q: "Fix the incorrect word:\n'Can you advice me?'", a: "ADVISE" },
+        { q: "Fix the incorrect word:\n'This is the boy WHICH won the race.'", a: "WHO" }
     ],
     comprehension: [
         { q: "Based on the ticket, what is the destination?", opts: ["Melaka", "Kuala Lumpur", "Johor"], a: "Melaka", showTicket: true },
         { q: "Based on the ticket, the bus...", opts: ["leaves for Melaka at 9.00 a.m.", "leaves for KL at 9.00 a.m.", "arrives at 9.00 a.m."], a: "leaves for Melaka at 9.00 a.m.", showTicket: true },
         { q: "Based on the ticket, how long is the journey?", opts: ["2 Hours", "1 Hour", "3 Hours"], a: "2 Hours", showTicket: true },
         { q: "What is the fare for 2 people?", opts: ["RM 30", "RM 15", "RM 45"], a: "RM 30", showTicket: true },
-        { q: "Where does the bus depart from?", opts: ["Kuala Lumpur", "Melaka", "Seremban"], a: "Kuala Lumpur", showTicket: true }
+        { q: "Where does the bus depart from?", opts: ["Kuala Lumpur", "Melaka", "Seremban"], a: "Kuala Lumpur", showTicket: true },
+        { q: "If the bus is delayed by 30 mins, what is the new arrival time?", opts: ["11.30 a.m.", "10.30 a.m.", "12.00 p.m."], a: "11.30 a.m.", showTicket: true },
+        { q: "How much change will you receive if you pay with RM 50 for one ticket?", opts: ["RM 35", "RM 25", "RM 45"], a: "RM 35", showTicket: true }
     ]
 };
 
@@ -360,17 +401,24 @@ const dbHard = {
         { q: "Spell the word you hear (Hard):", a: "CONSCIENTIOUS", audio: "Conscientious" },
         { q: "Spell the word you hear (Hard):", a: "ONOMATOPOEIA", audio: "Onomatopoeia" },
         { q: "Spell the word you hear (Hard):", a: "MISCHIEVOUS", audio: "Mischievous" },
-        { q: "Spell the word you hear (Hard):", a: "NAUSEOUS", audio: "Nauseous" }
+        { q: "Spell the word you hear (Hard):", a: "NAUSEOUS", audio: "Nauseous" },
+        { q: "Spell the word you hear (Hard):", a: "PRIVILEGE", audio: "Privilege" },
+        { q: "Spell the word you hear (Hard):", a: "RHYTHM", audio: "Rhythm" },
+        { q: "Spell the word you hear (Hard):", a: "UBIQUITOUS", audio: "Ubiquitous" },
+        { q: "Spell the word you hear (Hard):", a: "SYCOPHANT", audio: "Sycophant" },
+        { q: "Spell the word you hear (Hard):", a: "CACOPHONY", audio: "Cacophony" }
     ],
     guessing: [
-        { q: "A woman shoots her husband, holds him under water for 5 minutes, and hangs him. Later they eat dinner. How?", opts: ["She took a photograph", "She is an executioner", "It was a dream"], a: "She took a photograph" },
-        { q: "I am a word of letters three, add two and fewer there will be. What am I?", opts: ["Few", "Less", "One"], a: "Few" },
-        { q: "What comes once in a minute, twice in a moment, but never in a thousand years?", opts: ["The letter M", "A second", "A thought"], a: "The letter M" },
-        { q: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", opts: ["An Echo", "A Ghost", "A Cloud"], a: "An Echo" },
-        { q: "You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. What am I?", opts: ["A Candle", "A Clock", "A Battery"], a: "A Candle" },
-        { q: "What disappears the second you say its name?", opts: ["Silence", "The Wind", "A Shadow"], a: "Silence" },
+        { q: "Forward I am heavy, backward I am not. What am I?", opts: ["The word TON", "A Truck", "Gravity"], a: "The word TON" },
+        { q: "What five-letter word becomes shorter when you add two letters to it?", opts: ["Short", "Small", "Brief"], a: "Short" },
+        { q: "What word is pronounced the same if you take away four of its five letters?", opts: ["Queue", "Aisle", "Eerie"], a: "Queue" },
+        { q: "A man dies of old age on his 25th birthday. How is this possible?", opts: ["He was born on Feb 29th", "He time traveled", "He had a disease"], a: "He was born on Feb 29th" },
+        { q: "I am an odd number. Take away a letter and I become even. What number am I?", opts: ["Seven", "Three", "Nine"], a: "Seven" },
+        { q: "The person who makes it has no need of it. The person who buys it has no use for it. The person who uses it can neither see nor feel it. What is it?", opts: ["A Coffin", "A Poison", "A Dream"], a: "A Coffin" },
+        { q: "You see a boat filled with people. It has not sunk, but when you look again you don’t see a single person on the boat. Why?", opts: ["They were all married", "They are ghosts", "They fell in"], a: "They were all married" },
         { q: "First you eat me, then you get eaten. What am I?", opts: ["A Fish Hook", "A Poison Apple", "A Lion"], a: "A Fish Hook" },
-        { q: "I have cities, but no houses. Mountains, but no trees. Water, but no fish. What am I?", opts: ["A Map", "A Globe", "A Desert"], a: "A Map" }
+        { q: "I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. What am I?", opts: ["The letter E", "God", "The Universe"], a: "The letter E" },
+        { q: "A man is looking at a photograph. His friend asks who it is. The man replies, 'Brothers and sisters, I have none. But that man's father is my father's son.' Who was in the photograph?", opts: ["His Son", "Himself", "His Father"], a: "His Son" }
     ],
     grammar: [
         { q: "Fix the incorrect word:\n'If I WAS you, I would leave.'", a: "WERE" },
@@ -378,11 +426,11 @@ const dbHard = {
         { q: "Fix the incorrect word:\n'Neither the teacher nor the students IS ready.'", a: "ARE" },
         { q: "Fix the incorrect word:\n'One of my friends ARE coming.'", a: "IS" },
         { q: "Fix the incorrect word:\n'She plays tennis GOOD.'", a: "WELL" },
-        { q: "Fix the incorrect word:\n'I look forward to MEET you.'", a: "MEETING" },
         { q: "Fix the incorrect word:\n'He insisted ON GO to the park.'", a: "GOING" },
         { q: "Fix the incorrect word:\n'Between you and I, this is a secret.'", a: "ME" },
         { q: "Fix the incorrect word:\n'Whom did you say IS calling?'", a: "WHO" },
-        { q: "Fix the incorrect word:\n'She is the girl WHICH won the prize.'", a: "WHO" }
+        { q: "Fix the incorrect word:\n'She is the girl WHICH won the prize.'", a: "WHO" },
+        { q: "Fix the incorrect word:\n'Not only the boys but also the girl HAVE arrived.'", a: "HAS" }
     ],
     comprehension: [
         { q: "If the bus is delayed by 45 minutes, what is the new estimated arrival time?", opts: ["11.45 a.m.", "11.00 a.m.", "12.00 p.m."], a: "11.45 a.m.", showTicket: true },
@@ -393,7 +441,7 @@ const dbHard = {
     ]
 };
 
-// Copy pools to splice from
+// Copy pools to safely splice from without losing the original database
 let poolNormal = JSON.parse(JSON.stringify(dbNormal));
 let poolHard = JSON.parse(JSON.stringify(dbHard));
 
@@ -442,13 +490,17 @@ function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 function animateCardHeight(cardEl, callback) {
     const startHeight = cardEl.offsetHeight;
     cardEl.style.height = 'auto';
+    
+    // Temporarily apply DOM changes to measure target height
+    if (callback) callback();
+    
     const targetHeight = cardEl.offsetHeight;
+    
+    // Revert to start and animate to target
     cardEl.style.height = startHeight + 'px';
     void cardEl.offsetHeight; // force reflow
     cardEl.style.transition = 'height 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
     cardEl.style.height = targetHeight + 'px';
-    
-    if (callback) callback();
     
     setTimeout(() => {
         cardEl.style.height = 'auto';
@@ -510,23 +562,24 @@ function drawWheel() {
         ctx.shadowBlur = 2; ctx.shadowColor = "rgba(0,0,0,0.4)";
         ctx.fillStyle = "white";
         
-        // Translate to the middle of the arc
-        ctx.translate(Math.cos(angle + arc / 2) * textRadius, Math.sin(angle + arc / 2) * textRadius);
+        // Translate to the middle of the arc on the inside radius + small padding
+        let textStartRadius = insideRadius + 15;
+        ctx.translate(Math.cos(angle + arc / 2) * textStartRadius, Math.sin(angle + arc / 2) * textStartRadius);
         
         // Rotate text pointing outwards
         ctx.rotate(angle + arc / 2);
         
         let text = studentsData[i].name;
-        // Dynamically size text to fit
-        let fontSize = Math.min(16, (arc * textRadius) / 2);
+        // Dynamically size text to fit (prevent horizontal bleed)
+        let fontSize = Math.min(14, (arc * outsideRadius) / 1.5); 
         ctx.font = `bold ${fontSize}px Inter, sans-serif`;
-        ctx.textAlign = "right"; // Right align to pull towards center
+        ctx.textAlign = "left"; // Start from inside and go outwards!
         ctx.textBaseline = "middle";
         
-        // Trim if still too long
-        if(text.length > 20) text = text.substring(0,18) + "..";
+        // Trim if too long to prevent overflowing outside of the wheel
+        if(text.length > 17) text = text.substring(0,15) + "..";
         
-        ctx.fillText(text, 20, 0); // slight padding
+        ctx.fillText(text, 0, 0); 
         ctx.restore();
     }
     ctx.translate(-size/2, -size/2); // reset
@@ -547,6 +600,8 @@ function rotateWheel() {
     startAngle += (spinAngle * Math.PI / 180);
     
     // Sound Logic: Calculate segment crossed
+    // Since transform: rotate(-90deg) is in CSS, physical Top is -PI/2.
+    // We can just calculate angle modulo arc to detect boundary crossing.
     let degrees = (startAngle * 180 / Math.PI) % 360;
     let arcd = arc * 180 / Math.PI;
     let currentSegment = Math.floor(degrees / arcd);
@@ -572,15 +627,14 @@ function spinWheel() {
 function stopRotateWheel() {
     clearTimeout(spinTimeout);
     
-    // Adjust logic due to -90deg canvas rotation in CSS
-    // The pointer is visually at Top (270 degrees in canvas space).
-    // Canvas rotation -90deg makes 0 rad at Top. 
-    // Wait, let's calculate exactly where pointer is.
-    // CSS transform: rotate(-90deg) puts 0 rad at the Top.
-    // The pointer is at the Top. So we just use startAngle reversed.
+    // Calculate which segment stopped at the pointer.
+    // The canvas is rotated -90 degrees in CSS. 
+    // Meaning the 0 radian (normally right) is at the TOP.
+    // The pointer is at the TOP.
+    // Therefore, we just check what segment covers the 0 radian in the reversed `startAngle`.
     let degrees = startAngle * 180 / Math.PI;
     let arcd = arc * 180 / Math.PI;
-    let index = Math.floor((360 - degrees % 360) / arcd) % studentsData.length;
+    let index = Math.floor((360 - (degrees % 360)) / arcd) % studentsData.length;
     
     currentStudent = studentsData[index];
     
@@ -618,13 +672,14 @@ function getQuestions(type, isHard, count) {
     
     // Refill if not enough questions
     if(sourcePool.length < count) {
+        // Deep copy original DB back into the pool to replenish
         poolHard[type] = JSON.parse(JSON.stringify(dbHard[type]));
         poolNormal[type] = JSON.parse(JSON.stringify(dbNormal[type]));
         sourcePool = isHard ? poolHard[type] : poolNormal[type];
     }
     
     shuffle(sourcePool);
-    let selected = sourcePool.splice(0, count);
+    let selected = sourcePool.splice(0, count); // removes them so they aren't repeated
     return selected;
 }
 
@@ -703,7 +758,7 @@ function loadQuestion() {
             if (q.showTicket) {
                 tktUi.style.display = 'block';
                 // Barcode Easter Egg
-                document.getElementById('ticket-barcode-text').innerText = `*${currentStudent.name}*`;
+                document.getElementById('ticket-barcode-text').innerText = `*${currentStudent.name.replace(/\s+/g, '')}*`;
             }
             mcqCont.style.display = 'block';
             let optsHTML = '';
@@ -716,27 +771,35 @@ function loadQuestion() {
     });
 }
 
+// Force voices to load early (Chrome workaround)
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = function() {
+        window.speechSynthesis.getVoices();
+    };
+    window.speechSynthesis.getVoices(); // initial fetch
+}
+
 // AUDIO (TTS)
 function playCurrentWord() {
     if (currentGameType !== 'spelling') return;
     let word = questions[currentQIndex].audio;
     let u = new SpeechSynthesisUtterance(word);
     
-    // Select Voice
+    // Select Voice Robustly
     let voices = window.speechSynthesis.getVoices();
     let selectedVoice = null;
+    
     if (accentChoice === 'UK') {
-        selectedVoice = voices.find(v => v.lang === 'en-GB');
+        selectedVoice = voices.find(v => v.lang === 'en-GB' || v.lang === 'en_GB' || v.name.includes('UK') || v.name.includes('British'));
     } else {
-        selectedVoice = voices.find(v => v.lang === 'en-US');
+        selectedVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en_US' || v.name.includes('US') || v.name.includes('American'));
     }
+    
     if(selectedVoice) u.voice = selectedVoice;
     
     u.rate = 0.85; 
     speechSynthesis.speak(u);
 }
-// Force voices to load early
-window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
 
 // KEYBOARD LOGIC
 function renderKeyboard() {
