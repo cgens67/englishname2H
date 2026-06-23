@@ -6,7 +6,7 @@
 <title>English Game 2026</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 <style>
 :root {
@@ -92,13 +92,13 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 
 /* MCQs */
 .mcq-btn { width: 100%; background: var(--ios-input); border: 2px solid var(--glass-border); padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 600; text-align: left; margin-bottom: 12px; cursor: pointer; transition: 0.2s; color: var(--ios-text); box-shadow: var(--shadow-sm); }
-.mcq-btn:active { transform: scale(0.98); background: var(--ios-bg); }
-.mcq-btn.selected { border-color: var(--ios-blue); background: var(--ios-blue-light); color: var(--ios-blue); }
+.mcq-btn:active { transform: scale(0.98); }
+.mcq-btn.selected { border-color: var(--ios-blue); box-shadow: 0 0 0 2px var(--ios-blue); background: var(--ios-card); }
 .mcq-btn.correct { background: var(--success) !important; color: #fff !important; border-color: var(--success) !important; box-shadow: 0 4px 12px rgba(52,199,89,0.3) !important; }
 .mcq-btn.wrong { background: var(--danger) !important; color: #fff !important; border-color: var(--danger) !important; }
 
 /* VIRTUAL KEYBOARD */
-.v-input-display { width: 100%; background: var(--ios-input); border: 2px solid var(--ios-blue); padding: 16px 20px; border-radius: 16px; font-size: 24px; font-weight: 600; text-align: center; min-height: 64px; margin-bottom: 20px; word-break: break-all; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 8px;}
+.v-input-display { width: 100%; background: var(--ios-input); border: 2px solid var(--ios-blue); padding: 16px 20px; border-radius: 16px; font-size: 24px; font-weight: 600; text-align: center; min-height: 64px; margin-bottom: 20px; word-break: break-all; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); transition: 0.3s; }
 .v-keyboard { width: 100%; display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.05); padding: 12px; border-radius: 20px; }
 [data-theme="dark"] .v-keyboard { background: rgba(255,255,255,0.05); }
 .vk-row { display: flex; justify-content: center; gap: 6px; }
@@ -112,7 +112,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .btn-primary, .btn-danger, .btn-warning { flex: 1; padding: 16px; border-radius: 16px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; color: #fff; box-shadow: var(--shadow-sm); transition: 0.2s var(--ease-spring); display: flex; justify-content: center; align-items: center; gap: 8px; }
 .btn-primary { background: var(--ios-blue); }
 .btn-danger { background: var(--danger); }
-.btn-warning { background: var(--warning); }
+.btn-warning { background: var(--warning); color: #fff; }
 .btn-primary:active, .btn-danger:active, .btn-warning:active { transform: scale(0.95); }
 
 /* TICKET EASTER EGG CSS RECREATION */
@@ -197,7 +197,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
                 <div class="game-desc">Read the info ticket and answer the questions.</div>
             </div>
         </div>
-        <button class="btn-warning" style="margin-top: 24px; width: 100%; max-width: 300px; color:#fff;" onclick="promptCancelSelection()"><span class="material-icons-round">refresh</span> Spin Again</button>
+        <button class="btn-warning" style="margin-top: 24px; width: 100%; max-width: 300px;" onclick="cancelSelectionFlow()"><span class="material-icons-round">refresh</span> Spin Again</button>
     </div>
 
     <!-- SCREEN 3: GAMEPLAY -->
@@ -255,7 +255,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
         </div>
 
         <div class="play-actions">
-            <button class="btn-danger" onclick="promptForfeitGame()"><span class="material-icons-round">flag</span> Forfeit</button>
+            <button class="btn-danger" onclick="forfeitGameFlow()"><span class="material-icons-round">flag</span> Forfeit</button>
             <button class="btn-primary" id="btn-submit" onclick="submitAnswer()" style="display:none;"><span class="material-icons-round">check_circle</span> Submit</button>
         </div>
     </div>
@@ -264,14 +264,14 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 
 <!-- MODALS -->
 
-<!-- Custom In-UI Confirm Modal -->
+<!-- In-UI Confirmation Modal -->
 <div class="modal-bg" id="modal-confirm">
     <div class="modal-card">
-        <h2 class="modal-title" id="confirm-title">Confirm</h2>
-        <p style="font-size: 16px; color: var(--ios-text-sec); margin-bottom: 24px;" id="confirm-desc">Are you sure?</p>
+        <h2 class="modal-title" id="confirm-title" style="margin-bottom:8px;">Are you sure?</h2>
+        <p style="color: var(--ios-text-sec); margin-bottom: 24px; line-height:1.4;" id="confirm-desc">Message</p>
         <div style="display:flex; gap:10px;">
-            <button class="btn-primary" style="background:var(--ios-input); color:var(--ios-text);" onclick="closeModal('modal-confirm')">Cancel</button>
-            <button class="btn-danger" id="confirm-btn">Confirm</button>
+            <button class="btn-primary" style="flex:1; background:var(--ios-input); color:var(--ios-text); font-size:16px;" onclick="closeModal('modal-confirm')">Cancel</button>
+            <button class="btn-danger" id="confirm-action-btn" style="flex:1; font-size:16px;">Yes</button>
         </div>
     </div>
 </div>
@@ -298,22 +298,6 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 </div>
 
 <script>
-// --- CUSTOM CONFIRM DIALOG ---
-let confirmAction = null;
-function showConfirm(title, desc, action, btnText="Confirm", btnColor="var(--danger)") {
-    document.getElementById('confirm-title').innerText = title;
-    document.getElementById('confirm-desc').innerText = desc;
-    let btn = document.getElementById('confirm-btn');
-    btn.innerText = btnText;
-    btn.style.background = btnColor;
-    confirmAction = action;
-    openModal('modal-confirm');
-}
-document.getElementById('confirm-btn').onclick = function() {
-    closeModal('modal-confirm');
-    if(confirmAction) confirmAction();
-};
-
 // --- DARK MODE TOGGLE ---
 let isDark = false;
 function toggleDarkMode() {
@@ -324,7 +308,7 @@ function toggleDarkMode() {
 }
 
 // --- DATA: STUDENTS ---
-// LOO CHIN SIANG removed as requested
+// LOO CHIN SIANG removed.
 let studentsData = [
     { name: "ALOYSIUS NG YU YI", cn: "黄昱毅" }, { name: "ALVIN TANG ZHENG HAO", cn: "汤正豪" },
     { name: "CLEMENT SEAH JI WEN", cn: "佘其汶" }, { name: "ELVIS LOW YI HAO", cn: "罗苡豪" },
@@ -352,26 +336,21 @@ function isHardStudent(name) {
 // --- MASSIVE GAME DATA POOLS ---
 const dbNormal = {
     spelling: [
-        { q: "Spell the word you hear:", a: "ENVIRONMENT", audio: "Environment" },
-        { q: "Spell the word you hear:", a: "GOVERNMENT", audio: "Government" },
-        { q: "Spell the word you hear:", a: "NECESSARY", audio: "Necessary" },
-        { q: "Spell the word you hear:", a: "ACCOMMODATION", audio: "Accommodation" },
-        { q: "Spell the word you hear:", a: "RHYTHM", audio: "Rhythm" },
-        { q: "Spell the word you hear:", a: "EMBARRASS", audio: "Embarrass" },
-        { q: "Spell the word you hear:", a: "GUARANTEE", audio: "Guarantee" },
-        { q: "Spell the word you hear:", a: "DEFINITELY", audio: "Definitely" },
-        { q: "Spell the word you hear:", a: "SEPARATELY", audio: "Separately" },
-        { q: "Spell the word you hear:", a: "PRONUNCIATION", audio: "Pronunciation" },
-        { q: "Spell the word you hear:", a: "OCCASION", audio: "Occasion" },
-        { q: "Spell the word you hear:", a: "DISAPPEAR", audio: "Disappear" },
-        { q: "Spell the word you hear:", a: "RECEIPT", audio: "Receipt" },
-        { q: "Spell the word you hear:", a: "PARALLEL", audio: "Parallel" },
-        { q: "Spell the word you hear:", a: "SUCCESSFUL", audio: "Successful" },
-        { q: "Spell the word you hear:", a: "ACHIEVEMENT", audio: "Achievement" },
-        { q: "Spell the word you hear:", a: "KNOWLEDGE", audio: "Knowledge" },
-        { q: "Spell the word you hear:", a: "MAINTENANCE", audio: "Maintenance" },
-        { q: "Spell the word you hear:", a: "FASCINATING", audio: "Fascinating" },
-        { q: "Spell the word you hear:", a: "EXAGGERATE", audio: "Exaggerate" }
+        { q: "Spell the word you hear:", a: "BEAUTIFUL", audio: "Beautiful" },
+        { q: "Spell the word you hear:", a: "DANGEROUS", audio: "Dangerous" },
+        { q: "Spell the word you hear:", a: "IMPORTANT", audio: "Important" },
+        { q: "Spell the word you hear:", a: "COMFORTABLE", audio: "Comfortable" },
+        { q: "Spell the word you hear:", a: "EXPENSIVE", audio: "Expensive" },
+        { q: "Spell the word you hear:", a: "DELICIOUS", audio: "Delicious" },
+        { q: "Spell the word you hear:", a: "FAVORITE", audio: "Favorite" },
+        { q: "Spell the word you hear:", a: "LANGUAGE", audio: "Language" },
+        { q: "Spell the word you hear:", a: "DICTIONARY", audio: "Dictionary" },
+        { q: "Spell the word you hear:", a: "VOCABULARY", audio: "Vocabulary" },
+        { q: "Spell the word you hear:", a: "TOMORROW", audio: "Tomorrow" },
+        { q: "Spell the word you hear:", a: "YESTERDAY", audio: "Yesterday" },
+        { q: "Spell the word you hear:", a: "HAPPINESS", audio: "Happiness" },
+        { q: "Spell the word you hear:", a: "TOGETHER", audio: "Together" },
+        { q: "Spell the word you hear:", a: "BECAUSE", audio: "Because" }
     ],
     guessing: [
         { q: "What has to be broken before you can use it?", opts: ["An Egg", "A Coconut", "A Glass"], a: "An Egg" },
@@ -383,12 +362,7 @@ const dbNormal = {
         { q: "I have branches, but no fruit, trunk or leaves. What am I?", opts: ["A Bank", "A Tree", "A River"], a: "A Bank" },
         { q: "What can you keep after giving to someone?", opts: ["Your Word", "A Gift", "A Secret"], a: "Your Word" },
         { q: "I shave every day, but my beard stays the same. What am I?", opts: ["A Barber", "A Magician", "An Animal"], a: "A Barber" },
-        { q: "What has 13 hearts, but no other organs?", opts: ["A Deck of Cards", "An Octopus", "An Alien"], a: "A Deck of Cards" },
-        { q: "What goes up and down but doesn't move?", opts: ["A Staircase", "An Elevator", "A Yo-yo"], a: "A Staircase" },
-        { q: "If you’ve got me, you want to share me; if you share me, you haven’t kept me. What am I?", opts: ["A Secret", "A Disease", "Money"], a: "A Secret" },
-        { q: "What gets wetter the more it dries?", opts: ["A Towel", "Water", "A Sponge"], a: "A Towel" },
-        { q: "What invention lets you look right through a wall?", opts: ["A Window", "X-Rays", "A Hammer"], a: "A Window" },
-        { q: "I have cities, but no houses. Forests, but no trees. Water, but no fish.", opts: ["A Map", "A Globe", "A Desert"], a: "A Map" }
+        { q: "What has 13 hearts, but no other organs?", opts: ["A Deck of Cards", "An Octopus", "An Alien"], a: "A Deck of Cards" }
     ],
     grammar: [
         { q: "Fix the incorrect word:\n'She GO to school.'", a: "GOES" },
@@ -400,41 +374,34 @@ const dbNormal = {
         { q: "Fix the incorrect word:\n'We WAS walking home.'", a: "WERE" },
         { q: "Fix the incorrect word:\n'I have SAW that movie.'", a: "SEEN" },
         { q: "Fix the incorrect word:\n'It is MORE BETTER.'", a: "BETTER" },
-        { q: "Fix the incorrect word:\n'The dog wagged IT'S tail.'", a: "ITS" },
-        { q: "Fix the incorrect word:\n'Everybody HAVE a book.'", a: "HAS" },
-        { q: "Fix the incorrect word:\n'He works GOOD under pressure.'", a: "WELL" },
-        { q: "Fix the incorrect word:\n'I am looking forward to MEET you.'", a: "MEETING" },
-        { q: "Fix the incorrect word:\n'Can you advice me?'", a: "ADVISE" },
-        { q: "Fix the incorrect word:\n'This is the boy WHICH won the race.'", a: "WHO" }
+        { q: "Fix the incorrect word:\n'The dog wagged IT'S tail.'", a: "ITS" }
     ],
     comprehension: [
         { q: "Based on the ticket, what is the destination?", opts: ["Melaka", "Kuala Lumpur", "Johor"], a: "Melaka", showTicket: true },
         { q: "Based on the ticket, the bus...", opts: ["leaves for Melaka at 9.00 a.m.", "leaves for KL at 9.00 a.m.", "arrives at 9.00 a.m."], a: "leaves for Melaka at 9.00 a.m.", showTicket: true },
         { q: "Based on the ticket, how long is the journey?", opts: ["2 Hours", "1 Hour", "3 Hours"], a: "2 Hours", showTicket: true },
         { q: "What is the fare for 2 people?", opts: ["RM 30", "RM 15", "RM 45"], a: "RM 30", showTicket: true },
-        { q: "Where does the bus depart from?", opts: ["Kuala Lumpur", "Melaka", "Seremban"], a: "Kuala Lumpur", showTicket: true },
-        { q: "If the bus is delayed by 30 mins, what is the new arrival time?", opts: ["11.30 a.m.", "10.30 a.m.", "12.00 p.m."], a: "11.30 a.m.", showTicket: true },
-        { q: "How much change will you receive if you pay with RM 50 for one ticket?", opts: ["RM 35", "RM 25", "RM 45"], a: "RM 35", showTicket: true }
+        { q: "Where does the bus depart from?", opts: ["Kuala Lumpur", "Melaka", "Seremban"], a: "Kuala Lumpur", showTicket: true }
     ]
 };
 
 const dbHard = {
     spelling: [
-        { q: "Spell the word you hear (Hard):", a: "KNOWLEDGE", audio: "Knowledge" },
-        { q: "Spell the word you hear (Hard):", a: "PSYCHOLOGY", audio: "Psychology" },
-        { q: "Spell the word you hear (Hard):", a: "RESTAURANT", audio: "Restaurant" },
-        { q: "Spell the word you hear (Hard):", a: "SCISSORS", audio: "Scissors" },
-        { q: "Spell the word you hear (Hard):", a: "TOMORROW", audio: "Tomorrow" },
-        { q: "Spell the word you hear (Hard):", a: "DIARRHEA", audio: "Diarrhea" },
+        { q: "Spell the word you hear (Hard):", a: "ENVIRONMENT", audio: "Environment" },
+        { q: "Spell the word you hear (Hard):", a: "GOVERNMENT", audio: "Government" },
+        { q: "Spell the word you hear (Hard):", a: "NECESSARY", audio: "Necessary" },
+        { q: "Spell the word you hear (Hard):", a: "ACCOMMODATION", audio: "Accommodation" },
         { q: "Spell the word you hear (Hard):", a: "EMBARRASS", audio: "Embarrass" },
         { q: "Spell the word you hear (Hard):", a: "GUARANTEE", audio: "Guarantee" },
-        { q: "Spell the word you hear (Hard):", a: "CONVENIENCE", audio: "Convenience" },
-        { q: "Spell the word you hear (Hard):", a: "FAHRENHEIT", audio: "Fahrenheit" },
-        { q: "Spell the word you hear (Hard):", a: "JEWELLERY", audio: "Jewellery" },
-        { q: "Spell the word you hear (Hard):", a: "MILLENNIUM", audio: "Millennium" },
-        { q: "Spell the word you hear (Hard):", a: "QUEUE", audio: "Queue" },
-        { q: "Spell the word you hear (Hard):", a: "FASCINATING", audio: "Fascinating" },
-        { q: "Spell the word you hear (Hard):", a: "APPRECIATE", audio: "Appreciate" }
+        { q: "Spell the word you hear (Hard):", a: "DEFINITELY", audio: "Definitely" },
+        { q: "Spell the word you hear (Hard):", a: "SEPARATELY", audio: "Separately" },
+        { q: "Spell the word you hear (Hard):", a: "PRONUNCIATION", audio: "Pronunciation" },
+        { q: "Spell the word you hear (Hard):", a: "OCCASION", audio: "Occasion" },
+        { q: "Spell the word you hear (Hard):", a: "DISAPPEAR", audio: "Disappear" },
+        { q: "Spell the word you hear (Hard):", a: "RECEIPT", audio: "Receipt" },
+        { q: "Spell the word you hear (Hard):", a: "PARALLEL", audio: "Parallel" },
+        { q: "Spell the word you hear (Hard):", a: "SUCCESSFUL", audio: "Successful" },
+        { q: "Spell the word you hear (Hard):", a: "ACHIEVEMENT", audio: "Achievement" }
     ],
     guessing: [
         { q: "Forward I am heavy, backward I am not. What am I?", opts: ["The word TON", "A Truck", "Gravity"], a: "The word TON" },
@@ -485,17 +452,13 @@ let timerInt;
 let timeLeft = 60;
 let inputText = "";
 let accentChoice = 'US';
-let selectedMCQ = null;
+let currentSelectedOption = null;
 
 // Audio Context for spinning sound
 let audioCtx = null;
 function initAudio() {
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
+    if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
 }
 function playTick() {
     if(!audioCtx) return;
@@ -506,10 +469,8 @@ function playTick() {
     osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
     gain.gain.setValueAtTime(0.1, audioCtx.currentTime); // low volume
     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.05);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.05);
 }
 
 // --- UTILS ---
@@ -544,6 +505,20 @@ function showScreen(id) {
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
+// IN-UI CONFIRM MODAL
+function showConfirm(title, desc, btnText, btnColor, onConfirm) {
+    document.getElementById('confirm-title').innerText = title;
+    document.getElementById('confirm-desc').innerText = desc;
+    let actionBtn = document.getElementById('confirm-action-btn');
+    actionBtn.innerText = btnText;
+    actionBtn.style.background = btnColor;
+    actionBtn.onclick = function() {
+        closeModal('modal-confirm');
+        onConfirm();
+    };
+    openModal('modal-confirm');
+}
+
 // --- WHEEL LOGIC ---
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
@@ -556,12 +531,7 @@ let spinTimeTotal = 0;
 let lastSegment = 0;
 
 function drawWheel() {
-    if(studentsData.length === 0) {
-        // Clear canvas if empty
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        return; 
-    }
-    
+    if(studentsData.length === 0) return;
     arc = Math.PI * 2 / studentsData.length;
     
     const dpr = window.devicePixelRatio || 1;
@@ -571,7 +541,8 @@ function drawWheel() {
     ctx.scale(dpr, dpr);
     
     let outsideRadius = size/2 - 10;
-    let insideRadius = 50;
+    let textStartRadius = 75; // Safely away from the center
+    let insideRadius = 60;
     
     ctx.clearRect(0,0,size,size);
     ctx.translate(size/2, size/2);
@@ -595,18 +566,17 @@ function drawWheel() {
         ctx.shadowBlur = 2; ctx.shadowColor = "rgba(0,0,0,0.4)";
         ctx.fillStyle = "white";
         
-        // Translate to the middle of the arc on the inside radius + small padding
-        let textStartRadius = insideRadius + 15;
+        // Translate to the start radius inside the segment
         ctx.translate(Math.cos(angle + arc / 2) * textStartRadius, Math.sin(angle + arc / 2) * textStartRadius);
         
         // Rotate text pointing outwards
         ctx.rotate(angle + arc / 2);
         
         let text = studentsData[i].name;
-        // Dynamically size text to fit (prevent horizontal bleed)
+        // Dynamically size text to fit
         let fontSize = Math.min(14, (arc * outsideRadius) / 1.5); 
         ctx.font = `bold ${fontSize}px Inter, sans-serif`;
-        ctx.textAlign = "left"; // Start from inside and go outwards!
+        ctx.textAlign = "left"; // Start from inside edge and go outwards!
         ctx.textBaseline = "middle";
         
         // Trim if too long to prevent overflowing outside of the wheel
@@ -618,6 +588,11 @@ function drawWheel() {
     ctx.translate(-size/2, -size/2); // reset
 }
 
+function easeOut(t, b, c, d) {
+    t /= d; t--;
+    return c * (t*t*t + 1) + b;
+}
+
 function rotateWheel() {
     spinTime += 30;
     if(spinTime >= spinTimeTotal) {
@@ -627,7 +602,7 @@ function rotateWheel() {
     let spinAngle = spinArcStart - easeOut(spinTime, 0, spinArcStart, spinTimeTotal);
     startAngle += (spinAngle * Math.PI / 180);
     
-    // Sound Logic: Calculate segment crossed
+    // Sound Logic
     let degrees = (startAngle * 180 / Math.PI) % 360;
     let arcd = arc * 180 / Math.PI;
     let currentSegment = Math.floor(degrees / arcd);
@@ -641,10 +616,7 @@ function rotateWheel() {
 }
 
 function spinWheel() {
-    if(studentsData.length === 0) { 
-        showConfirm("Wheel Empty", "No more students left to pick!", null, "OK", "var(--ios-blue)"); 
-        return; 
-    }
+    if(studentsData.length === 0) { alert("No students left! Refresh the page to restart."); return; }
     initAudio();
     document.getElementById('spin-btn').disabled = true;
     spinArcStart = Math.random() * 10 + 10;
@@ -656,13 +628,14 @@ function spinWheel() {
 function stopRotateWheel() {
     clearTimeout(spinTimeout);
     
+    // Calculate which segment stopped at the pointer.
     let degrees = startAngle * 180 / Math.PI;
     let arcd = arc * 180 / Math.PI;
     let index = Math.floor((360 - (degrees % 360)) / arcd) % studentsData.length;
     
     currentStudent = studentsData[index];
     
-    // Automatically remove student from wheel pool right as we select them
+    // Auto Remove Student
     studentsData.splice(index, 1);
     
     // Proceed to Game Selection
@@ -671,7 +644,7 @@ function stopRotateWheel() {
         document.getElementById('disp-student-cn').innerText = currentStudent.cn !== "-" ? currentStudent.cn : "";
         document.getElementById('spin-btn').disabled = false;
         
-        drawWheel(); // Redraw the wheel without the student quietly in the background
+        drawWheel(); // Redraw wheel without them
         showScreen('screen-games');
     }, 1000);
 }
@@ -681,22 +654,24 @@ drawWheel();
 
 // --- GAME LOGIC ---
 
-function promptCancelSelection() {
+function cancelSelectionFlow() {
     showConfirm(
         "Spin Again?", 
-        `Are you sure you want to abandon ${currentStudent.name}'s turn and spin again?`, 
-        function() {
+        `Are you sure you want to cancel ${currentStudent.name}'s turn? They have already been removed from the wheel.`, 
+        "Spin Again", 
+        "var(--warning)",
+        () => {
             currentStudent = null;
             showScreen('screen-wheel');
-        },
-        "Spin Again",
-        "var(--warning)"
+        }
     );
 }
 
+// Function to fetch questions safely without running out
 function getQuestions(type, isHard, count) {
     let sourcePool = isHard ? poolHard[type] : poolNormal[type];
     
+    // Refill if not enough questions
     if(sourcePool.length < count) {
         poolHard[type] = JSON.parse(JSON.stringify(dbHard[type]));
         poolNormal[type] = JSON.parse(JSON.stringify(dbNormal[type]));
@@ -720,7 +695,6 @@ function startGame(type) {
     currentGameType = type;
     score = 0;
     currentQIndex = 0;
-    selectedMCQ = null;
     
     let isHard = isHardStudent(currentStudent.name);
     questions = getQuestions(type, isHard, 3);
@@ -741,7 +715,6 @@ function loadQuestion() {
         return;
     }
     
-    selectedMCQ = null;
     let q = questions[currentQIndex];
     document.getElementById('q-text').innerText = `Q${currentQIndex+1}: ${q.q}`;
     
@@ -751,6 +724,9 @@ function loadQuestion() {
     let tktUi = document.getElementById('ticket-ui');
     let btnSub = document.getElementById('btn-submit');
     let spellSet = document.getElementById('spelling-settings');
+    const disp = document.getElementById('v-input');
+    
+    currentSelectedOption = null; // reset MCQ selection
     
     const cardEl = document.getElementById('q-card');
     
@@ -763,9 +739,12 @@ function loadQuestion() {
         btnSub.style.display = 'none';
         spellSet.style.display = 'none';
         
-        // Reset input styles
-        const disp = document.getElementById('v-input');
-        if(disp) { disp.style.borderColor = "var(--ios-blue)"; disp.style.color = "inherit"; }
+        // Reset Inputs
+        if(disp) { 
+            disp.style.borderColor = "var(--ios-blue)"; 
+            disp.style.color = "inherit"; 
+        }
+        document.getElementById('v-keyboard').style.pointerEvents = 'auto';
         
         // Setup specific game UI
         if (currentGameType === 'spelling') {
@@ -795,6 +774,7 @@ function loadQuestion() {
             let optsHTML = '';
             let opts = shuffle([...q.opts]);
             opts.forEach(opt => {
+                // New logic: Select first, then submit
                 optsHTML += `<button class="mcq-btn" onclick="selectMCQ(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
             });
             mcqCont.innerHTML = optsHTML;
@@ -804,10 +784,8 @@ function loadQuestion() {
 
 // AUDIO (TTS)
 if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = function() {
-        window.speechSynthesis.getVoices();
-    };
-    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+    window.speechSynthesis.getVoices(); 
 }
 
 function playCurrentWord() {
@@ -815,20 +793,16 @@ function playCurrentWord() {
     let word = questions[currentQIndex].audio;
     let u = new SpeechSynthesisUtterance(word);
     
-    // Select Voice Robustly
     let voices = window.speechSynthesis.getVoices();
-    let selectedVoice = null;
+    let preferredVoices = [];
     
-    if (accentChoice === 'UK') {
-        selectedVoice = voices.find(v => v.lang === 'en-GB' || v.lang === 'en_GB' || v.name.includes('UK') || v.name.includes('British'));
-        u.lang = 'en-GB';
+    if (accentChoice === 'US') {
+        preferredVoices = voices.filter(v => (v.lang === 'en-US' || v.lang === 'en_US') && !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain'));
     } else {
-        // Try Google US first, then any en-US
-        selectedVoice = voices.find(v => v.name === 'Google US English') || 
-                        voices.find(v => v.lang === 'en-US' || v.lang === 'en_US' || v.name.includes('US') || v.name.includes('American'));
-        u.lang = 'en-US';
+        preferredVoices = voices.filter(v => v.lang === 'en-GB' || v.lang === 'en_GB' || v.name.includes('UK') || v.name.includes('British'));
     }
     
+    let selectedVoice = preferredVoices.find(v => v.name.includes('Google')) || preferredVoices[0] || voices.find(v => v.lang.startsWith('en'));
     if(selectedVoice) u.voice = selectedVoice;
     
     u.rate = 0.85; 
@@ -875,51 +849,55 @@ function updateInputDisplay() {
     disp.innerText = inputText + "|"; 
 }
 
-function selectMCQ(btn, answer) {
+// ANSWER CHECKING
+function selectMCQ(btn, selectedVal) {
     document.querySelectorAll('.mcq-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
-    selectedMCQ = answer;
-    document.getElementById('btn-submit').style.display = 'flex';
+    currentSelectedOption = { btn: btn, val: selectedVal };
+    document.getElementById('btn-submit').style.display = 'flex'; // show submit
 }
 
-// ANSWER CHECKING
 function submitAnswer() {
     let q = questions[currentQIndex];
     document.getElementById('btn-submit').style.display = 'none'; // hide during review
     
-    if (currentGameType === 'spelling' || currentGameType === 'grammar') {
+    if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
+        if(!currentSelectedOption) return; 
+        
+        let btn = currentSelectedOption.btn;
+        let selected = currentSelectedOption.val;
+        let correct = q.a;
+        
+        document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none');
+        
+        if (selected === correct) {
+            btn.classList.add('correct');
+            score++;
+            showFeedback(true);
+        } else {
+            btn.classList.add('wrong');
+            document.querySelectorAll('.mcq-btn').forEach(b => {
+                if(b.innerText === correct) b.classList.add('correct');
+            });
+            showFeedback(false);
+        }
+    } else {
+        // Spelling & Grammar
         let userA = inputText.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
         let realA = q.a.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
         
         const disp = document.getElementById('v-input');
+        document.getElementById('v-keyboard').style.pointerEvents = 'none'; // prevent typing
         
         if (userA === realA) {
-            score++;
             disp.style.borderColor = "var(--success)";
             disp.style.color = "var(--success)";
-            disp.innerHTML = `${realA} <span class="material-icons-round" style="vertical-align:middle;">check_circle</span>`;
+            score++;
             showFeedback(true);
         } else {
             disp.style.borderColor = "var(--danger)";
             disp.style.color = "var(--danger)";
-            disp.innerHTML = `${realA} <span class="material-icons-round" style="vertical-align:middle;">cancel</span>`; 
-            showFeedback(false);
-        }
-    } 
-    else {
-        // MCQ Logic
-        document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none');
-        let selectedBtn = document.querySelector('.mcq-btn.selected');
-        
-        if (selectedMCQ === q.a) {
-            score++;
-            if(selectedBtn) selectedBtn.classList.add('correct');
-            showFeedback(true);
-        } else {
-            if(selectedBtn) selectedBtn.classList.add('wrong');
-            document.querySelectorAll('.mcq-btn').forEach(b => {
-                if(b.innerText === q.a) b.classList.add('correct');
-            });
+            disp.innerText = realA; // reveal correct answer
             showFeedback(false);
         }
     }
@@ -927,11 +905,10 @@ function submitAnswer() {
 
 function showFeedback(isCorrect) {
     document.getElementById('play-score').innerText = `Score: ${score}`;
-    
     setTimeout(() => {
         currentQIndex++;
         loadQuestion();
-    }, 1500); // 1.5s delay to review answer
+    }, 2000); // 2s delay to review answer
 }
 
 // TIMER & FORFEIT
@@ -959,13 +936,15 @@ function updateTimerUI() {
     else pill.style.background = 'var(--warning)';
 }
 
-function promptForfeitGame() {
+function forfeitGameFlow() {
     showConfirm(
         "Forfeit Game?", 
         "Are you sure you want to forfeit? Your current score will be evaluated.", 
-        function() { finishGame(false); },
-        "Forfeit",
-        "var(--danger)"
+        "Forfeit", 
+        "var(--danger)",
+        () => {
+            finishGame(false);
+        }
     );
 }
 
@@ -1014,24 +993,24 @@ function showLostList() {
         cont.innerHTML = lostList.map((name, i) => `
             <div class="lost-list-item">
                 <span>${i+1}. ${name}</span>
-                <span class="material-icons-round" style="color:var(--danger); cursor:pointer; font-size:20px;" onclick="promptRemoveLost('${name}')">close</span>
+                <span class="material-icons-round" style="color:var(--danger); cursor:pointer; font-size:20px;" onclick="removeLostFlow('${name}')">close</span>
             </div>
         `).join('');
     }
     openModal('modal-lost');
 }
 
-function promptRemoveLost(name) {
+function removeLostFlow(name) {
     showConfirm(
-        "Remove Name?", 
-        `Remove ${name} from the Lost List?`, 
-        function() {
+        "Remove from List?", 
+        `Are you sure you want to remove ${name} from the Lost List?`, 
+        "Remove", 
+        "var(--danger)",
+        () => {
             lostList = lostList.filter(n => n !== name);
             document.getElementById('lost-count').innerText = lostList.length;
-            showLostList(); 
-        },
-        "Remove",
-        "var(--danger)"
+            showLostList(); // re-render
+        }
     );
 }
 
