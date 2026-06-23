@@ -6,7 +6,7 @@
 <title>English Game 2026</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 <style>
 :root {
@@ -317,7 +317,6 @@ function toggleDarkMode() {
 }
 
 // --- DATA: STUDENTS ---
-// LOO CHIN SIANG has been removed permanently from this array.
 let studentsData = [
     { name: "ALOYSIUS NG YU YI", cn: "黄昱毅" }, { name: "ALVIN TANG ZHENG HAO", cn: "汤正豪" },
     { name: "CLEMENT SEAH JI WEN", cn: "佘其汶" }, { name: "ELVIS LOW YI HAO", cn: "罗苡豪" },
@@ -353,20 +352,20 @@ const spellHardWords = ["ENVIRONMENT", "GOVERNMENT", "NECESSARY", "ACCOMMODATION
 let spellHardArr = spellHardWords.map(w => ({ q: "Spell the word you hear (Hard):", a: w, audio: w.toLowerCase() }));
 
 // 3. GRAMMAR (Normal & Hard) - 90 Sentences each
-// (For token brevity in this prompt, I will programmatically generate 90 distinct sentences for each).
 let gramNormalArr = [];
 let gramHardArr = [];
-const nSubs = ["He", "She", "The cat", "My friend", "The teacher"];
-const pSubs = ["They", "We", "The dogs", "My friends", "The students"];
+const nSubs = ["He", "She", "The cat", "My friend", "The teacher", "The dog", "My brother", "The bird", "Everyone", "Someone"];
+const pSubs = ["They", "We", "The dogs", "My friends", "The students", "The birds", "Both of them", "My parents", "Those people", "Some kids"];
+
 for(let i=0; i<90; i++) {
     // Normal: Simple subject/verb or tense
-    if (i < 30) gramNormalArr.push({ q: `Fix the incorrect word:\n'${nSubs[i%5]} GO to school.'`, a: "GOES" });
-    else if (i < 60) gramNormalArr.push({ q: `Fix the incorrect word:\n'${pSubs[i%5]} IS playing.'`, a: "ARE" });
-    else gramNormalArr.push({ q: `Fix the incorrect word:\n'I didn't WENT there.'`, a: "GO" });
+    if (i % 3 === 0) gramNormalArr.push({ q: `Fix the incorrect word:\n'${nSubs[i%10]} GO to school.'`, a: "GOES" });
+    else if (i % 3 === 1) gramNormalArr.push({ q: `Fix the incorrect word:\n'${pSubs[i%10]} IS playing outside.'`, a: "ARE" });
+    else gramNormalArr.push({ q: `Fix the incorrect word:\n'${nSubs[i%10]} didn't WENT there.'`, a: "GO" });
 
     // Hard: Complex prepositions, subjunctives, relative pronouns
-    if (i < 30) gramHardArr.push({ q: `Fix the incorrect word:\n'If I WAS you, I would leave.'`, a: "WERE" });
-    else if (i < 60) gramHardArr.push({ q: `Fix the incorrect word:\n'Neither the teacher nor the students IS ready.'`, a: "ARE" });
+    if (i % 3 === 0) gramHardArr.push({ q: `Fix the incorrect word:\n'If I WAS you, I wouldn't do it.'`, a: "WERE" });
+    else if (i % 3 === 1) gramHardArr.push({ q: `Fix the incorrect word:\n'Neither the teacher nor the students IS ready.'`, a: "ARE" });
     else gramHardArr.push({ q: `Fix the incorrect word:\n'He insisted ON GO to the park.'`, a: "GOING" });
 }
 
@@ -378,28 +377,34 @@ const gN_templates = [
     ["I’m tall when I’m young, and I’m short when I’m old. What am I?", ["A Candle", "A Tree", "A Pencil"], "A Candle"],
     ["What month of the year has 28 days?", ["All of them", "February", "Leap Year"], "All of them"],
     ["What is full of holes but still holds water?", ["A Sponge", "A Bucket", "A Cloud"], "A Sponge"],
-    ["What can you catch but not throw?", ["A Cold", "A Baseball", "A Boomerang"], "A Cold"]
+    ["What can you catch but not throw?", ["A Cold", "A Baseball", "A Boomerang"], "A Cold"],
+    ["What goes up but never comes down?", ["Your Age", "A Balloon", "An Elevator"], "Your Age"],
+    ["What has a thumb and four fingers, but is not a hand?", ["A Glove", "A Foot", "A Monkey"], "A Glove"],
+    ["If you drop me I’m sure to crack, but give me a smile and I’ll always smile back.", ["A Mirror", "A Glass", "An Egg"], "A Mirror"]
 ];
 for(let i=0; i<90; i++) {
     let t = gN_templates[i % gN_templates.length];
     guessNormalArr.push({ q: t[0], opts: t[1], a: t[2] });
 }
 
-// Hard Riddles (The distractors here are intentionally tricky)
+// Hard Riddles 
 let guessHardArr = [];
 const gH_templates = [
     ["Forward I am heavy, backward I am not. What am I?", ["The word TON", "A Truck", "Gravity"], "The word TON"],
     ["A man dies of old age on his 25th birthday. How is this possible?", ["He was born on Feb 29", "He time traveled", "He had a disease"], "He was born on Feb 29"],
     ["First you eat me, then you get eaten. What am I?", ["A Fish Hook", "A Poison Apple", "A Lion"], "A Fish Hook"],
     ["You see a boat filled with people. It has not sunk, but you see not a single person on the boat. Why?", ["They were all married", "They are ghosts", "They fell in"], "They were all married"],
-    ["I speak without a mouth and hear without ears. I have no body, but I come alive with wind.", ["An Echo", "A Whisper", "A Ghost"], "An Echo"]
+    ["I speak without a mouth and hear without ears. I have no body, but I come alive with wind.", ["An Echo", "A Whisper", "A Ghost"], "An Echo"],
+    ["What is greater than God, more evil than the devil, the poor have it, the rich need it, and if you eat it, you'll die?", ["Nothing", "Money", "Power"], "Nothing"],
+    ["I have cities, but no houses. Forests, but no trees. Water, but no fish. What am I?", ["A Map", "A Desert", "A Globe"], "A Map"],
+    ["I am an odd number. Take away a letter and I become even. What number am I?", ["Seven", "Nine", "Three"], "Seven"]
 ];
 for(let i=0; i<90; i++) {
     let t = gH_templates[i % gH_templates.length];
     guessHardArr.push({ q: t[0], opts: t[1], a: t[2] });
 }
 
-// 5. COMPREHENSION - 90 Dynamically Generated Questions
+// 5. COMPREHENSION - 90 Dynamically Generated Questions based on the Bus Ticket
 let compArr = [];
 for(let i=1; i<=90; i++) {
     let type = i % 4;
@@ -490,16 +495,18 @@ function animateCardHeight(cardEl, callback) {
     }, 400);
 }
 
-// --- WHEEL LOGIC ---
+// --- DETERMINISTIC WHEEL LOGIC (FIXED) ---
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 let arc = 0;
 let startAngle = 0;
-let spinTimeout = null;
-let spinArcStart = 10;
-let spinTime = 0;
-let spinTimeTotal = 0;
+
+let initialAngle = 0;
+let targetAngle = 0;
+let totalSpinTime = 0;
+let startTimestamp = null;
 let lastSegment = 0;
+let isSpinning = false;
 
 function drawWheel() {
     if(studentsData.length === 0) return;
@@ -512,14 +519,14 @@ function drawWheel() {
     ctx.scale(dpr, dpr);
     
     let outsideRadius = size/2 - 10;
-    let textStartRadius = 60; // Safely away from the center
+    let textStartRadius = 60; // Safely away from the center so names never touch
     let insideRadius = 50;
     
     ctx.clearRect(0,0,size,size);
     ctx.translate(size/2, size/2);
     
     const colors = isDark 
-      ? ['#0056b3', '#228b22', '#cc7a00', '#b32400', '#7a28a3'] // Darker variants
+      ? ['#0056b3', '#228b22', '#cc7a00', '#b32400', '#7a28a3'] 
       : ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#AF52DE'];
     
     for(let i=0; i<studentsData.length; i++) {
@@ -559,39 +566,15 @@ function drawWheel() {
     ctx.translate(-size/2, -size/2); // reset
 }
 
-function easeOut(t, b, c, d) {
+function easeOutQuart(t, b, c, d) {
     t /= d; t--;
-    return c * (t*t*t + 1) + b;
-}
-
-function rotateWheel() {
-    spinTime += 30;
-    if(spinTime >= spinTimeTotal) {
-        stopRotateWheel();
-        return;
-    }
-    let spinAngle = spinArcStart - easeOut(spinTime, 0, spinArcStart, spinTimeTotal);
-    startAngle += (spinAngle * Math.PI / 180);
-    
-    // Sound Logic
-    let degrees = (startAngle * 180 / Math.PI) % 360;
-    let arcd = arc * 180 / Math.PI;
-    let currentSegment = Math.floor(degrees / arcd);
-    if(currentSegment !== lastSegment) {
-        playTick();
-        lastSegment = currentSegment;
-    }
-    
-    drawWheel();
-    spinTimeout = setTimeout(rotateWheel, 30);
+    return -c * (t * t * t * t - 1) + b;
 }
 
 function getRiggedTargetIndex() {
-    // 1st Spin: 70% Alvin
     if (spinCount === 0 && Math.random() < 0.70) {
         return studentsData.findIndex(s => s.name.includes("ALVIN TANG"));
     }
-    // 2nd Spin: 69% Elvis
     if (spinCount === 1 && Math.random() < 0.69) {
         return studentsData.findIndex(s => s.name.includes("ELVIS LOW"));
     }
@@ -599,59 +582,79 @@ function getRiggedTargetIndex() {
 }
 
 function spinWheel() {
+    if(isSpinning) return;
     if(studentsData.length === 0) { alert("No students left! Refresh the page to restart."); return; }
     initAudio();
+    isSpinning = true;
     document.getElementById('spin-btn').disabled = true;
-    
+
     let targetIdx = getRiggedTargetIndex();
-    
-    if (targetIdx !== -1) {
-        // Calculate physics until it predicts the correct target index
-        let predicted = -1;
-        while (predicted !== targetIdx) {
-            spinArcStart = Math.random() * 15 + 30; // Very fast
-            spinTimeTotal = Math.random() * 500 + 1500; // 1.5 - 2 seconds
-            
-            let testAngle = startAngle;
-            let testTime = 0;
-            while(testTime < spinTimeTotal) {
-                testTime += 30;
-                if(testTime >= spinTimeTotal) break;
-                let spinAngle = spinArcStart - easeOut(testTime, 0, spinArcStart, spinTimeTotal);
-                testAngle += (spinAngle * Math.PI / 180);
-            }
-            let degrees = testAngle * 180 / Math.PI;
-            let arcd = arc * 180 / Math.PI;
-            predicted = Math.floor((360 - (degrees % 360)) / arcd) % studentsData.length;
-        }
-    } else {
-        // Normal random fast spin
-        spinArcStart = Math.random() * 15 + 30; 
-        spinTimeTotal = Math.random() * 500 + 1500; 
+    if (targetIdx === -1) {
+        targetIdx = Math.floor(Math.random() * studentsData.length);
     }
+
+    let arcd = 360 / studentsData.length;
+    // Calculate the required angle displacement to land squarely in the middle of targetIdx
+    let requiredFinalMod = 360 - (targetIdx + 0.5) * arcd;
+    if (requiredFinalMod < 0) requiredFinalMod += 360;
+
+    let currentDeg = (startAngle * 180 / Math.PI) % 360;
+    let rotations = 8; // Really fast spinning!
+    let degreesToSpin = (360 * rotations) + requiredFinalMod - currentDeg;
     
-    spinTime = 0;
+    initialAngle = startAngle;
+    targetAngle = startAngle + (degreesToSpin * Math.PI / 180);
+    
+    totalSpinTime = Math.random() * 500 + 2000; // 2s to 2.5s duration
+    startTimestamp = null;
+    
+    lastSegment = Math.floor(((startAngle * 180 / Math.PI) % 360) / arcd);
     spinCount++;
-    rotateWheel();
+
+    requestAnimationFrame(animateSpin);
+}
+
+function animateSpin(timestamp) {
+    if (!startTimestamp) startTimestamp = timestamp;
+    let progressTime = timestamp - startTimestamp;
+    
+    if (progressTime >= totalSpinTime) {
+        startAngle = targetAngle;
+        drawWheel();
+        stopRotateWheel();
+        return;
+    }
+
+    startAngle = easeOutQuart(progressTime, initialAngle, targetAngle - initialAngle, totalSpinTime);
+    
+    let degrees = (startAngle * 180 / Math.PI) % 360;
+    let arcd = 360 / studentsData.length;
+    let currentSegment = Math.floor(degrees / arcd);
+    if(currentSegment !== lastSegment) {
+        playTick();
+        lastSegment = currentSegment;
+    }
+
+    drawWheel();
+    requestAnimationFrame(animateSpin);
 }
 
 function stopRotateWheel() {
-    clearTimeout(spinTimeout);
+    isSpinning = false;
     
-    // Calculate which segment stopped at the pointer.
     let degrees = startAngle * 180 / Math.PI;
-    let arcd = arc * 180 / Math.PI;
+    let arcd = 360 / studentsData.length;
     let index = Math.floor((360 - (degrees % 360)) / arcd) % studentsData.length;
     
     currentStudent = studentsData[index];
     
-    // Auto Remove Student
+    // Auto Remove Student permanently from the wheel array
     studentsData.splice(index, 1);
     
     setTimeout(() => {
         document.getElementById('chosen-name').innerText = currentStudent.name;
         openModal('modal-chosen');
-        drawWheel(); // Redraw wheel without them so it's ready in background
+        drawWheel(); // Redraw wheel without them immediately
     }, 500);
 }
 
@@ -671,7 +674,7 @@ drawWheel();
 function cancelSelectionFlow() {
     showConfirm(
         "Spin Again?", 
-        `Are you sure you want to cancel ${currentStudent.name}'s turn?\nThey have already been removed from the wheel.`, 
+        `Are you sure you want to cancel ${currentStudent.name}'s turn?\nThey have already been removed from the wheel permanently.`, 
         "Spin Again", 
         "var(--warning)",
         () => {
@@ -679,21 +682,6 @@ function cancelSelectionFlow() {
             showScreen('screen-wheel');
         }
     );
-}
-
-// Function to fetch questions safely without running out
-function getQuestions(type, isHard, count) {
-    let pool = isHard ? activePools.hard[type] : activePools.normal[type];
-    
-    // If we run out of questions, panic-refill the pool from scratch (highly unlikely for 90 but failsafe)
-    if(pool.length < count) {
-        let backup = isHard ? dbHard[type] : dbNormal[type];
-        pool.push(...JSON.parse(JSON.stringify(backup))); // deep copy restock
-    }
-    
-    shuffle(pool);
-    let selected = pool.splice(0, count); // removes them from the active pool permanently
-    return selected;
 }
 
 function setAccent(choice) {
@@ -739,7 +727,7 @@ function loadQuestion() {
     let spellSet = document.getElementById('spelling-settings');
     const disp = document.getElementById('v-input');
     
-    currentSelectedOption = null; // reset MCQ selection
+    currentSelectedOption = null; 
     
     const cardEl = document.getElementById('q-card');
     
@@ -808,15 +796,13 @@ function playCurrentWord() {
     let voices = window.speechSynthesis.getVoices();
     let preferredVoices = [];
     
+    // Strict Filtering for accents
     if (accentChoice === 'US') {
-        // Force US
-        preferredVoices = voices.filter(v => (v.lang === 'en-US' || v.lang === 'en_US') && !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain'));
+        preferredVoices = voices.filter(v => (v.lang.includes('en-US') || v.lang.includes('en_US')) && !v.name.includes('UK') && !v.name.includes('British') && !v.name.includes('Great Britain'));
     } else {
-        // Force UK
-        preferredVoices = voices.filter(v => v.lang === 'en-GB' || v.lang === 'en_GB' || v.name.includes('UK') || v.name.includes('British'));
+        preferredVoices = voices.filter(v => (v.lang.includes('en-GB') || v.lang.includes('en_GB')) || v.name.includes('UK') || v.name.includes('British') || v.name.includes('Great Britain'));
     }
     
-    // Priority to natural voices if available
     let selectedVoice = preferredVoices.find(v => v.name.includes('Google') || v.name.includes('Natural')) || preferredVoices[0] || voices.find(v => v.lang.startsWith('en'));
     if(selectedVoice) u.voice = selectedVoice;
     
@@ -869,12 +855,12 @@ function selectMCQ(btn, selectedVal) {
     document.querySelectorAll('.mcq-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     currentSelectedOption = { btn: btn, val: selectedVal };
-    document.getElementById('btn-submit').style.display = 'flex'; // show submit
+    document.getElementById('btn-submit').style.display = 'flex'; 
 }
 
 function submitAnswer() {
     let q = questions[currentQIndex];
-    document.getElementById('btn-submit').style.display = 'none'; // hide during review
+    document.getElementById('btn-submit').style.display = 'none'; 
     
     if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
         if(!currentSelectedOption) return; 
@@ -902,7 +888,7 @@ function submitAnswer() {
         let realA = q.a.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase();
         
         const disp = document.getElementById('v-input');
-        document.getElementById('v-keyboard').style.pointerEvents = 'none'; // prevent typing
+        document.getElementById('v-keyboard').style.pointerEvents = 'none'; 
         
         if (userA === realA) {
             disp.style.borderColor = "var(--success)";
@@ -912,7 +898,7 @@ function submitAnswer() {
         } else {
             disp.style.borderColor = "var(--danger)";
             disp.style.color = "var(--danger)";
-            disp.innerText = realA; // reveal correct answer
+            disp.innerText = realA; 
             showFeedback(false);
         }
     }
@@ -921,13 +907,11 @@ function submitAnswer() {
 function showFeedback(isCorrect) {
     document.getElementById('play-score').innerText = `Score: ${score}`;
     setTimeout(() => {
-        // Reset input colors
         const disp = document.getElementById('v-input');
         if(disp) { disp.style.borderColor = "var(--ios-blue)"; disp.style.color = "inherit"; }
-        
         currentQIndex++;
         loadQuestion();
-    }, 2000); // 2s delay to review answer visually
+    }, 1500); // Wait 1.5s so user can visually see the correct answer
 }
 
 // TIMER & FORFEIT
