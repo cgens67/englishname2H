@@ -115,16 +115,6 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 .btn-warning { background: var(--warning); color: #fff; }
 .btn-primary:active, .btn-danger:active, .btn-warning:active { transform: scale(0.95); }
 
-/* TICKET EASTER EGG CSS RECREATION */
-.bus-ticket { border: 2px solid var(--ios-text); background: var(--ios-card); border-radius: 8px; width: 100%; max-width: 400px; margin: 0 auto 20px auto; overflow: hidden; box-shadow: var(--shadow-md); font-family: 'Inter', sans-serif;}
-.ticket-header { background: rgba(0,0,0,0.1); padding: 12px 20px; border-bottom: 2px solid var(--ios-text); display: flex; justify-content: space-between; align-items: center; color: var(--ios-text); }
-[data-theme="dark"] .ticket-header { background: rgba(255,255,255,0.1); }
-.ticket-title { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
-.ticket-body { padding: 20px; display: grid; grid-template-columns: 140px 1fr; gap: 10px; font-size: 14px; font-weight: 500; border-bottom: 2px solid var(--ios-text); color: var(--ios-text); }
-.ticket-body span:nth-child(even) { font-weight: 800; }
-.ticket-barcode { padding: 10px; text-align: center; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-.barcode-font { font-family: 'Libre Barcode 39 Text', cursive; font-size: 48px; color: var(--ios-text); transform: scaleY(1.3); transform-origin: top; overflow: hidden; white-space: nowrap; max-width: 100%; }
-
 /* MODALS */
 .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px; }
 .modal-bg.show { opacity: 1; pointer-events: auto; }
@@ -194,7 +184,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
             <div class="game-card" onclick="startGame('comprehension')">
                 <span class="material-icons-round game-icon" style="color: #007AFF;">fact_check</span>
                 <div class="game-title">Choose Correct Answer</div>
-                <div class="game-desc">Read the short text and answer the questions.</div>
+                <div class="game-desc">Read the short text and solve the deduction.</div>
             </div>
         </div>
         <button class="btn-warning" style="margin-top: 24px; width: 100%; max-width: 300px;" onclick="cancelSelectionFlow()"><span class="material-icons-round">refresh</span> Spin Again</button>
@@ -215,23 +205,6 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
                 <div class="seg-control" style="margin: 0 auto 15px auto;">
                     <button class="seg-btn active" id="btn-accent-us" onclick="setAccent('US')">US Accent</button>
                     <button class="seg-btn" id="btn-accent-uk" onclick="setAccent('UK')">UK Accent</button>
-                </div>
-            </div>
-
-            <!-- Ticket UI Injection (Hidden by default) -->
-            <div id="ticket-ui" style="display:none;">
-                <div class="bus-ticket">
-                    <div class="ticket-header">
-                        <span class="ticket-title">BUS TICKET</span>
-                        <span class="material-icons-round" style="font-size:32px;">directions_bus</span>
-                    </div>
-                    <div class="ticket-body">
-                        <span>DESTINATION</span> <span>: Kuala Lumpur to Melaka</span>
-                        <span>DEPARTURE</span> <span>: 9.00 a.m.</span>
-                        <span>ARRIVAL</span> <span>: 11.00 a.m.</span>
-                        <span>FARE</span> <span>: RM 15.00</span>
-                    </div>
-                    <div class="ticket-barcode"><div class="barcode-font" id="ticket-barcode-text">*STUDENT*</div></div>
                 </div>
             </div>
 
@@ -264,7 +237,7 @@ canvas#wheel { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--
 
 <!-- MODALS -->
 
-<!-- Chosen Modal (New) -->
+<!-- Chosen Modal -->
 <div class="modal-bg" id="modal-chosen">
     <div class="modal-card" style="border: 4px solid var(--ios-blue);">
         <span class="material-icons-round" style="font-size: 80px; margin-bottom: 10px; color: var(--ios-blue);">stars</span>
@@ -368,20 +341,109 @@ const dbNormal = {
         {q:"Fix the incorrect word:\n'We need some informations.'",a:"INFORMATION"}, {q:"Fix the incorrect word:\n'Please reply BACK soon.'",a:"REPLY"}, {q:"Fix the incorrect word:\n'The reason is BECAUSE he is sick.'",a:"THAT"}, {q:"Fix the incorrect word:\n'I am used to WAKE up early.'",a:"WAKING"}, {q:"Fix the incorrect word:\n'He drove CAREFUL down the road.'",a:"CAREFULLY"}, {q:"Fix the incorrect word:\n'I have visited Paris LAST year.'",a:"VISITED"}, {q:"Fix the incorrect word:\n'Where DOES he lives?'",a:"LIVE"}, {q:"Fix the incorrect word:\n'She was boring by the movie.'",a:"BORED"}, {q:"Fix the incorrect word:\n'I am waiting him.'",a:"FOR"}, {q:"Fix the incorrect word:\n'You must to go now.'",a:"GO"},
         {q:"Fix the incorrect word:\n'He suggested TO go to the park.'",a:"GOING"}, {q:"Fix the incorrect word:\n'I will call you when I WILL arrive.'",a:"ARRIVE"}, {q:"Fix the incorrect word:\n'The scissors IS on the table.'",a:"ARE"}, {q:"Fix the incorrect word:\n'She arrived IN the airport.'",a:"AT"}, {q:"Fix the incorrect word:\n'He insisted ON go there.'",a:"GOING"}, {q:"Fix the incorrect word:\n'I am having a brother.'",a:"HAVE"}, {q:"Fix the incorrect word:\n'Did you BOUGHT the milk?'",a:"BUY"}, {q:"Fix the incorrect word:\n'She prevented him TO fall.'",a:"FROM"}, {q:"Fix the incorrect word:\n'I object TO go there.'",a:"GOING"}, {q:"Fix the incorrect word:\n'I am very MUCH happy.'",a:"VERY"},
         {q:"Fix the incorrect word:\n'Between you and I, it's true.'",a:"ME"}, {q:"Fix the incorrect word:\n'Whom did you say IS coming?'",a:"WHO"}, {q:"Fix the incorrect word:\n'The man WHICH called is here.'",a:"WHO"}, {q:"Fix the incorrect word:\n'Everyone HAVE to leave.'",a:"HAS"}, {q:"Fix the incorrect word:\n'Either the boy or the girls IS right.'",a:"ARE"}, {q:"Fix the incorrect word:\n'She plays piano everyday.'",a:"THE"}, {q:"Fix the incorrect word:\n'I prefer tea THAN coffee.'",a:"TO"}, {q:"Fix the incorrect word:\n'He is senior THAN me.'",a:"TO"}, {q:"Fix the incorrect word:\n'The police IS investigating.'",a:"ARE"}, {q:"Fix the incorrect word:\n'We reached AT the station.'",a:"REACHED"},
-        {q:"Fix the incorrect word:\n'She resembles TO her mother.'",a:"RESEMBLES"}, {q:"Fix the incorrect word:\n'He entered INTO the room.'",a:"ENTERED"}, {q:"Fix the incorrect word:\n'I told TO him the truth.'",a:"TOLD"}, {q:"Fix the incorrect word:\n'Can you explain me this?'",a:"TO"}, {q:"Fix the incorrect word:\n'I listened the music.'",a:"TO"}, {q:"Fix the incorrect word:\n'She smiled TO me.'",a:"AT"}, {q:"Fix the incorrect word:\n'He is good IN English.'",a:"AT"}, {q:"Fix the incorrect word:\n'I am angry ON him.'",a:"WITH"}, {q:"Fix the incorrect word:\n'The book is ON the desk.' (No, wait) 'The book is ON the roof.' -> No error. 'The bird flew OVER to the house.' -> No error. 'Fix the incorrect word:\nShe is afraid FROM dogs.'",a:"OF"}, {q:"Fix the incorrect word:\n'He died FROM cancer.'",a:"OF"},
+        {q:"Fix the incorrect word:\n'She resembles TO her mother.'",a:"RESEMBLES"}, {q:"Fix the incorrect word:\n'He entered INTO the room.'",a:"ENTERED"}, {q:"Fix the incorrect word:\n'I told TO him the truth.'",a:"TOLD"}, {q:"Fix the incorrect word:\n'Can you explain me this?'",a:"TO"}, {q:"Fix the incorrect word:\n'I listened the music.'",a:"TO"}, {q:"Fix the incorrect word:\n'She smiled TO me.'",a:"AT"}, {q:"Fix the incorrect word:\n'He is good IN English.'",a:"AT"}, {q:"Fix the incorrect word:\n'I am angry ON him.'",a:"WITH"}, {q:"Fix the incorrect word:\n'She is afraid FROM dogs.'",a:"OF"}, {q:"Fix the incorrect word:\n'He died FROM cancer.'",a:"OF"},
         {q:"Fix the incorrect word:\n'I congratulate you FOR your success.'",a:"ON"}, {q:"Fix the incorrect word:\n'He is suffering WITH fever.'",a:"FROM"}, {q:"Fix the incorrect word:\n'I prefer walking THAN swimming.'",a:"TO"}, {q:"Fix the incorrect word:\n'She is married WITH a dentist.'",a:"TO"}, {q:"Fix the incorrect word:\n'He is interested FOR history.'",a:"IN"}, {q:"Fix the incorrect word:\n'I am proud FOR you.'",a:"OF"}, {q:"Fix the incorrect word:\n'Don't laugh ON him.'",a:"AT"}, {q:"Fix the incorrect word:\n'She is fond FOR sweets.'",a:"OF"}, {q:"Fix the incorrect word:\n'Beware FROM the dog.'",a:"OF"}, {q:"Fix the incorrect word:\n'He is guilty FOR murder.'",a:"OF"},
         {q:"Fix the incorrect word:\n'They accused him FOR stealing.'",a:"OF"}, {q:"Fix the incorrect word:\n'I am sure FOR his success.'",a:"OF"}, {q:"Fix the incorrect word:\n'He relies IN my help.'",a:"ON"}, {q:"Fix the incorrect word:\n'We depend FROM our parents.'",a:"ON"}, {q:"Fix the incorrect word:\n'I differ WITH you on this point.'",a:"FROM"}, {q:"Fix the incorrect word:\n'She parted FROM her money.'",a:"WITH"}, {q:"Fix the incorrect word:\n'He parted WITH his friends.'",a:"FROM"}, {q:"Fix the incorrect word:\n'He was absorbed WITH his work.'",a:"IN"}, {q:"Fix the incorrect word:\n'She is confident FOR success.'",a:"OF"}, {q:"Fix the incorrect word:\n'He is capable TO do it.'",a:"OF"}
     ],
     comprehension: [
-        {q:"Read: 'John bought 3 apples, ate 1, and gave 1 to Mary.' How many apples does John have left?",opts:["1","2","0"],a:"1"}, {q:"Read: 'The library opens at 9 AM and closes at 5 PM.' How many hours is it open?",opts:["8 hours","9 hours","7 hours"],a:"8 hours"}, {q:"Read: 'Sarah is taller than Mark, but shorter than Leo.' Who is the shortest?",opts:["Mark","Sarah","Leo"],a:"Mark"}, {q:"Read: 'The train arrives at 10:15 AM.' If it is 10:00 AM, how many minutes until it arrives?",opts:["15 minutes","10 minutes","25 minutes"],a:"15 minutes"}, {q:"Read: 'Water freezes at 0 degrees Celsius.' What happens at 0 degrees?",opts:["Water freezes","Water boils","Nothing"],a:"Water freezes"}, {q:"Read: 'Tim has two brothers and one sister.' How many children do Tim's parents have?",opts:["4","3","2"],a:"4"}, {q:"Read: 'A baker bakes a dozen loaves and sells 5.' How many are left?",opts:["7","5","12"],a:"7"}, {q:"Read: 'The Eiffel Tower is in Paris.' Where is the Eiffel Tower?",opts:["Paris","London","Berlin"],a:"Paris"}, {q:"Read: 'Mary wore a red dress because it was her favorite color.' What is Mary's favorite color?",opts:["Red","Blue","Green"],a:"Red"}, {q:"Read: 'Despite the rain, the football match continued.' Did they stop playing?",opts:["No","Yes","Only for a while"],a:"No"},
-        {q:"Read: 'A cheetah can run up to 70 mph.' Which animal is mentioned?",opts:["A cheetah","A lion","A tiger"],a:"A cheetah"}, {q:"Read: 'Mount Everest is the tallest mountain.' What is the tallest mountain?",opts:["Mount Everest","K2","Mount Fuji"],a:"Mount Everest"}, {q:"Read: 'The quick brown fox jumps over the lazy dog.' Who is lazy?",opts:["The dog","The fox","The cat"],a:"The dog"}, {q:"Read: 'Earth is the third planet from the Sun.' Which planet is Earth?",opts:["Third","Second","Fourth"],a:"Third"}, {q:"Read: 'There are 7 days in a week.' How many days are in two weeks?",opts:["14","7","21"],a:"14"}, {q:"Read: 'An octagon has 8 sides.' How many sides does an octagon have?",opts:["8","6","10"],a:"8"}, {q:"Read: 'The sun rises in the east.' Where does the sun rise?",opts:["East","West","North"],a:"East"}, {q:"Read: 'A leap year has 366 days.' How many days in a normal year?",opts:["365","366","364"],a:"365"}, {q:"Read: 'Bees make honey from nectar.' What do bees make?",opts:["Honey","Nectar","Pollen"],a:"Honey"}, {q:"Read: 'A century is 100 years.' How long is half a century?",opts:["50 years","100 years","10 years"],a:"50 years"},
-        {q:"Read: 'Ice is solid water.' What state is ice?",opts:["Solid","Liquid","Gas"],a:"Solid"}, {q:"Read: 'Humans need oxygen to breathe.' What do humans need?",opts:["Oxygen","Carbon","Helium"],a:"Oxygen"}, {q:"Read: 'The Titanic sank in 1912.' What year did it sink?",opts:["1912","1920","1905"],a:"1912"}, {q:"Read: 'A triangle has 3 angles.' How many angles does it have?",opts:["3","4","2"],a:"3"}, {q:"Read: 'Sharks are a type of fish.' What type of animal is a shark?",opts:["Fish","Mammal","Reptile"],a:"Fish"}, {q:"Read: 'Apples can be red, green, or yellow.' Which color is NOT mentioned?",opts:["Blue","Red","Green"],a:"Blue"}, {q:"Read: 'A piano has 88 keys.' How many keys does a piano have?",opts:["88","66","99"],a:"88"}, {q:"Read: 'The Great Wall is in China.' Where is the Great Wall?",opts:["China","Japan","India"],a:"China"}, {q:"Read: 'Penguins live in the Southern Hemisphere.' Where do penguins live?",opts:["Southern Hemisphere","Northern Hemisphere","Equator"],a:"Southern Hemisphere"}, {q:"Read: 'A thermometer measures temperature.' What does it measure?",opts:["Temperature","Distance","Weight"],a:"Temperature"},
-        {q:"Read: 'Bats are mammals, not birds.' What are bats?",opts:["Mammals","Birds","Insects"],a:"Mammals"}, {q:"Read: 'The Nile is the longest river.' What is the longest river?",opts:["The Nile","The Amazon","The Mississippi"],a:"The Nile"}, {q:"Read: 'A decade is 10 years.' How many years in 2 decades?",opts:["20","10","30"],a:"20"}, {q:"Read: 'Jupiter is the largest planet in our solar system.' Which is the largest?",opts:["Jupiter","Saturn","Earth"],a:"Jupiter"}, {q:"Read: 'Spiders have 8 legs.' How many legs do spiders have?",opts:["8","6","10"],a:"8"}, {q:"Read: 'Diamonds are the hardest natural substance.' What is the hardest?",opts:["Diamonds","Gold","Iron"],a:"Diamonds"}, {q:"Read: 'The Pacific is the largest ocean.' Which ocean is the largest?",opts:["Pacific","Atlantic","Indian"],a:"Pacific"}, {q:"Read: 'Cows eat grass.' What do cows eat?",opts:["Grass","Meat","Fish"],a:"Grass"}, {q:"Read: 'An hour has 60 minutes.' How many minutes in half an hour?",opts:["30","60","15"],a:"30"}, {q:"Read: 'The moon orbits the Earth.' What does the moon orbit?",opts:["Earth","Sun","Mars"],a:"Earth"},
-        {q:"Read: 'Cats have retractable claws.' What kind of claws do cats have?",opts:["Retractable","Fixed","None"],a:"Retractable"}, {q:"Read: 'A pentagon has 5 sides.' How many sides does a pentagon have?",opts:["5","6","4"],a:"5"}, {q:"Read: 'Oxygen is a gas.' What state is oxygen?",opts:["Gas","Liquid","Solid"],a:"Gas"}, {q:"Read: 'The speed of light is faster than sound.' Which is faster?",opts:["Light","Sound","Both"],a:"Light"}, {q:"Read: 'A bicycle has 2 wheels.' How many wheels does a bicycle have?",opts:["2","3","4"],a:"2"}, {q:"Read: 'The human body has 206 bones.' How many bones does an adult have?",opts:["206","300","106"],a:"206"}, {q:"Read: 'A leap year occurs every 4 years.' How often does a leap year occur?",opts:["Every 4 years","Every 2 years","Every 10 years"],a:"Every 4 years"}, {q:"Read: 'Leaves produce food through photosynthesis.' How do leaves produce food?",opts:["Photosynthesis","Digestion","Breathing"],a:"Photosynthesis"}, {q:"Read: 'A marathon is 26.2 miles.' How long is a marathon?",opts:["26.2 miles","20 miles","13.1 miles"],a:"26.2 miles"}, {q:"Read: 'Water boils at 100 degrees Celsius.' At what temperature does it boil?",opts:["100","0","50"],a:"100"},
-        {q:"Read: 'The capital of Japan is Tokyo.' What is the capital of Japan?",opts:["Tokyo","Kyoto","Osaka"],a:"Tokyo"}, {q:"Read: 'A hexagon has 6 sides.' How many sides does a hexagon have?",opts:["6","5","8"],a:"6"}, {q:"Read: 'Dogs have a great sense of smell.' What sense is great in dogs?",opts:["Smell","Sight","Taste"],a:"Smell"}, {q:"Read: 'The Earth rotates on its axis.' What does the Earth rotate on?",opts:["Its axis","The moon","The sun"],a:"Its axis"}, {q:"Read: 'A kilometer is 1000 meters.' How many meters in a kilometer?",opts:["1000","100","10000"],a:"1000"}, {q:"Read: 'The alphabet has 26 letters.' How many letters are in the alphabet?",opts:["26","24","28"],a:"26"}, {q:"Read: 'Butterflies start as caterpillars.' What do butterflies start as?",opts:["Caterpillars","Eggs","Worms"],a:"Caterpillars"}, {q:"Read: 'Sound cannot travel in a vacuum.' Where can sound NOT travel?",opts:["A vacuum","Air","Water"],a:"A vacuum"}, {q:"Read: 'The sun is a star.' What is the sun?",opts:["A star","A planet","A moon"],a:"A star"}, {q:"Read: 'A square has 4 equal sides.' How many sides does a square have?",opts:["4","3","5"],a:"4"},
-        {q:"Read: 'Frogs are amphibians.' What are frogs?",opts:["Amphibians","Reptiles","Mammals"],a:"Amphibians"}, {q:"Read: 'A year has 12 months.' How many months in a year?",opts:["12","10","14"],a:"12"}, {q:"Read: 'The Sahara is a large desert.' What is the Sahara?",opts:["A desert","A forest","An ocean"],a:"A desert"}, {q:"Read: 'A tricycle has 3 wheels.' How many wheels does it have?",opts:["3","2","4"],a:"3"}, {q:"Read: 'Venus is the hottest planet.' Which planet is the hottest?",opts:["Venus","Mercury","Mars"],a:"Venus"}, {q:"Read: 'A minute has 60 seconds.' How many seconds in a minute?",opts:["60","30","100"],a:"60"}, {q:"Read: 'Elephants are the largest land animals.' What are the largest land animals?",opts:["Elephants","Giraffes","Rhinos"],a:"Elephants"}, {q:"Read: 'A millipede has many legs.' What does a millipede have?",opts:["Many legs","Wings","Fins"],a:"Many legs"}, {q:"Read: 'The brain controls the body.' What controls the body?",opts:["The brain","The heart","The lungs"],a:"The brain"}, {q:"Read: 'A rainbow has 7 colors.' How many colors does a rainbow have?",opts:["7","6","8"],a:"7"},
-        {q:"Read: 'Whales breathe air.' What do whales breathe?",opts:["Air","Water","Helium"],a:"Air"}, {q:"Read: 'A quarter is 25 cents.' How many cents in a quarter?",opts:["25","50","10"],a:"25"}, {q:"Read: 'The heart pumps blood.' What does the heart pump?",opts:["Blood","Air","Water"],a:"Blood"}, {q:"Read: 'A spider web is made of silk.' What is a spider web made of?",opts:["Silk","Cotton","Wool"],a:"Silk"}, {q:"Read: 'Mars is known as the Red Planet.' Which planet is Red?",opts:["Mars","Venus","Jupiter"],a:"Mars"}, {q:"Read: 'A standard guitar has 6 strings.' How many strings does it have?",opts:["6","4","8"],a:"6"}, {q:"Read: 'Kangaroos carry their young in a pouch.' Where do kangaroos carry their young?",opts:["In a pouch","On their back","In their mouth"],a:"In a pouch"}, {q:"Read: 'A decagon has 10 sides.' How many sides does a decagon have?",opts:["10","8","12"],a:"10"}, {q:"Read: 'The liver is an organ.' What is the liver?",opts:["An organ","A bone","A muscle"],a:"An organ"}, {q:"Read: 'A piano has black and white keys.' What color are the keys?",opts:["Black and white","Red and blue","Yellow and green"],a:"Black and white"},
-        {q:"Read: 'Snakes shed their skin.' What do snakes shed?",opts:["Skin","Hair","Scales"],a:"Skin"}, {q:"Read: 'A half is 50 percent.' What percentage is a half?",opts:["50","25","75"],a:"50"}, {q:"Read: 'The lungs help you breathe.' What do lungs do?",opts:["Help you breathe","Pump blood","Digest food"],a:"Help you breathe"}, {q:"Read: 'A violin has 4 strings.' How many strings does a violin have?",opts:["4","6","5"],a:"4"}, {q:"Read: 'The equator divides the Earth in half.' What divides the Earth?",opts:["The equator","The poles","The oceans"],a:"The equator"}, {q:"Read: 'A dollar is 100 cents.' How many cents in a dollar?",opts:["100","50","10"],a:"100"}, {q:"Read: 'Ostriches cannot fly.' Can ostriches fly?",opts:["No","Yes","Only short distances"],a:"No"}, {q:"Read: 'A heptagon has 7 sides.' How many sides does it have?",opts:["7","6","8"],a:"7"}, {q:"Read: 'The stomach digests food.' What does the stomach do?",opts:["Digests food","Pumps blood","Helps breathe"],a:"Digests food"}, {q:"Read: 'A rainbow appears after rain.' When does a rainbow appear?",opts:["After rain","Before rain","During snow"],a:"After rain"}
+        {q:"Read: 'The movie starts at 7:15 PM and lasts 125 minutes.' What time does it end?",opts:["9:20 PM","9:15 PM","9:30 PM"],a:"9:20 PM"},
+        {q:"Read: 'A snail climbs up 3 meters during the day and slips back 2 meters at night. The wall is 5 meters high.' How many days to reach the top?",opts:["3 days","5 days","4 days"],a:"3 days"},
+        {q:"Read: 'John works from Monday to Friday. He earns $20 a day, but spends $5 on lunch every workday.' How much does he save in a week?",opts:["$75","$100","$150"],a:"$75"},
+        {q:"Read: 'The train was due at 4:30 PM but was delayed by a quarter of an hour.' When did it arrive?",opts:["4:45 PM","4:15 PM","5:00 PM"],a:"4:45 PM"},
+        {q:"Read: 'A book has 120 pages. Tom reads 10 pages a day for the first week, then 5 pages a day.' How many days total to finish?",opts:["17 days","10 days","15 days"],a:"17 days"},
+        {q:"Read: 'A plant doubles its height every month. In month 3, it is 8cm tall.' How tall was it in month 1?",opts:["2cm","4cm","1cm"],a:"2cm"},
+        {q:"Read: 'There are 12 eggs. You take away 5.' How many do you have?",opts:["5","7","12"],a:"5"},
+        {q:"Read: 'A doctor gives you 3 pills, telling you to take one every half hour.' How long will they last?",opts:["1 hour","1.5 hours","2 hours"],a:"1 hour"},
+        {q:"Read: 'Lily gives the cashier two $10 bills for an $18 toy.' How much change does she get?",opts:["$2","$12","$8"],a:"$2"},
+        {q:"Read: 'A recipe for 4 people needs 2 eggs. How many eggs for 10 people?'",opts:["5 eggs","4 eggs","6 eggs"],a:"5 eggs"},
+
+        {q:"Read: 'Ben is taller than Sam but shorter than Alex. Chris is the tallest.' Who is the shortest?",opts:["Sam","Ben","Alex"],a:"Sam"},
+        {q:"Read: 'In a race, you overtake the person in second place.' What position are you in now?",opts:["Second","First","Third"],a:"Second"},
+        {q:"Read: 'Team A beat Team B. Team C lost to Team B. Team A lost to Team D.' Who is the strongest team?",opts:["Team D","Team A","Team B"],a:"Team D"},
+        {q:"Read: 'Red is heavier than Blue. Green is lighter than Blue. Yellow is heavier than Red.' Which is the lightest?",opts:["Green","Blue","Red"],a:"Green"},
+        {q:"Read: 'The library is north of the school. The park is south of the school.' Where is the school?",opts:["Between them","North of the library","South of the park"],a:"Between them"},
+        {q:"Read: 'Monday’s meeting is delayed by two days.' What day is the meeting now?",opts:["Wednesday","Saturday","Thursday"],a:"Wednesday"},
+        {q:"Read: 'P is older than Q. R is younger than P but older than Q.' Who is the middle age?",opts:["R","P","Q"],a:"R"},
+        {q:"Read: 'The gold box is inside the silver box. The silver box is inside the wooden box.' Which box is the largest?",opts:["Wooden box","Silver box","Gold box"],a:"Wooden box"},
+        {q:"Read: 'First place gets Gold, second gets Silver, third gets Bronze. Dan beat the Bronze winner but didn't win Gold.' What did Dan get?",opts:["Silver","Gold","Bronze"],a:"Silver"},
+        {q:"Read: 'March comes before April, but after February. May is after April.' Which month is the earliest?",opts:["February","March","April"],a:"February"},
+
+        {q:"Read: 'The siren blared as the red truck sped down the street, unrolling a large hose.' Who is likely in the truck?",opts:["Firefighters","Police","Paramedics"],a:"Firefighters"},
+        {q:"Read: 'She wore a white dress, walked down the aisle, and held a bouquet of flowers.' What event is this?",opts:["A wedding","A funeral","A graduation"],a:"A wedding"},
+        {q:"Read: 'He tapped the chalkboard, handed out the test papers, and set a timer.' What is his profession?",opts:["Teacher","Doctor","Chef"],a:"Teacher"},
+        {q:"Read: 'The stadium erupted in cheers as the player kicked the ball into the net.' What sport is being played?",opts:["Football/Soccer","Basketball","Tennis"],a:"Football/Soccer"},
+        {q:"Read: 'The sun set, the streetlights flickered on, and the owls began to hoot.' What time of day is it?",opts:["Evening/Night","Morning","Afternoon"],a:"Evening/Night"},
+        {q:"Read: 'She put on oven mitts before taking the tray out.' Why did she use oven mitts?",opts:["The tray was hot","Her hands were cold","To keep her hands clean"],a:"The tray was hot"},
+        {q:"Read: 'He packed a tent, a sleeping bag, and a flashlight.' What is he going to do?",opts:["Camping","Hiking","Fishing"],a:"Camping"},
+        {q:"Read: 'The leaves turned orange and began to fall from the trees. A cool breeze blew.' What season is it?",opts:["Autumn/Fall","Winter","Spring"],a:"Autumn/Fall"},
+        {q:"Read: 'She placed a stamp on the envelope and dropped it in the blue box.' What is she doing?",opts:["Mailing a letter","Paying a bill","Reading a book"],a:"Mailing a letter"},
+        {q:"Read: 'He checked the patient's pulse, listened to their lungs, and wrote a prescription.' Who is he?",opts:["A Doctor","A Pharmacist","A Scientist"],a:"A Doctor"},
+
+        {q:"Read: 'All the cars in the lot are blue, except for one red car and two green cars.' How many non-blue cars are there?",opts:["3","1","2"],a:"3"},
+        {q:"Read: 'Everyone passed the math test except Sarah and Tom. Jake got a perfect score.' Did Jake pass?",opts:["Yes","No","Not enough info"],a:"Yes"},
+        {q:"Read: 'The store is open every day except Sunday. Today is Tuesday.' Is the store open tomorrow?",opts:["Yes","No","Maybe"],a:"Yes"},
+        {q:"Read: 'Mary has 3 brothers. Each of her brothers has 1 sister.' How many daughters does Mary's mother have?",opts:["1","3","4"],a:"1"},
+        {q:"Read: 'If it is raining, the game is canceled. It is not raining.' What happens to the game?",opts:["It is played","It is canceled","It is delayed"],a:"It is played"},
+        {q:"Read: 'You have a match and enter a dark room with a candle, a lamp, and a fireplace.' What do you light first?",opts:["The match","The candle","The lamp"],a:"The match"},
+        {q:"Read: 'A farmer has 17 sheep. All but 9 die.' How many are left alive?",opts:["9","8","17"],a:"9"},
+        {q:"Read: 'Some months have 31 days, others have 30.' How many have 28 days?",opts:["12","1","0"],a:"12"},
+        {q:"Read: 'I went to bed at 8:00 PM and set my mechanical wind-up alarm for 9:00 AM.' How much sleep will I get?",opts:["1 hour","13 hours","12 hours"],a:"1 hour"},
+        {q:"Read: 'Divide 30 by half and add 10.' What is the answer?",opts:["70","25","40"],a:"70"},
+
+        {q:"Read: 'A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball.' How much is the ball?",opts:["$0.05","$0.10","$1.00"],a:"$0.05"},
+        {q:"Read: 'If it takes 5 machines 5 minutes to make 5 widgets, how long for 100 machines to make 100 widgets?'",opts:["5 minutes","100 minutes","1 minute"],a:"5 minutes"},
+        {q:"Read: 'In a lake, there is a patch of lily pads that doubles every day. It covers the lake in 48 days.' When is it half covered?",opts:["Day 47","Day 24","Day 46"],a:"Day 47"},
+        {q:"Read: 'A rooster lays an egg on the peak of a slanted roof. Which way does the egg roll?'",opts:["It doesn't","Left","Right"],a:"It doesn't"},
+        {q:"Read: 'An electric train is moving north at 100mph and wind blows west at 10mph.' Which way does the smoke blow?",opts:["There is no smoke","Southwest","Northwest"],a:"There is no smoke"},
+        {q:"Read: 'How many two-cent stamps are there in a dozen?'",opts:["12","24","6"],a:"12"},
+        {q:"Read: 'A drawer has 10 black socks and 10 white socks. How many must you pull blindly to guarantee a matching pair?'",opts:["3","2","10"],a:"3"},
+        {q:"Read: 'I have 3 apples. If you take 2 from me, how many do you have?'",opts:["2","1","3"],a:"2"},
+        {q:"Read: 'A plane crashes exactly on the border of US and Canada. Where do they bury the survivors?'",opts:["Nowhere","In the US","In Canada"],a:"Nowhere"},
+        {q:"Read: 'You are running in a race and pass the person in 2nd place.' What place are you in?",opts:["2nd","1st","3rd"],a:"2nd"},
+
+        {q:"Read: 'The word short becomes shorter when you add two letters to it.' What two letters?",opts:["E and R","S and T","L and Y"],a:"E and R"},
+        {q:"Read: 'I am light as a feather, but even the strongest man can't hold me for long. What am I?'",opts:["Breath","A thought","A shadow"],a:"Breath"},
+        {q:"Read: 'The manager fired the clerk because he was always late.' Who was always late?",opts:["The clerk","The manager","Cannot be determined"],a:"The clerk"},
+        {q:"Read: 'Despite being exhausted, the team continued to practice.' What does this mean?",opts:["They practiced while tired","They stopped practicing","They rested then practiced"],a:"They practiced while tired"},
+        {q:"Read: 'The vase shattered into a million pieces when it hit the floor.' What caused the vase to break?",opts:["Hitting the floor","Being dropped","A million pieces"],a:"Hitting the floor"},
+        {q:"Read: 'He could hardly believe his eyes when he saw the giant elephant.' What does hardly believe his eyes mean?",opts:["He was very surprised","He had bad vision","He thought it was fake"],a:"He was very surprised"},
+        {q:"Read: 'She has a green thumb; her garden is always flourishing.' What does green thumb mean?",opts:["She is good at gardening","Her thumb is painted green","She likes green plants"],a:"She is good at gardening"},
+        {q:"Read: 'It was raining cats and dogs, so we stayed inside.' What does this mean?",opts:["It was raining heavily","Animals were falling","It was a light drizzle"],a:"It was raining heavily"},
+        {q:"Read: 'He let the cat out of the bag about the surprise party.' What did he do?",opts:["Revealed a secret","Freed a pet","Ruined a bag"],a:"Revealed a secret"},
+        {q:"Read: 'She hit the nail on the head with her answer.' What does this mean?",opts:["Her answer was exactly right","She used a hammer","She hurt her head"],a:"Her answer was exactly right"},
+
+        {q:"Read: 'The day before yesterday was Thursday.' What day is tomorrow?",opts:["Sunday","Monday","Saturday"],a:"Sunday"},
+        {q:"Read: 'If you look at a mirror and touch your right ear with your left hand, what does the reflection touch?'",opts:["Its left ear with its right hand","Its right ear with its right hand","Its left ear with its left hand"],a:"Its left ear with its right hand"},
+        {q:"Read: 'A father and son are in a crash. The doctor says, I cannot operate, he is my son.' Who is the doctor?",opts:["The mother","The grandfather","A stranger"],a:"The mother"},
+        {q:"Read: 'Mary’s father has 5 daughters: Nana, Nene, Nini, Nono. What is the 5th daughter's name?'",opts:["Mary","Nunu","Nano"],a:"Mary"},
+        {q:"Read: 'What word is pronounced the same if you take away four of its five letters?'",opts:["Queue","Aisle","Eerie"],a:"Queue"},
+        {q:"Read: 'There is a house with four southern-facing windows. A bear walks past.' What color is the bear?",opts:["White","Brown","Black"],a:"White"},
+        {q:"Read: 'A woman shoots her husband, holds him underwater for 5 minutes, then hangs him. Later they go to dinner.' How?",opts:["She's a photographer","It was a dummy","She missed"],a:"She's a photographer"},
+        {q:"Read: 'What has towns but no houses, forests but no trees, and rivers but no water?'",opts:["A map","A globe","A drawing"],a:"A map"},
+        {q:"Read: 'I am not alive, but I have 5 fingers.' What am I?",opts:["A glove","A statue","A skeleton"],a:"A glove"},
+        {q:"Read: 'You drop a 10-pound iron ball and a 1-pound iron ball from a building.' Which hits the ground first?",opts:["They hit at the same time","The 10-pound ball","The 1-pound ball"],a:"They hit at the same time"},
+
+        {q:"Read: 'The flight takes 3 hours. It leaves at 2:00 PM in Timezone A and arrives at 4:00 PM in Timezone B.' What is the time difference?",opts:["1 hour","2 hours","0 hours"],a:"1 hour"},
+        {q:"Read: 'A bookshelf has 5 shelves. Each holds 20 books. 3 shelves are full, 1 is half full, 1 is empty.' How many books total?",opts:["70","80","60"],a:"70"},
+        {q:"Read: 'John is 10. His sister is half his age. When John is 50, how old is his sister?'",opts:["45","25","30"],a:"45"},
+        {q:"Read: 'A farmer plants corn in spring, wheat in fall, and soy in summer.' What does he plant first in the calendar year?",opts:["Corn","Soy","Wheat"],a:"Corn"},
+        {q:"Read: 'A parking garage charges $2 for the first hour and $1 for each extra hour. You stay for 4 hours.' How much do you pay?",opts:["$5","$6","$4"],a:"$5"},
+        {q:"Read: 'The restaurant offers a free dessert with every 2 entrees. You buy 5 entrees.' How many free desserts?",opts:["2","3","1"],a:"2"},
+        {q:"Read: 'A password requires 1 letter and 3 numbers. Which of these is valid?'",opts:["A123","1234","AB12"],a:"A123"},
+        {q:"Read: 'If today is the 3rd day of the month, and the month has 30 days, how many days are left in the month?'",opts:["27","28","26"],a:"27"},
+        {q:"Read: 'A pizza is cut into 8 slices. You eat 3, your friend eats 2.' What fraction of the pizza is left?",opts:["3/8","5/8","1/4"],a:"3/8"},
+        {q:"Read: 'Water freezes at 32°F and boils at 212°F. The temperature outside is 25°F.' What state is water in outside?",opts:["Solid (Ice)","Liquid","Gas (Steam)"],a:"Solid (Ice)"},
+
+        {q:"Read: 'All mammals have hair. A dolphin is a mammal.' Does a dolphin have hair?",opts:["Yes","No","Only when young"],a:"Yes"},
+        {q:"Read: 'Tom’s mom has 3 children: Snap, Crackle, and...?'",opts:["Tom","Pop","John"],a:"Tom"},
+        {q:"Read: 'Before Mount Everest was discovered, what was the highest mountain on Earth?'",opts:["Mount Everest","K2","Mount Kilimanjaro"],a:"Mount Everest"},
+        {q:"Read: 'There are six apples in a basket and six girls. Each girl takes one apple, yet one apple remains in the basket.' How?",opts:["The last girl took the basket","One girl took two","There were seven apples"],a:"The last girl took the basket"},
+        {q:"Read: 'A truck driver goes down a one-way street the wrong way. A police officer sees him but doesn't stop him.' Why?",opts:["He was walking","He was speeding","The officer was off duty"],a:"He was walking"},
+        {q:"Read: 'If an electric train is traveling south, which way is the smoke blowing?'",opts:["There is no smoke","North","South"],a:"There is no smoke"},
+        {q:"Read: 'What has a head, a tail, is brown, and has no legs?'",opts:["A penny","A snake","A worm"],a:"A penny"},
+        {q:"Read: 'You draw a line. Without touching it, how do you make it seem shorter?'",opts:["Draw a longer line next to it","Erase part of it","You can't"],a:"Draw a longer line next to it"},
+        {q:"Read: 'Which is heavier: a ton of bricks or a ton of feathers?'",opts:["They weigh the same","A ton of bricks","A ton of feathers"],a:"They weigh the same"},
+        {q:"Read: 'You are in a foot race. You pass the person in last place.' What place are you in now?",opts:["Impossible","Second to last","Last"],a:"Impossible"}
     ]
 };
 
@@ -713,7 +775,6 @@ function loadQuestion() {
     let mcqCont = document.getElementById('mcq-container');
     let inpCont = document.getElementById('input-container');
     let audCont = document.getElementById('audio-controls');
-    let tktUi = document.getElementById('ticket-ui');
     let btnSub = document.getElementById('btn-submit');
     let spellSet = document.getElementById('spelling-settings');
     const disp = document.getElementById('v-input');
@@ -727,7 +788,6 @@ function loadQuestion() {
         mcqCont.style.display = 'none';
         inpCont.style.display = 'none';
         audCont.style.display = 'none';
-        tktUi.style.display = 'none';
         btnSub.style.display = 'none';
         spellSet.style.display = 'none';
         
@@ -757,11 +817,6 @@ function loadQuestion() {
             updateInputDisplay();
         }
         else if (currentGameType === 'guessing' || currentGameType === 'comprehension') {
-            if (q.showTicket) {
-                tktUi.style.display = 'block';
-                // Barcode Easter Egg
-                document.getElementById('ticket-barcode-text').innerText = `*${currentStudent.name.replace(/\s+/g, '')}*`;
-            }
             mcqCont.style.display = 'block';
             let optsHTML = '';
             let opts = shuffle([...q.opts]);
